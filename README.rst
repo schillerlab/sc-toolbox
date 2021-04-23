@@ -31,11 +31,17 @@ sc-toolbox
    :target: https://github.com/psf/black
    :alt: Black
 
+.. warning::
+    This package is still under heavy development. It is primarily designed for in-house analyes at the `Theislab <https://github.com/theislab>`_
+    and `Schillerlab <https://github.com/schillerlab>`_. Don't yet expect it to be well tested or documented.
+    However, contributions are highly welcome and we will provide guidance if required.
+
 
 Features
 --------
 
-* TODO
+* Create minimal best-practice containers for single-cell data analysis with Scanpy
+* API for advanced Scanpy based plots and analyses
 
 
 Installation
