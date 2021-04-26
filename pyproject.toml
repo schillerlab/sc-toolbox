@@ -32,6 +32,8 @@ matplotlib = "^3.4.1"
 scanpy = "^1.7.2"
 seaborn = "^0.11.1"
 pandas = "^1.2.4"
+scipy = "^1.6.3"
+scikit-learn = "^0.24.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.3"

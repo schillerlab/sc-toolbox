@@ -1,7 +1,9 @@
-from typing import List, Tuple
+from typing import List
+from typing import Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import seaborn as sb
 
 
@@ -54,10 +56,10 @@ def standart_lineplot(
         cols:
         title: Title of the plot
         rotation: Rotation of the x-axis labels
-        figsize: Size of the figure as specified in matplotlib.
-        tick_size: Size of the ticks as specified in matplotlib.
-        label_size: Size of the labels as specified in matplotlib.
-        order_smooth: If greater than 1, numpy.polyfit is used to estimate a polynomial regression.
+        figsize: Size of the figure as specified in matplotlib
+        tick_size: Size of the ticks as specified in matplotlib
+        label_size: Size of the labels as specified in matplotlib
+        order_smooth: If greater than 1, numpy.polyfit is used to estimate a polynomial regression
         conf_int: Confidence interval
         scatter:
         save: Path to save the plot to
@@ -110,36 +112,444 @@ def standart_lineplot(
     plt.close()
 
 
-def split_boxplot(
-    table,
+def plot_avg_expression(
+    gene_expression,
+    genes,
     order,
-    xlabel,
-    ylabel,
-    column=None,
+    xlabel: str = "days",
+    cluster: str = "all",
     hue=None,
-    cols=None,
-    width=1,
-    title=None,
     figsize=(15, 6),
+    smooth=None,
+    rotation=None,
+    order_smooth=None,
+    conf_int=None,
+    scatter=None,
+    save: str = None,
+):
+    """
+    Draw a line plot showing the average gene expression over time.
+
+    Args:
+        gene_expression:
+        genes:
+        order: Order of x-axis labels from left to right
+        xlabel: x-axis label
+        cluster: Which clusters to plot. Select 'all" if all clusters should be drawn.
+        hue: Which value to color by
+        figsize: Size of the figure as specified in matplotlib
+        smooth:
+        rotation:
+        order_smooth:
+        conf_int:
+        scatter:
+        save: Path to save the plot to
+    """
+    for gene in genes:
+        meanpid = gene_expression.groupby(["identifier", xlabel])[gene].mean().reset_index()
+
+        cluster_label = ", ".join(cluster)
+        standart_lineplot(
+            meanpid,
+            order=order,
+            xlabel=xlabel,
+            ylabel=f"Average expression in cluster {cluster_label}",
+            hue=hue,
+            gene=gene,
+            smooth=smooth,
+            cols=None,
+            title=gene,
+            rotation=rotation,
+            figsize=figsize,
+            save=save,
+            order_smooth=order_smooth,
+            conf_int=conf_int,
+            scatter=scatter,
+        )
+
+
+def plot_avg_expression_per_cluster(
+    gene_expression,
+    genes,
+    order,
+    obs=None,
+    xlabel: str = "days",
+    cluster: str = "all",
+    hue=None,
+    figsize: Tuple[int, int] = (15, 6),
+    smooth=None,
+    rotation=None,
+    tick_size: int = 12,
+    label_size: int = 15,
+    order_smooth=None,
+    conf_int=None,
+    scatter=None,
+    save: str = None,
+):
+    """
+    Plots gene expression over time split by cluster identity.
+    One line per cluster.
+
+    Args:
+        gene_expression:
+        genes:
+        order:
+        obs:
+        xlabel: x-axis label
+        cluster:
+        hue:
+        figsize: Size of the figure as specified in matplotlib
+        smooth:
+        rotation:
+        tick_size: Size of the ticks as specified in matplotlib
+        label_size: Size of the labels as specified in matplotlib
+        order_smooth:
+        conf_int:
+        scatter:
+        save: Path to save the plot to
+    """
+    for gene in genes:
+        meanpid = gene_expression.groupby(["identifier", xlabel])[gene].mean().reset_index()
+
+        if hue:
+            # meanpid[typ] = grouping.loc[meanpid.identifier, typ].values
+            cell_types = {}
+            combis = obs.groupby(["identifier", hue]).groups.keys()
+
+            for c in combis:
+                cell_types[c[0]] = c[1]
+            meanpid[hue] = [cell_types[label] for label in meanpid.identifier]
+
+        cluster_label = ", ".join(cluster)
+        standart_lineplot(
+            meanpid,
+            order=order,
+            xlabel=xlabel,
+            ylabel=f"Average expression in cluster {cluster_label}",
+            hue=hue,
+            gene=gene,
+            smooth=smooth,
+            cols=None,
+            title=gene,
+            tick_size=tick_size,
+            label_size=label_size,
+            rotation=rotation,
+            figsize=figsize,
+            save=save,
+            order_smooth=order_smooth,
+            conf_int=conf_int,
+            scatter=scatter,
+        )
+
+
+def plot_avg_expression_split_cluster(
+    gene_expression,
+    genes,
+    order,
+    xlabel="days",
+    hue="genotype",
+    cluster=None,
+    figsize=(15, 6),
+    smooth=None,
+    rotation=None,
+    cols=None,
+    tick_size=12,
+    label_size=15,
+    order_smooth=None,
+    conf_int=None,
+    scatter=None,
+    save=None,
+):
+    """
+    Plot average gene expression as line plots for multiple clusters at once.
+
+    Args:
+        gene_expression:
+        genes:
+        order:
+        xlabel: x-axis label
+        hue: Value to color by
+        cluster:
+        figsize: Size of the figure as specified in matplotlib
+        smooth:
+        rotation: x-axis label rotation
+        cols:
+        tick_size: Size of the ticks as specified in matplotlib
+        label_size: Size of the labels as specified in matplotlib
+        order_smooth:
+        conf_int:
+        scatter:
+        save: Path to save the plot to
+    """
+    if cluster:
+        if isinstance(cluster, list):
+            ylab = f"Average expression in {', '.join(cluster)}"
+        else:
+            ylab = f"Average expression in {cluster}"
+    else:
+        ylab = "Average expression"
+
+    for gene in genes:
+        meanpid = gene_expression.groupby(["identifier", hue, xlabel])[gene].mean().reset_index()
+
+        standart_lineplot(
+            meanpid,
+            order=order,
+            xlabel=xlabel,
+            ylabel=ylab,
+            hue=hue,
+            gene=gene,
+            smooth=smooth,
+            cols=cols,
+            title=gene,
+            tick_size=tick_size,
+            label_size=label_size,
+            rotation=rotation,
+            figsize=figsize,
+            save=save,
+            order_smooth=order_smooth,
+            conf_int=conf_int,
+            scatter=scatter,
+        )
+
+
+def plot_avg_expression_per_cell(
+    gene_expression,
+    genes,
+    order,
+    xlabel: str = "days",
+    cluster: str = "all",
+    hue=None,
+    figsize: Tuple[int, int] = (15, 6),
+    smooth=None,
+    rotation=None,
+    tick_size=12,
+    label_size=15,
+    order_smooth=None,
+    conf_int=None,
+    scatter=None,
+    cols=None,
+    save: str = None,
+):
+    """
+    Plots the average gene expression as a line plot per cell.
+    Ideally used when the scatter point should not be sample wise, but cell wise.
+    Args:
+        gene_expression:
+        genes:
+        order:
+        xlabel: x-axis label
+        cluster:
+        hue: Value to color by
+        figsize: Size of the figure as specified in matplotlib
+        smooth:
+        rotation:
+        tick_size: Size of the ticks as specified in matplotlib
+        label_size: Size of the labels as specified in matplotlib
+        order_smooth:
+        conf_int:
+        scatter:
+        cols:
+        save: Path to save the plot to
+
+    """
+    for gene in genes:
+        cluster_label = ", ".join(cluster) if isinstance(cluster, list) else cluster
+        standart_lineplot(
+            gene_expression,
+            order=order,
+            xlabel=xlabel,
+            ylabel=f"Average expression in cluster {cluster_label}",
+            hue=hue,
+            gene=gene,
+            smooth=smooth,
+            cols=cols,
+            title=gene,
+            tick_size=tick_size,
+            label_size=label_size,
+            rotation=rotation,
+            figsize=figsize,
+            save=save,
+            order_smooth=order_smooth,
+            conf_int=conf_int,
+            scatter=scatter,
+        )
+
+
+def plot_gene_expression_dpt_ordered(
+    data,
+    genes,
+    xlabel,
+    order=3,
+    ci=95,
+    figsize: Tuple[int, int] = (12, 6),
+    condition=None,
+    label_size: int = 15,
+    cols=None,
+    scale=None,
+    ylim=None,
+    save: str = None,
+):
+    """
+    Plot smoothed expression of all cells ordered by pseudotime.
+    Args:
+        data: AnnData object
+        genes:
+        xlabel: x-axis label
+        order:
+        ci:
+        figsize: Size of the figure as specified in matplotlib
+        condition:
+        label_size:
+        cols:
+        scale:
+        ylim:
+        save: Path to save the plot to
+    """
+    import matplotlib.patches as mpatches
+
+    patches = []
+    data = data.copy()
+    fig, ax = plt.subplots(figsize=figsize)
+
+    # use rainbow colour palette if no colours are specified
+    if cols is None:
+        from matplotlib import colors
+
+        bins = len(np.unique(data.loc[:, condition])) if condition else len(genes)
+        cmap = plt.cm.rainbow
+        cmaplist = [cmap(i) for i in range(cmap.N)]
+        cmap = colors.LinearSegmentedColormap.from_list("colours", cmaplist, N=bins)
+        cols = [cmap(i) for i in range(bins)]
+
+    # only working for one gene at a time for now
+    if condition:
+        conditions = np.unique(data.loc[:, condition])
+        gene = genes[0]
+        data = pd.pivot(data, columns=[condition])
+        columns = [
+            "%s_%s" % (data.columns.get_level_values(0)[i], data.columns.get_level_values(1)[i])
+            for i in range(len(data.columns.values))
+        ]
+        data.columns = columns
+        data[xlabel] = data.filter(like=xlabel).sum(axis=1).values
+
+        for i, con in enumerate(conditions):
+            col = "%s_%s" % (gene, con)
+
+            if scale:
+                data[col] = np.interp(data[col], (data[col].min(), data[col].max()), (0, +1))
+
+            cat = sb.regplot(
+                data=data, x=xlabel, y=col, scatter=False, order=order, truncate=True, ax=ax, color=cols[i], ci=ci
+            )
+            patches.append(mpatches.Patch(color=cols[i], label=col))
+
+    else:
+        for i, gene in enumerate(genes):
+            if scale:
+                data[gene] = np.interp(data[gene], (data[gene].min(), data[gene].max()), (0, +1))
+
+            cat = sb.regplot(
+                data=data, x=xlabel, y=gene, scatter=False, order=order, truncate=True, ax=ax, color=cols[i], ci=ci
+            )
+            patches.append(mpatches.Patch(color=cols[i], label=gene))
+
+    cat.set_ylabel("expression", size=label_size)
+    cat.set_xlabel(xlabel, size=label_size)
+    cat.tick_params(labelsize=label_size)
+    sb.despine()
+
+    plt.legend(handles=patches, loc="center left", bbox_to_anchor=(1.02, 0.5), prop={"size": label_size}, frameon=False)
+
+    if ylim:
+        cat.set(ylim=ylim)
+
+    if save:
+        plt.savefig(f"{save}", bbox_to_anchor="tight")
+        print("[bold blue]Saving figure to {save}")
+
+    plt.show()
+    plt.close()
+
+
+def plot_relative_frequencies(
+    relative_frequencies: pd.DataFrame,
+    cluster,
+    cols,
+    order,
+    xlabel: str = "days",
+    hue: str = "batch",
+    figsize: Tuple[int, int] = (15, 6),
+    width: float = 0.5,
     jitter=None,
     save=None,
 ):
     """
-    Draws a boxsplit split by
+    Plots the relative frequencies as split boxplots.
+    Use calc_relative_frequencies to get the required input format.
 
     Args:
-        table:
-        order:
-        xlabel:
-        ylabel:
-        column:
-        hue:
+        relative_frequencies: Calculated by calc_relative_frequencies as Pandas DataFrame
+        cluster:
         cols:
-        width:
-        title:
-        figsize:
+        order:
+        xlabel: x-axis label
+        hue: Value to color by
+        figsize: Size of the figure as specified in matplotlib
+        width: Width of the plot as specified in matplotlib
         jitter:
-        save:
+        save: Path to save the plot to
+    """
+    # Subset according to order
+    relative_frequencies = relative_frequencies.loc[relative_frequencies[xlabel].isin(order)]
+
+    split_boxplot(
+        relative_frequencies,
+        order=order,
+        xlabel=xlabel,
+        ylabel="relative frequency",
+        hue=hue,
+        column=cluster,
+        cols=cols,
+        width=width,
+        title=cluster,
+        figsize=figsize,
+        jitter=jitter,
+        save=save,
+    )
+
+
+def split_boxplot(
+    table,
+    order,
+    xlabel: str,
+    ylabel: str,
+    column=None,
+    hue=None,
+    cols=None,
+    width: float = 1,
+    title=None,
+    figsize: Tuple[int, int] = (15, 6),
+    jitter=None,
+    save: str = None,
+):
+    """
+    Draws a boxsplit split by hue.
+
+    Args:
+        table: Table containing the data to draw the boxplots for
+        order: Order of the boxplot labels
+        xlabel: x-axis label
+        ylabel: y-axis label
+        column:
+        hue: Value to color by
+        cols:
+        width: Width of the desired plot
+        title: Title of the plot
+        figsize: Size of the figure as specified in matplotlib
+        jitter:
+        save: Path to save the plot to
     """
     fig, ax = plt.subplots()
     fig.set_size_inches(figsize)
@@ -166,4 +576,109 @@ def split_boxplot(
         fig.get_figure().savefig("{save}")
 
     plt.show()
+    plt.close()
+
+
+def plot_marker_dendrogram(
+    marker,
+    thresh: float = 0.7,
+    column: str = "cluster",
+    label_size: int = 10,
+    orient: str = "top",
+    figsize: Tuple[int, int] = (10, 4),
+    save: str = None,
+):
+    """
+    Plots a dendogram of used marker genes.
+
+    Args:
+        marker:
+        thresh:
+        column:
+        label_size:
+        orient:
+        figsize: Size of the figure as specified in matplotlib
+        save: Path to save the plot to
+    """
+    import scipy.cluster.hierarchy as hc
+
+    log = "avg_logFC" if "avg_logFC" in marker.columns else "logfoldchange"
+    marker = marker[marker[log] > thresh]
+
+    marker = marker.pivot(index="gene", columns=column, values=log)
+    marker.fillna(value=0, inplace=True)
+
+    corr = 1 - marker.corr()
+    corr = hc.distance.squareform(corr)  # convert to condensed
+    z = hc.linkage(corr, method="complete")
+    plt.figure(figsize=figsize)
+    rot = 90 if orient == "top" else 0
+    hc.dendrogram(
+        z,
+        labels=marker.columns,
+        leaf_rotation=rot,
+        color_threshold=0,
+        orientation=orient,
+        leaf_font_size=label_size,
+        above_threshold_color="black",
+    )
+    plt.yticks(size=label_size)
+    if save is None:
+        plt.show()
+    else:
+        plt.savefig("{save}")
+        print(f"Saving figure to {save}")
+    plt.close()
+
+
+def volcano_plot(
+    table,
+    fdr_thresh: float = None,
+    adj_p_val: str = "adj_p_val",
+    log_fc: str = "avg_logFC",
+    gene: str = "gene",
+    figsize: Tuple[int, int] = (8, 6),
+    save=None,
+):
+    """
+    Scatter plot of differential gene expression results generated by diffxpy
+
+    Args:
+        table: diffxpy generated table of results
+        fdr_thresh: FDR threshold
+        adj_p_val: Label of the adjusted p value
+        log_fc: Label of the log fold change
+        gene:
+        figsize: Size of the figure as specified in matplotlib
+        save: Path to save the plot to
+    """
+    table["-log_FDR"] = -np.log(table[adj_p_val])
+
+    # take the 99% quantile by default for highlighting
+    if not fdr_thresh:
+        fdr_thresh = np.percentile(table.loc[:, "-log_FDR"], 99)
+    lowqval_de = table.loc[table["-log_FDR"] > fdr_thresh]
+    other_de = table.loc[table["-log_FDR"] < fdr_thresh]
+
+    fig, ax = plt.subplots()
+    fig.set_size_inches(figsize)
+
+    sb.regplot(other_de[log_fc], other_de["-log_FDR"], fit_reg=False, scatter_kws={"s": 6})
+    sb.regplot(lowqval_de[log_fc], lowqval_de["-log_FDR"], fit_reg=False, scatter_kws={"s": 6})
+    ax.set_xlabel("log2 FC", fontsize=20)
+    ax.set_ylabel("-log Q-value", fontsize=20)
+    ax.tick_params(labelsize=15)
+    ax.grid(False)
+
+    # Label names and positions
+    x = [i - 0.1 for i in lowqval_de[log_fc]]
+    y = [i + 0.1 for i in lowqval_de["-log_FDR"]]
+    labels = lowqval_de[gene]
+
+    for i, txt in enumerate(labels):
+        ax.annotate(txt, (x[i], y[i]))
+    if save:
+        fig.savefig(f"{save}")
+    else:
+        plt.show()
     plt.close()
