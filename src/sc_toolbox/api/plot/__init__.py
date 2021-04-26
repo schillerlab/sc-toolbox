@@ -1,3 +1,5 @@
+from typing import List
+
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sb
@@ -21,9 +23,9 @@ def custom_plot_size(width: int, height: int, dpi: int):
 
 def standart_lineplot(
     data,
-    order,
-    xlabel,
-    ylabel,
+    order: List,
+    xlabel: str,
+    ylabel: str,
     typ=None,
     gene=None,
     smooth=None,
@@ -41,9 +43,9 @@ def standart_lineplot(
     """
 
     Args:
-        data: Data to plot. Usually AnnData object.
-        order: Order of
-        xlabel:
+        data: Data to plot. Usually AnnData object
+        order: Order of x-axis labels from left to right
+        xlabel: 
         ylabel:
         typ:
         gene:
