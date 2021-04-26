@@ -43,6 +43,8 @@ Features
 * Create minimal best-practice containers for single-cell data analysis with Scanpy
 * API for advanced Scanpy based plots and analyses
 
+![image](https://user-images.githubusercontent.com/21954664/116152289-01ee1080-a6e6-11eb-9aeb-80f6c7c98e07.png)
+
 
 Installation
 ------------
