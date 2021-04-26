@@ -31,7 +31,7 @@ def standart_lineplot(
     smooth: bool = None,
     cols=None,
     title=None,
-    rotation=None,
+    rotation: int = None,
     figsize=(15, 5),
     tick_size=None,
     label_size=None,
@@ -41,21 +41,22 @@ def standart_lineplot(
     save: str = None,
 ):
     """
+    Draws a standard line plot based on Seaborn's lmplot.
 
     Args:
         data: Data to plot. Usually AnnData object
         order: Order of x-axis labels from left to right
-        xlabel: X-axis label
-        ylabel: Y-axis label
-        typ:
+        xlabel: x-axis label
+        ylabel: y-axis label
+        typ: Grouping colors
         gene:
-        smooth:
+        smooth: Whether to smoothen (interpolate) the curve
         cols:
-        title:
-        rotation:
-        figsize:
+        title: Title of the plot
+        rotation: Rotation of the x-axis labels
+        figsize: Size of the figure as specified in matplotlib.
         tick_size:
-        label_size:
+        label_size: Size of the
         order_smooth:
         conf_int:
         scatter:
