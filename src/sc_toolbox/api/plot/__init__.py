@@ -28,7 +28,7 @@ def standart_lineplot(
     ylabel: str,
     typ=None,
     gene=None,
-    smooth=None,
+    smooth: bool = None,
     cols=None,
     title=None,
     rotation=None,
@@ -38,15 +38,15 @@ def standart_lineplot(
     order_smooth=3,
     conf_int=None,
     scatter=None,
-    save=None,
+    save: str = None,
 ):
     """
 
     Args:
         data: Data to plot. Usually AnnData object
         order: Order of x-axis labels from left to right
-        xlabel: 
-        ylabel:
+        xlabel: X-axis label
+        ylabel: Y-axis label
         typ:
         gene:
         smooth:
@@ -59,10 +59,7 @@ def standart_lineplot(
         order_smooth:
         conf_int:
         scatter:
-        save:
-
-    Returns:
-
+        save: Path to save the plot to
     """
     if smooth:
         # Possible to set alpha of scatter with scatter_kws={'alpha': 0.1}
