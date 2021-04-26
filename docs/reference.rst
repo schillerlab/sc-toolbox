@@ -6,5 +6,5 @@ Reference
     :backlinks: none
 
 
-.. automodule:: sc_toolbox.__main__
+.. automodule:: src.sc_toolbox.api.plot
    :members:
