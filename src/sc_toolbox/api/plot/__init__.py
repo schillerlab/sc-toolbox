@@ -1,5 +1,6 @@
 from typing import List
 from typing import Tuple
+from rich import print
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -428,7 +429,7 @@ def plot_gene_expression_dpt_ordered(
         gene = genes[0]
         data = pd.pivot(data, columns=[condition])
         columns = [
-            "%s_%s" % (data.columns.get_level_values(0)[i], data.columns.get_level_values(1)[i])
+            f"{data.columns.get_level_values(0)[i]}_{data.columns.get_level_values(1)[i]}"
             for i in range(len(data.columns.values))
         ]
         data.columns = columns
@@ -581,7 +582,7 @@ def split_boxplot(
 
 def plot_marker_dendrogram(
     marker,
-    thresh: float = 0.7,
+    threshold: float = 0.7,
     column: str = "cluster",
     label_size: int = 10,
     orient: str = "top",
@@ -593,7 +594,7 @@ def plot_marker_dendrogram(
 
     Args:
         marker:
-        thresh:
+        threshold:
         column:
         label_size:
         orient:
@@ -603,7 +604,7 @@ def plot_marker_dendrogram(
     import scipy.cluster.hierarchy as hc
 
     log = "avg_logFC" if "avg_logFC" in marker.columns else "logfoldchange"
-    marker = marker[marker[log] > thresh]
+    marker = marker[marker[log] > threshold]
 
     marker = marker.pivot(index="gene", columns=column, values=log)
     marker.fillna(value=0, inplace=True)
@@ -681,4 +682,84 @@ def volcano_plot(
         fig.savefig(f"{save}")
     else:
         plt.show()
+    plt.close()
+
+
+def plot_cluster_composition(
+    relative_frequencies: pd.DataFrame,
+    xlabel: str = "name",
+    figsize: Tuple[int, int] = (6, 10),
+    width: float = 0.8,
+    order=None,
+    error_bar=None,
+    label_size: int = 15,
+    tick_size: int = 13,
+    capsize: int = None,
+    margins: Tuple[float, float] = (0.02, 0.04),
+    cols=None,
+    save: str = None,
+):
+    """
+    Plot relative frequencies as a stacked barplot.
+
+    Args:
+        relative_frequencies:
+        xlabel: x-axis label
+        figsize: Size of the figure as specified in matplotlib
+        width:
+        order:
+        error_bar:
+        tick_size: Size of the ticks as specified in matplotlib
+        label_size: Size of the labels as specified in matplotlib
+        capsize:
+        margins:
+        cols:
+        save: Path to save the plot to
+    """
+    import matplotlib.patches as mpatches
+
+    patches = []
+    fig, ax = plt.subplots()
+    fig.set_size_inches(figsize)
+    order = np.unique(relative_frequencies.loc[:, xlabel]) if order is None else order
+    ci = 95 if error_bar else None
+    ax.margins(margins[0], margins[1])
+    cell_types = np.flip([col for col in relative_frequencies.columns if col not in ["identifier", xlabel]])
+    # cell_types = np.flip(np.setdiff1d(relFreqs.columns, ["identifier", xlabel]))
+
+    bars = pd.DataFrame(index=order, data=np.zeros(len(order)))
+    plot_data = pd.DataFrame(relative_frequencies.loc[:, xlabel])
+
+    for i, typ in enumerate(cell_types):
+        sum_up = [
+            relative_frequencies.loc[:, typ].values[i] + bars.loc[g].values[0]
+            for i, g in enumerate(relative_frequencies.loc[:, xlabel])
+        ]
+        plot_data[typ] = sum_up
+        bars.iloc[:, 0] = (
+            bars.iloc[:, 0] + relative_frequencies.loc[:, [typ, xlabel]].groupby(xlabel).mean().loc[order, typ]
+        )
+
+    for i, typ in enumerate(reversed(cell_types)):
+        fig = sb.barplot(
+            data=plot_data, x=xlabel, y=typ, order=order, ci=ci, errcolor="black", color=cols[i], capsize=capsize
+        )
+        patches.append(mpatches.Patch(color=cols[i], label=typ))
+
+    ax.set_xlabel(xlabel, size=label_size)
+    ax.set_ylabel("relative frequency", size=label_size)
+    ax.tick_params(labelsize=tick_size)
+    ax.set_xticklabels(labels=order, rotation="vertical")
+
+    # Change the bar width
+    for bar in fig.patches:
+        centre = bar.get_x() + bar.get_width() / 2.0
+        bar.set_x(centre - width / 2.0)
+        bar.set_width(width)
+
+    plt.legend(handles=patches, loc="center left", bbox_to_anchor=(1.02, 0.5), prop={"size": tick_size}, frameon=False)
+    if save:
+        plt.savefig("{save}")
+        print("[bold blue]Saving Figure to {save}")
+    plt.show()
     plt.close()
