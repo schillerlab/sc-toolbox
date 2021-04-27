@@ -1,7 +1,9 @@
-from rich import print
+from typing import List
 
 import numpy as np
 import pandas as pd
+import scanpy as sc
+from rich import print
 
 
 def generate_expression_table(
@@ -236,18 +238,155 @@ def add_pct(adata, table, ids, group_by: str, threshold: int = 0, gene_label: st
     return table
 
 
-## [06.Mai.20] To make wilcoxon ranksum test between two groups
 def ranksums_between_groups(
-    tab, id1: str = "bystander", id2: str = "infected", xlabel: str = "condition", cells=None, score: str = "Axin2"
+    table, id1: str = "bystander", id2: str = "infected", xlabel: str = "condition", cells=None, score: str = "Axin2"
 ):
+    """
+    Perform Wilcoxon Rank-sum test between two groups.
+
+    Args:
+        table:
+        id1:
+        id2:
+        xlabel: x-axis label
+        cells:
+        score:
+
+    Returns:
+        Pandas DataFrame containing test statistic and p-value
+    """
     from scipy import stats
 
     if cells is not None:
-        tab = tab.loc[cells].copy()
-    group1 = tab[tab.loc[:, xlabel] == id1].copy()
-    group2 = tab[tab.loc[:, xlabel] == id2].copy()
+        table = table.loc[cells].copy()
+    group1 = table[table.loc[:, xlabel] == id1].copy()
+    group2 = table[table.loc[:, xlabel] == id2].copy()
 
     t, p = stats.ranksums(group1.loc[:, score], group2.loc[:, score])
-    res = pd.DataFrame(columns=["wilcoxon_ranksum", "pval"])
-    res.loc[0] = [t, p]
-    return res
+    result = pd.DataFrame(columns=["wilcoxon_ranksum", "pval"])
+    result.loc[0] = [t, p]
+
+    return result
+
+
+def generate_count_object(
+    adata,
+    hue: str = "disease",
+    cell_type_label: str = "cell_type",
+    cell_type: List[str] = None,
+    min_samples: int = 2,
+    min_cells: int = 5,
+    ref: str = "healthy",
+    subset: List[str] = None,
+    layer: str = "counts",
+    outliers_removal: bool = False,
+):
+    """
+
+    Args:
+        adata: AnnData object
+        hue: Value to color by
+        cell_type_label: Label containing cell types
+        cell_type: Cells type to generate counts for
+        min_samples: Minimum samples for outlier removal with DBScan
+        min_cells: Minimal number of cells
+        ref:
+        subset:
+        layer:
+        outliers_removal: Whether to remove outliers or not
+
+    Returns:
+        AnnData object containing counts
+
+    Example Call:
+    subset = ['3d PI-KO', '3d PI-WT']
+
+    raw_counts = generate_count_object(adata,
+                                       condition = "grouping",
+                                       cell_type_label = "celltype_refined", cell_type = ["AT2"],
+                                       ref = "3d PI-WT",
+                                       subset = subset)
+    """
+    adata_subset = adata[adata.obs.grouping.isin(subset)]
+    cells = [
+        True if (adata_subset.obs[cell_type_label][i] in cell_type) else False for i in range(adata_subset.n_obs)  # type: ignore
+    ]
+
+    # Raw count data for diffxpy
+    obs = adata_subset[cells].obs.copy()
+    var = adata_subset.var_names.copy()
+
+    adata_raw = sc.AnnData(X=adata_subset[cells].layers[layer].copy())
+    adata_raw.obs = obs
+    adata_raw.var.index = var
+    adata_raw.obsm = adata_subset[cells].obsm.copy()
+
+    # Also automate tidy up with DBScan :)
+    if outliers_removal:
+        adata_raw.obs["dcluster"] = remove_outliers(adata_raw.obsm["X_umap"], min_samples=min_samples)
+        sc.pl.umap(adata_raw, color=[hue, "dcluster"])
+        adata_raw = adata_raw[adata_raw.obs.dcluster == "0"].copy()
+
+    sc.pp.filter_genes(adata_raw, min_cells=min_cells)
+
+    # Set reference as first column
+    adata_raw.obs.loc[:, hue].cat.reorder_categories([ref, np.setdiff1d(subset, ref)[0]], inplace=True)
+    pal = adata_subset.uns[f"{hue}_colors"]
+    sc.pl.umap(adata_raw, color=[hue], palette=list(pal))
+
+    return adata_raw
+
+
+def tidy_de_table(de_test, adata, cells, ids=None, qval_thresh: float = 0.9, group_by: str = "treatment", cols=None):
+    """
+    Sorts diffxpy de table and adds percentages of expression per group
+
+    Args:
+        de_test: diffxpy de test
+        adata: AnnData object
+        cells:
+        ids:
+        qval_thresh:
+        group_by:
+        cols:
+
+    Returns:
+        Pandas Dataframe of diffxpy table with percentages
+    """
+    result = de_test.summary().sort_values(by=["qval"], ascending=True)
+    result = result[result.qval < qval_thresh].loc[:, cols].copy()
+
+    # Add percentages
+    result = add_pct(adata[cells], result, ids=ids, group_by=group_by)
+
+    return result
+
+
+def correlate_means_to_gene(means: pd.DataFrame, corr_gene: str = "EOMES"):
+    """
+    Calculate gene to gene correlation based on a mean expression table
+
+    Args:
+        means:
+        corr_gene:
+
+    Returns:
+        Pandas DataFrame of correlations
+    """
+    import scipy.stats
+
+    genes = means.columns.values
+    cors = pd.DataFrame(index=genes, columns=["spearman_corr", "pvalue"])
+    # tab = sc.get.obs_df(sub, keys = [corr_gene], layer = None, use_raw = True)
+    table = means.loc[:, [corr_gene]].values
+
+    # Loop over all genes.
+    for gene in genes:
+        tmp = scipy.stats.spearmanr(table, means.loc[:, [gene]])  # Spearman's rho
+        cors.loc[gene, :] = tmp[0:2]
+
+    # Throw away NA columns
+    cors.dropna(axis=0, inplace=True)
+    cors.sort_values("spearman_corr", ascending=False, inplace=True)
+
+    return cors

@@ -1,11 +1,12 @@
+from typing import Dict
 from typing import List
 from typing import Tuple
-from rich import print
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sb
+from rich import print
 
 
 def custom_plot_size(width: int, height: int, dpi: int):
@@ -436,7 +437,7 @@ def plot_gene_expression_dpt_ordered(
         data[xlabel] = data.filter(like=xlabel).sum(axis=1).values
 
         for i, con in enumerate(conditions):
-            col = "%s_%s" % (gene, con)
+            col = f"{gene}_{con}"
 
             if scale:
                 data[col] = np.interp(data[col], (data[col].min(), data[col].max()), (0, +1))
@@ -706,7 +707,7 @@ def plot_cluster_composition(
         relative_frequencies:
         xlabel: x-axis label
         figsize: Size of the figure as specified in matplotlib
-        width:
+        width: Width of the desired plot
         order:
         error_bar:
         tick_size: Size of the ticks as specified in matplotlib
@@ -763,3 +764,191 @@ def plot_cluster_composition(
         print("[bold blue]Saving Figure to {save}")
     plt.show()
     plt.close()
+
+
+def plot_gene_boxplot(
+    table,
+    palette: List[str],
+    xlabel: str = "cell_types",
+    hue: str = None,
+    figsize: Tuple[int, int] = (10, 5),
+    legend=True,
+    score="Axin2",
+    scatter=None,
+    rotate=False,
+    width=0.7,
+    save=None,
+):
+    """
+    Plot gene values as split boxplots
+
+    Args:
+        table: Pandas DataFrame
+        palette:
+        xlabel: x-axis label
+        hue:
+        figsize: Size of the figure as specified in matplotlib
+        legend: Whether to draw a legend or not
+        score:
+        scatter:
+        rotate:
+        width: Width of the desired plot
+        save: Path to save the plot to
+    """
+    sb.set_style("ticks")
+    fig, ax = plt.subplots()
+    fig.set_size_inches(figsize)
+
+    sf = False if scatter else True
+    if hue:
+        fig = sb.boxplot(data=table, x=xlabel, y=score, width=width, hue=hue, showfliers=sf, palette=palette)
+        if scatter:
+            fig = sb.stripplot(data=table, x=xlabel, y=score, palette=["black"], size=4, hue=hue, dodge=True)
+    else:
+        fig = sb.boxplot(data=table, x=xlabel, y=score, width=width, showfliers=sf, palette=palette)
+        if scatter:
+            fig = sb.stripplot(data=table, x=xlabel, y=score, palette=["black"], size=4, dodge=True)
+
+    if rotate:
+        fig.set_xticklabels(fig.get_xticklabels(), rotation=90)
+    else:
+        fig.set_xticklabels(fig.get_xticklabels())
+
+    if legend:
+        ax.legend(bbox_to_anchor=(1.05, 1.06))
+    else:
+        ax.legend_.remove()
+
+    plt.setp(ax.artists, edgecolor="black")
+    plt.setp(ax.lines, color="black")
+    sb.despine()  # to not show ouline box
+
+    if save:
+        print(f"Saving to {save}")
+        plt.savefig(save, bbox_to_anchor="tight")
+    plt.show()
+
+
+def plot_colors(colors: Dict, ncols: int = 2, figsize: Tuple[int, int] = (8, 5), save: str = None):
+    """
+    Draw an overview plot of all used colors
+
+    Args:
+        colors: Dictionary of color name and color
+        ncols: How many columns for the plot
+        figsize: Size of the figure as specified in matplotlib
+        save: Path to save the plot to
+    """
+    from matplotlib import colors as mcolors
+
+    # Sort colors by hue, saturation, value and name.
+    by_hsv = sorted((tuple(mcolors.rgb_to_hsv(mcolors.to_rgba(color)[:3])), name) for name, color in colors.items())
+    sorted_names = [name for hsv, name in by_hsv]
+
+    n = len(sorted_names)
+    nrows = n // ncols + 1
+
+    fig, ax = plt.subplots(figsize=figsize)
+
+    # Get height and width
+    x, y = fig.get_dpi() * fig.get_size_inches()
+    h = y / (nrows + 1)
+    w = x / ncols
+
+    for i, name in enumerate(sorted_names):
+        col = i % ncols
+        row = i // ncols
+        y = y - (row * h) - h
+
+        xi_line = w * (col + 0.05)
+        xf_line = w * (col + 0.25)
+        xi_text = w * (col + 0.3)
+
+        ax.text(
+            xi_text,
+            y,
+            "%s %s" % (name, colors[name]),
+            fontsize=(h * 0.4),
+            horizontalalignment="left",
+            verticalalignment="center",
+        )
+        ax.hlines(y + h * 0.1, xi_line, xf_line, color=colors[name], linewidth=(h * 0.6))
+
+    ax.set_xlim(0, x)
+    ax.set_ylim(0, y)
+    ax.set_axis_off()
+
+    fig.subplots_adjust(left=0, right=1, top=1, bottom=0, hspace=0, wspace=0)
+    if save:
+        print(f"Saving to {save}")
+        plt.savefig(save, bbox_to_anchor="tight")
+    plt.show()
+
+
+def plot_rel_frequencies_line(
+    relative_frequencies: pd.DataFrame,
+    order,
+    cluster,
+    xlabel: str = "days",
+    ylabel: str = "relative frequency",
+    hue: str = None,
+    smooth: bool = None,
+    cols=None,
+    title: str = None,
+    rotation: int = None,
+    figsize: Tuple[int, int] = (15, 5),
+    tick_size: int = None,
+    label_size: int = None,
+    order_smooth: int = 3,
+    conf_int=None,
+    scatter=None,
+    save: str = None,
+):
+    """
+    Plot relative frequencies as a line plot.
+
+    Args:
+        relative_frequencies: Pandas Data
+        order:
+        cluster:
+        xlabel: x-axis label
+        ylabel: y-axis label
+        hue: Value to color by
+        smooth: Whether to smoothen the plot
+        cols:
+        title: Title of the plot
+        rotation: Rotation of the x-axis labels
+        figsize: Size of the figure as specified in matplotlib
+        tick_size: Size of the ticks as specified in matplotlib
+        label_size: Size of the labels as specified in matplotlib
+        order_smooth:
+        conf_int:
+        scatter:
+        save: Path to save the plot to
+    """
+    if hue:
+        sub_freqs = relative_frequencies.loc[:, [cluster] + [xlabel, hue]]
+        sub_freqs = pd.melt(sub_freqs, id_vars=[xlabel, hue])
+    else:
+        sub_freqs = relative_frequencies.loc[:, [cluster] + [xlabel]]
+        sub_freqs = pd.melt(sub_freqs, id_vars=[xlabel])
+
+    standart_lineplot(
+        sub_freqs,
+        order=order,
+        xlabel=xlabel,
+        ylabel=ylabel,
+        hue=hue,
+        gene="value",
+        smooth=smooth,
+        cols=cols,
+        title=title,
+        rotation=rotation,
+        figsize=figsize,
+        tick_size=tick_size,
+        label_size=label_size,
+        order_smooth=order_smooth,
+        conf_int=conf_int,
+        scatter=scatter,
+        save=save,
+    )
