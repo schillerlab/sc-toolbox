@@ -43,6 +43,15 @@ Features
 * Create minimal best-practice containers for single-cell data analysis with Scanpy
 * API for advanced Scanpy based plots and analyses
 
+.. figure:: https://user-images.githubusercontent.com/21954664/116225631-5fb84200-a752-11eb-9489-16571428918f.png
+   :alt: Preview plot
+
+.. figure:: https://user-images.githubusercontent.com/21954664/116225765-824a5b00-a752-11eb-8cbf-c14ebd9ac030.png
+   :alt: Preview plot 2
+
+.. figure:: https://user-images.githubusercontent.com/21954664/116226005-c5a4c980-a752-11eb-9846-8dc72315d373.png
+   :alt: Preview plot 3
+
 
 Installation
 ------------
@@ -57,19 +66,13 @@ You can install *sc-toolbox* via pip_ from PyPI_:
 Usage
 -----
 
-Please see the `Command-line Reference <Usage_>`_ for details.
-
-
-Contributing
-------------
-
-Contributions are very welcome. To learn more, see the `Contributor Guide`_.
-
+Please see the `Command-line Reference <Usage_>`_ and the `API Reference <API_>`_
 
 Credits
 -------
 
 This package was created with cookietemple_ using Cookiecutter_ based on Hypermodern_Python_Cookiecutter_.
+Most scripts were developed by `Meshal Ansari <https://github.com/mesh09/>`_ and the package was designed by `Lukas Heumos <https://github.com/zethson>`_.
 
 .. _cookietemple: https://cookietemple.com
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
@@ -77,5 +80,5 @@ This package was created with cookietemple_ using Cookiecutter_ based on Hypermo
 .. _PyPI: https://pypi.org/
 .. _Hypermodern_Python_Cookiecutter: https://github.com/cjolowicz/cookiecutter-hypermodern-python
 .. _pip: https://pip.pypa.io/
-.. _Contributor Guide: CONTRIBUTING.rst
 .. _Usage: https://sc-toolbox.readthedocs.io/en/latest/usage.html
+.. _API: https://sc-toolbox.readthedocs.io/en/latest/api.html

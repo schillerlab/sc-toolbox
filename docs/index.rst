@@ -7,7 +7,7 @@ Welcome to sc-toolbox's documentation!
    readme
    installation
    usage
-   reference
+   api
    authors
    code_of_conduct
 
