@@ -9,7 +9,7 @@ homepage = "https://github.com/schillerlab/sc-toolbox"
 repository = "https://github.com/schillerlab/sc-toolbox"
 documentation = "https://sc-toolbox.readthedocs.io"
 packages = [
-    { include = "sc_toolbox", from = "src" },
+    { include = "src" },
 ]
 classifiers = [
     "Programming Language :: Python :: 3.6",
@@ -60,7 +60,7 @@ sphinx-click = "^2.5.0"
 Pygments = "^2.8.1"
 
 [tool.poetry.scripts]
-sc-toolbox = "sc_toolbox.__main__:main"
+sc-toolbox = "src.sc_toolbox.__main__:main"
 
 [tool.black]
 line-length = 120

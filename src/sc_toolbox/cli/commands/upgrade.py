@@ -10,9 +10,8 @@ from urllib.request import urlopen
 
 from pkg_resources import parse_version
 from rich import print
-
-import sc_toolbox
-from sc_toolbox.cli.questionary import sc_toolbox_questionary
+from src import sc_toolbox
+from src.sc_toolbox.cli.questionary import sc_toolbox_questionary
 
 
 class UpgradeCommand:
