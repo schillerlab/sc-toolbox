@@ -13,6 +13,7 @@ def timestamp():
 
 def binarize_score(adata, score_label: str, threshold: float):
     """
+    Binarizes a provided key of an AnnData object by labeling values over a threshold as 'positive' or 'negative'.
 
     Args:
         adata: AnnData object to perform the binarization for
@@ -21,7 +22,6 @@ def binarize_score(adata, score_label: str, threshold: float):
 
     Returns:
         List of 'positive' for all scores > threshold and 'negative' else
-
     """
     result = ["positive" if score > threshold else "negative" for score in adata.obs[score_label]]
 

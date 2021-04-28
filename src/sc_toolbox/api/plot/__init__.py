@@ -25,7 +25,7 @@ def custom_plot_size(width: int, height: int, dpi: int):
     return fig.gca()
 
 
-def standart_lineplot(
+def standard_lineplot(
     data,
     order: List,
     xlabel: str,
@@ -40,7 +40,7 @@ def standart_lineplot(
     tick_size=None,
     label_size=None,
     order_smooth: int = 3,
-    conf_int=None,
+    confidence_interval=None,
     scatter=None,
     save: str = None,
 ):
@@ -62,7 +62,7 @@ def standart_lineplot(
         tick_size: Size of the ticks as specified in matplotlib
         label_size: Size of the labels as specified in matplotlib
         order_smooth: If greater than 1, numpy.polyfit is used to estimate a polynomial regression
-        conf_int: Confidence interval
+        confidence_interval: Confidence interval
         scatter:
         save: Path to save the plot to
     """
@@ -73,7 +73,7 @@ def standart_lineplot(
                 data=data,
                 x=xlabel,
                 y=gene,
-                ci=conf_int,
+                ci=confidence_interval,
                 order=order_smooth,
                 scatter=scatter,
                 hue=hue,
@@ -81,7 +81,7 @@ def standart_lineplot(
                 palette=cols,
             )
         else:
-            cat = sb.lmplot(data=data, x=xlabel, y=gene, ci=conf_int, order=order_smooth, scatter=scatter, palette=cols)
+            cat = sb.lmplot(data=data, x=xlabel, y=gene, ci=confidence_interval, order=order_smooth, scatter=scatter, palette=cols)
 
     else:
         # Removed Parameter order = order, as order should be given numerically anyways.
@@ -114,16 +114,16 @@ def standart_lineplot(
     plt.close()
 
 
-def plot_avg_expression(
+def plot_average_expression(
     gene_expression,
     genes,
-    order,
+    order: List[str],
     xlabel: str = "days",
     cluster: str = "all",
     hue=None,
-    figsize=(15, 6),
+    figsize: Tuple[int, int] = (15, 6),
     smooth=None,
-    rotation=None,
+    rotation: int = None,
     order_smooth=None,
     conf_int=None,
     scatter=None,
@@ -146,12 +146,18 @@ def plot_avg_expression(
         conf_int:
         scatter:
         save: Path to save the plot to
+
+    Example smooth:
+        .. image:: /_images/average_expression_smooth.png
+
+    Example raw:
+        .. image:: /_images/average_expression_raw.png
     """
     for gene in genes:
         meanpid = gene_expression.groupby(["identifier", xlabel])[gene].mean().reset_index()
 
         cluster_label = ", ".join(cluster)
-        standart_lineplot(
+        standard_lineplot(
             meanpid,
             order=order,
             xlabel=xlabel,
@@ -165,12 +171,12 @@ def plot_avg_expression(
             figsize=figsize,
             save=save,
             order_smooth=order_smooth,
-            conf_int=conf_int,
+            confidence_interval=conf_int,
             scatter=scatter,
         )
 
 
-def plot_avg_expression_per_cluster(
+def plot_average_expression_per_cluster(
     gene_expression,
     genes,
     order,
@@ -214,7 +220,6 @@ def plot_avg_expression_per_cluster(
         meanpid = gene_expression.groupby(["identifier", xlabel])[gene].mean().reset_index()
 
         if hue:
-            # meanpid[typ] = grouping.loc[meanpid.identifier, typ].values
             cell_types = {}
             combis = obs.groupby(["identifier", hue]).groups.keys()
 
@@ -223,7 +228,7 @@ def plot_avg_expression_per_cluster(
             meanpid[hue] = [cell_types[label] for label in meanpid.identifier]
 
         cluster_label = ", ".join(cluster)
-        standart_lineplot(
+        standard_lineplot(
             meanpid,
             order=order,
             xlabel=xlabel,
@@ -239,7 +244,7 @@ def plot_avg_expression_per_cluster(
             figsize=figsize,
             save=save,
             order_smooth=order_smooth,
-            conf_int=conf_int,
+            confidence_interval=conf_int,
             scatter=scatter,
         )
 
@@ -282,6 +287,12 @@ def plot_avg_expression_split_cluster(
         conf_int:
         scatter:
         save: Path to save the plot to
+
+    Example smooth:
+        .. image:: /_images/average_expression_per_cluster_smooth.png
+
+    Example raw:
+        .. image:: /_images/average_expression_per_cluster_raw.png
     """
     if cluster:
         if isinstance(cluster, list):
@@ -294,7 +305,7 @@ def plot_avg_expression_split_cluster(
     for gene in genes:
         meanpid = gene_expression.groupby(["identifier", hue, xlabel])[gene].mean().reset_index()
 
-        standart_lineplot(
+        standard_lineplot(
             meanpid,
             order=order,
             xlabel=xlabel,
@@ -310,7 +321,7 @@ def plot_avg_expression_split_cluster(
             figsize=figsize,
             save=save,
             order_smooth=order_smooth,
-            conf_int=conf_int,
+            confidence_interval=conf_int,
             scatter=scatter,
         )
 
@@ -357,7 +368,7 @@ def plot_avg_expression_per_cell(
     """
     for gene in genes:
         cluster_label = ", ".join(cluster) if isinstance(cluster, list) else cluster
-        standart_lineplot(
+        standard_lineplot(
             gene_expression,
             order=order,
             xlabel=xlabel,
@@ -373,7 +384,7 @@ def plot_avg_expression_per_cell(
             figsize=figsize,
             save=save,
             order_smooth=order_smooth,
-            conf_int=conf_int,
+            confidence_interval=conf_int,
             scatter=scatter,
         )
 
@@ -394,6 +405,7 @@ def plot_gene_expression_dpt_ordered(
 ):
     """
     Plot smoothed expression of all cells ordered by pseudotime.
+
     Args:
         data: AnnData object
         genes:
@@ -407,6 +419,12 @@ def plot_gene_expression_dpt_ordered(
         scale:
         ylim:
         save: Path to save the plot to
+
+    Example:
+        .. image:: /_images/gene_expression_dpt_ordered.png
+
+    Example with columns:
+        .. image:: /_images/gene_expression_dpt_ordered_col.png
     """
     import matplotlib.patches as mpatches
 
@@ -502,6 +520,9 @@ def plot_relative_frequencies(
         width: Width of the plot as specified in matplotlib
         jitter:
         save: Path to save the plot to
+
+    Example:
+        .. image:: /_images/relative_frequencies_boxplots.png
     """
     # Subset according to order
     relative_frequencies = relative_frequencies.loc[relative_frequencies[xlabel].isin(order)]
@@ -601,6 +622,9 @@ def plot_marker_dendrogram(
         orient:
         figsize: Size of the figure as specified in matplotlib
         save: Path to save the plot to
+
+    Example:
+        .. image:: /_images/marker_dendrogram.png
     """
     import scipy.cluster.hierarchy as hc
 
@@ -653,6 +677,9 @@ def volcano_plot(
         gene:
         figsize: Size of the figure as specified in matplotlib
         save: Path to save the plot to
+
+    Example:
+        .. image:: /_images/diffxpy_volcano.png
     """
     table["-log_FDR"] = -np.log(table[adj_p_val])
 
@@ -716,6 +743,9 @@ def plot_cluster_composition(
         margins:
         cols:
         save: Path to save the plot to
+
+    Example:
+
     """
     import matplotlib.patches as mpatches
 
@@ -794,6 +824,9 @@ def plot_gene_boxplot(
         rotate:
         width: Width of the desired plot
         save: Path to save the plot to
+
+    Example:
+        .. image:: /_images/gene_boxplot.png
     """
     sb.set_style("ticks")
     fig, ax = plt.subplots()
@@ -838,6 +871,9 @@ def plot_colors(colors: Dict, ncols: int = 2, figsize: Tuple[int, int] = (8, 5),
         ncols: How many columns for the plot
         figsize: Size of the figure as specified in matplotlib
         save: Path to save the plot to
+
+    Example:
+        .. image:: /_images/colors.png
     """
     from matplotlib import colors as mcolors
 
@@ -925,6 +961,9 @@ def plot_rel_frequencies_line(
         conf_int:
         scatter:
         save: Path to save the plot to
+
+    Example:
+        .. image:: /_images/relative_frequencies_lineplots.png
     """
     if hue:
         sub_freqs = relative_frequencies.loc[:, [cluster] + [xlabel, hue]]
@@ -933,7 +972,7 @@ def plot_rel_frequencies_line(
         sub_freqs = relative_frequencies.loc[:, [cluster] + [xlabel]]
         sub_freqs = pd.melt(sub_freqs, id_vars=[xlabel])
 
-    standart_lineplot(
+    standard_lineplot(
         sub_freqs,
         order=order,
         xlabel=xlabel,
@@ -948,7 +987,7 @@ def plot_rel_frequencies_line(
         tick_size=tick_size,
         label_size=label_size,
         order_smooth=order_smooth,
-        conf_int=conf_int,
+        confidence_interval=conf_int,
         scatter=scatter,
         save=save,
     )
