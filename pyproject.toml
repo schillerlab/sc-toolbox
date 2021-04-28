@@ -8,9 +8,6 @@ readme = "README.rst"
 homepage = "https://github.com/schillerlab/sc-toolbox"
 repository = "https://github.com/schillerlab/sc-toolbox"
 documentation = "https://sc-toolbox.readthedocs.io"
-packages = [
-    { include = "sc_toolbox" },
-]
 classifiers = [
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
