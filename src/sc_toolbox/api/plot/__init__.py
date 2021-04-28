@@ -81,7 +81,9 @@ def standard_lineplot(
                 palette=cols,
             )
         else:
-            cat = sb.lmplot(data=data, x=xlabel, y=gene, ci=confidence_interval, order=order_smooth, scatter=scatter, palette=cols)
+            cat = sb.lmplot(
+                data=data, x=xlabel, y=gene, ci=confidence_interval, order=order_smooth, scatter=scatter, palette=cols
+            )
 
     else:
         # Removed Parameter order = order, as order should be given numerically anyways.
