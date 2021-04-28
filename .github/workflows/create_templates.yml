@@ -21,8 +21,8 @@ jobs:
                   pip install poetry
                   poetry --version
 
-            - name: Build package
-              run: poetry build --ansi
+            - name: Install sc-toolbox
+              run: make install
 
             - name: Create Simple Docker Project
               run: echo -e "\n\n" | poetry run sc-toolbox create
