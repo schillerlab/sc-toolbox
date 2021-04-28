@@ -8,14 +8,13 @@ import click
 import rich.logging
 from rich import print
 from rich import traceback
+from src.sc_toolbox.cli.commands.create import ProjectCreator
 from src.sc_toolbox.cli.commands.upgrade import UpgradeCommand
 
 WD = os.path.dirname(__file__)
 log = logging.getLogger()
 
 
-@click.command()
-@click.version_option()
 def main() -> None:
     traceback.install(width=200, word_wrap=True)
     print(
@@ -43,8 +42,7 @@ def main() -> None:
 @click.group()
 @click.option("-v", "--verbose", is_flag=True, default=False, help="Enable verbose output (print debug statements).")
 @click.option("-l", "--log-file", help="Save a verbose log to a file.")
-@click.pass_context
-def sc_toolbox_cli(ctx, verbose, log_file):
+def sc_toolbox_cli(verbose, log_file):
     """
     Create state of the art projects from production ready templates.
     """
@@ -69,6 +67,16 @@ def sc_toolbox_cli(ctx, verbose, log_file):
         log.addHandler(log_fh)
 
 
+@sc_toolbox_cli.command(short_help="Create a new project based on templates")
+def create() -> None:
+    """
+    Create a new project based on an existing template.
+    Usually includes a Docker container, a Conda environment and notebooks.
+    """
+    project_creator = ProjectCreator()
+    project_creator.create_project()
+
+
 @sc_toolbox_cli.command(short_help="Check for a newer version of sc-toolbox and upgrade if required.")  # type: ignore
 def upgrade() -> None:
     """
@@ -80,4 +88,4 @@ def upgrade() -> None:
 
 if __name__ == "__main__":
     traceback.install()
-    main(prog_name="sc-toolbox")  # pragma: no cover
+    main(prog_name="sc-toolbox")  # type: ignore

@@ -15,8 +15,8 @@ except ImportError:
     print("[bold blue]Try installing it using [bold green]pip install nox-poetry [bold blue]! ")
     sys.exit(1)
 
-package = "sc_toolbox"
-python_versions = ["3.8", "3.9"]
+package = "src.sc_toolbox"
+python_versions = ["3.9"]
 nox.options.sessions = (
     "pre-commit",
     "safety",
@@ -123,7 +123,7 @@ def tests(session: Session) -> None:
     session.install(".")
     session.install("coverage[toml]", "pytest", "pygments")
     try:
-        session.run("coverage", "run", "--parallel", "-m", "pytest", *session.posargs)
+        session.run("coverage", "run", f"--source={package}", "--parallel", "-m", "pytest", *session.posargs)
     finally:
         if session.interactive:
             session.notify("coverage")

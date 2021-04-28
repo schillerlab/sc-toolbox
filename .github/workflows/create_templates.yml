@@ -4,12 +4,8 @@ on: [push, pull_request]
 
 jobs:
     build:
-        runs-on: ${{ matrix.os }}
+        runs-on: ubuntu-latest
         if: "!contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[ci skip]')"
-        strategy:
-            matrix:
-                os: [macos-latest, ubuntu-latest, windows-latest]
-                python: [3.8, 3.9]
 
         steps:
             - uses: actions/checkout@v2
@@ -18,7 +14,7 @@ jobs:
             - name: Setup Python
               uses: actions/setup-python@v2
               with:
-                  python-version: ${{ matrix.python }}
+                  python-version: 3.9
 
             - name: Install Poetry
               run: |
@@ -28,8 +24,5 @@ jobs:
             - name: Build package
               run: poetry build --ansi
 
-            - name: Install required twine packaging dependencies
-              run: pip install setuptools wheel twine
-
-            - name: Check twine package
-              run: twine check dist/*
+            - name: Create Simple Docker Project
+              run: echo -e "\n\n" | poetry run sc-toolbox create
