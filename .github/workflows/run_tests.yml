@@ -35,11 +35,6 @@ jobs:
                     - {
                           python-version: 3.9,
                           os: ubuntu-latest,
-                          session: "xdoctest",
-                      }
-                    - {
-                          python-version: 3.9,
-                          os: ubuntu-latest,
                           session: "docs-build",
                       }
 
