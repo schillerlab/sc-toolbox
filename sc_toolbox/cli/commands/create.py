@@ -4,7 +4,7 @@ from dataclasses import asdict
 from dataclasses import dataclass
 
 from cookiecutter.main import cookiecutter
-from src.sc_toolbox.cli.questionary import sc_toolbox_questionary
+from sc_toolbox.cli.questionary import sc_toolbox_questionary
 
 log = logging.getLogger(__name__)
 

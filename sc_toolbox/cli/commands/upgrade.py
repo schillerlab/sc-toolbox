@@ -8,10 +8,10 @@ from urllib.error import URLError
 from urllib.request import Request
 from urllib.request import urlopen
 
+import sc_toolbox
 from pkg_resources import parse_version
 from rich import print
-from src import sc_toolbox
-from src.sc_toolbox.cli.questionary import sc_toolbox_questionary
+from sc_toolbox.cli.questionary import sc_toolbox_questionary
 
 
 class UpgradeCommand:

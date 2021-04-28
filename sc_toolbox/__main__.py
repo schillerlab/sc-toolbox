@@ -8,8 +8,8 @@ import click
 import rich.logging
 from rich import print
 from rich import traceback
-from src.sc_toolbox.cli.commands.create import ProjectCreator
-from src.sc_toolbox.cli.commands.upgrade import UpgradeCommand
+from sc_toolbox.cli.commands.create import ProjectCreator
+from sc_toolbox.cli.commands.upgrade import UpgradeCommand
 
 WD = os.path.dirname(__file__)
 log = logging.getLogger()
