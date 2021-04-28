@@ -10,4 +10,5 @@ Development Lead
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Meshal Ansari <meshal.ansari@helmholtz-muenchen.de>
+* Philipp Ehmele <philipp_ehm@protonmail.com>

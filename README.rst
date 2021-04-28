@@ -52,7 +52,6 @@ Features
 .. figure:: https://user-images.githubusercontent.com/21954664/116226005-c5a4c980-a752-11eb-9846-8dc72315d373.png
    :alt: Preview plot 3
 
-
 Installation
 ------------
 
@@ -62,11 +61,14 @@ You can install *sc-toolbox* via pip_ from PyPI_:
 
    $ pip install sc-toolbox
 
-
 Usage
 -----
 
-Please see the `Command-line Reference <Usage_>`_ and the `API Reference <API_>`_
+.. code:: python
+
+   import sc_toolbox.api as sct
+
+Please see the `Usage documentation <Usage_>`_.
 
 Credits
 -------

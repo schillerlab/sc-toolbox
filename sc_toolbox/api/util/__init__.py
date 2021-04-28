@@ -1,6 +1,9 @@
 def timestamp():
     """
     Custom timestamp in common EU format.
+
+    Returns:
+        datetime timestamp
     """
     import datetime
     import time

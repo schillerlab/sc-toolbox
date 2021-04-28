@@ -116,7 +116,7 @@ def standard_lineplot(
     plt.close()
 
 
-def plot_average_expression(
+def average_expression(
     gene_expression,
     genes,
     order: List[str],
@@ -178,7 +178,7 @@ def plot_average_expression(
         )
 
 
-def plot_average_expression_per_cluster(
+def average_expression_per_cluster(
     gene_expression,
     genes,
     order,
@@ -251,7 +251,7 @@ def plot_average_expression_per_cluster(
         )
 
 
-def plot_avg_expression_split_cluster(
+def avg_expression_split_cluster(
     gene_expression,
     genes,
     order,
@@ -328,7 +328,7 @@ def plot_avg_expression_split_cluster(
         )
 
 
-def plot_avg_expression_per_cell(
+def avg_expression_per_cell(
     gene_expression,
     genes,
     order,
@@ -391,7 +391,7 @@ def plot_avg_expression_per_cell(
         )
 
 
-def plot_gene_expression_dpt_ordered(
+def gene_expression_dpt_ordered(
     data,
     genes,
     xlabel,
@@ -495,7 +495,7 @@ def plot_gene_expression_dpt_ordered(
     plt.close()
 
 
-def plot_relative_frequencies(
+def relative_frequencies_boxplots(
     relative_frequencies: pd.DataFrame,
     cluster,
     cols,
@@ -604,7 +604,7 @@ def split_boxplot(
     plt.close()
 
 
-def plot_marker_dendrogram(
+def marker_dendrogram(
     marker,
     threshold: float = 0.7,
     column: str = "cluster",
@@ -715,7 +715,7 @@ def volcano_plot(
     plt.close()
 
 
-def plot_cluster_composition(
+def cluster_composition_stacked_barplot(
     relative_frequencies: pd.DataFrame,
     xlabel: str = "name",
     figsize: Tuple[int, int] = (6, 10),
@@ -798,7 +798,7 @@ def plot_cluster_composition(
     plt.close()
 
 
-def plot_gene_boxplot(
+def gene_boxplot(
     table,
     palette: List[str],
     xlabel: str = "cell_types",
@@ -864,7 +864,7 @@ def plot_gene_boxplot(
     plt.show()
 
 
-def plot_colors(colors: Dict, ncols: int = 2, figsize: Tuple[int, int] = (8, 5), save: str = None):
+def colors_overview(colors: Dict, ncols: int = 2, figsize: Tuple[int, int] = (8, 5), save: str = None):
     """
     Draw an overview plot of all used colors
 
@@ -923,7 +923,7 @@ def plot_colors(colors: Dict, ncols: int = 2, figsize: Tuple[int, int] = (8, 5),
     plt.show()
 
 
-def plot_rel_frequencies_line(
+def rel_frequencies_lineplot(
     relative_frequencies: pd.DataFrame,
     order,
     cluster,
