@@ -212,5 +212,6 @@ dl .sig-name,
 /*Background of the container list for every option*/
 dt {
     background-color: #000 !important;
+    color: white;
     z-index: 1000;
 }
