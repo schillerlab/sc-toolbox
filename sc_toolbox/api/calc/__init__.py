@@ -1,9 +1,13 @@
-from typing import List
+import os
+from typing import List, Optional, Literal
 
 import numpy as np
 import pandas as pd
 import scanpy as sc
+from anndata import AnnData
 from rich import print
+
+WORKING_DIRECTORY = os.path.dirname(__file__)
 
 
 def generate_expression_table(
@@ -390,3 +394,57 @@ def correlate_means_to_gene(means: pd.DataFrame, corr_gene: str = "EOMES"):
     cors.sort_values("spearman_corr", ascending=False, inplace=True)
 
     return cors
+
+
+def automated_marker_annotation(
+    adata: AnnData,
+    organism: str,
+    tissue: str,
+    marker_file: str,
+    key: str = "rank_genes_groups",
+    normalize: Optional[Literal["reference", "data"]] = "reference",
+    p_value: float = 0.05,
+    log_fold_change: float = 2,
+):
+    """
+    Calculates a marker gene overlap based on pre-existing annotations.
+
+    Args:
+        adata: AnnData object containing ranked genes
+        organism: Currently supported: 'mouse'
+        tissue: Currently supported: 'lung'
+        marker_file: Currently supported: 'lung_particle_markers.txt'
+        key: Key of ranked genes in adata
+        normalize: Normalization option for the marker gene overlap output (default: 'reference')
+        p_value: p-value threshold for existing marker genes (default: 0.05)
+        log_fold_change: log fold change threshold for existing marker genes (default: 2)
+
+    Returns:
+        Pandas DataFrame of overlapping genes. Visualize with a Seaborn Heatmap
+    """
+    supported_organisms = {"mouse"}
+    supported_tissues = {"lung"}
+    supported_marker_files = {"lung_particle_markers.txt"}
+
+    if organism not in supported_organisms:
+        print(f"[bold red]Unfortunately organism {organism} is not yet supported.")
+        return
+
+    if tissue not in supported_tissues:
+        print(f"[bold red]Unfortunately tissue {tissue} is not yet supported.")
+        return
+
+    if marker_file not in supported_marker_files:
+        print(f"[bold red]Unfortunately marker file {marker_file} could not be found. Please check your spelling.")
+
+    marker_table = pd.read_csv(f"{WORKING_DIRECTORY}/markers/lung_particle_markers.txt", sep="\t", index_col=None)
+    marker_table = marker_table[
+        (marker_table.logfoldchange > log_fold_change) & (marker_table.pval_adj < p_value)
+    ].copy()
+
+    marker = dict()
+    for ct in marker_table["cluster"].unique():
+        tmp = marker_table[marker_table["cluster"] == ct]
+        marker[ct] = tmp.gene.values
+
+    return sc.tl.marker_gene_overlap(adata, marker, key=key, normalize=normalize)
