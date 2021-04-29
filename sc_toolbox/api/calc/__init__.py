@@ -215,7 +215,7 @@ def calc_relative_frequency_per_cluster(adata, group_by: str = "cell_type", xlab
     return relative_frequencies
 
 
-def add_pct(adata, table, ids, group_by: str, threshold: int = 0, gene_label: str = "gene"):
+def add_percentages(adata, table, ids, group_by: str, threshold: int = 0, gene_label: str = "gene"):
     """
     Add columns to existing diffxpy table specifying percentage of expressing cells
 
@@ -288,6 +288,7 @@ def generate_count_object(
     outliers_removal: bool = False,
 ):
     """
+    @Meshal what is this really supposed to do?
 
     Args:
         adata: AnnData object
@@ -363,7 +364,7 @@ def tidy_de_table(de_test, adata, cells, ids=None, qval_thresh: float = 0.9, gro
     result = result[result.qval < qval_thresh].loc[:, cols].copy()
 
     # Add percentages
-    result = add_pct(adata[cells], result, ids=ids, group_by=group_by)
+    result = add_percentages(adata[cells], result, ids=ids, group_by=group_by)
 
     return result
 
@@ -391,7 +392,6 @@ def correlate_means_to_gene(means: pd.DataFrame, corr_gene: str = "EOMES"):
         tmp = scipy.stats.spearmanr(table, means.loc[:, [gene]])  # Spearman's rho
         cors.loc[gene, :] = tmp[0:2]
 
-    # Throw away NA columns
     cors.dropna(axis=0, inplace=True)
     cors.sort_values("spearman_corr", ascending=False, inplace=True)
 
@@ -416,7 +416,7 @@ def automated_marker_annotation(
         organism: Currently supported: 'mouse'
         tissue: Currently supported: 'lung'
         marker_file: Currently supported: 'lung_particle_markers.txt'
-        key: Key of ranked genes in adata
+        key: Key of ranked genes in adata (default: 'rank_genes_groups')
         normalize: Normalization option for the marker gene overlap output (default: 'reference')
         p_value: p-value threshold for existing marker genes (default: 0.05)
         log_fold_change: log fold change threshold for existing marker genes (default: 2)
@@ -438,8 +438,9 @@ def automated_marker_annotation(
 
     if marker_file not in supported_marker_files:
         print(f"[bold red]Unfortunately marker file {marker_file} could not be found. Please check your spelling.")
+        return
 
-    marker_table = pd.read_csv(f"{WORKING_DIRECTORY}/markers/lung_particle_markers.txt", sep="\t", index_col=None)
+    marker_table = pd.read_csv(f"{WORKING_DIRECTORY}/markers/{marker_file}", sep="\t", index_col=None)
     marker_table = marker_table[
         (marker_table.logfoldchange > log_fold_change) & (marker_table.pval_adj < p_value)
     ].copy()
