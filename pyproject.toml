@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sc-toolbox"
-version = "0.1.0"  # <<COOKIETEMPLE_FORCE_BUMP>>
+version = "0.2.0"  # <<COOKIETEMPLE_FORCE_BUMP>>
 description = "A collection of project templates and useful code snippets for single-cell data analysis with Scanpy."
 authors = ["Lukas Heumos <lukas.heumos@posteo.net>"]
 license = "MIT"
@@ -9,7 +9,6 @@ homepage = "https://github.com/schillerlab/sc-toolbox"
 repository = "https://github.com/schillerlab/sc-toolbox"
 documentation = "https://sc-toolbox.readthedocs.io"
 classifiers = [
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
