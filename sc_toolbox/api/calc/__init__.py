@@ -59,7 +59,7 @@ def generate_expression_table(
     return gen_expression_table
 
 
-def calc_relative_frequencies(adata, group_by: str = "cell_type", xlabel: str = "days", condition: str = "batch"):
+def relative_frequencies(adata, group_by: str = "cell_type", xlabel: str = "days", condition: str = "batch"):
     """
     Calculates the relative frequencies of conditions grouped by an observation.
 
@@ -93,6 +93,43 @@ def calc_relative_frequencies(adata, group_by: str = "cell_type", xlabel: str = 
         combis = adata.obs.groupby(["identifier", condition]).groups.keys()
         for c in combis:
             cell_types[c[0]] = c[1]
+        relative_frequencies[condition] = [cell_types[label] for label in relative_frequencies.index]  # type: ignore
+
+    return relative_frequencies
+
+
+def relative_frequency_per_cluster(adata, group_by: str = "cell_type", xlabel: str = "days", condition=None):
+    """
+    Calculates relative frequencies per cluster
+
+    Args:
+        adata: AnnData object containing the data
+        group_by: The label to group by for the clusters
+        xlabel: x-axis label
+        condition: condition to combine by
+
+    Returns:
+        Pandas DataFrame of relative frequencies
+    """
+    frequencies = adata.obs.groupby([group_by, xlabel]).size()
+    celltypes = np.unique(adata.obs[group_by])
+    ind = adata.obs[xlabel].cat.categories
+
+    relative_frequencies = [frequencies[ident] / sum(frequencies[ident]) for ident in celltypes]
+    relative_frequencies = pd.DataFrame(relative_frequencies, columns=ind, index=celltypes).fillna(0)
+
+    cell_types = {}
+    combinations = adata.obs.groupby([group_by, xlabel]).groups.keys()
+
+    for combination in combinations:
+        cell_types[combination[0]] = combination[1]
+    relative_frequencies[group_by] = relative_frequencies.index  # type: ignore
+
+    # Todo, add for condition
+    if condition:
+        combinations = adata.obs.groupby([group_by, condition]).groups.keys()
+        for combination in combinations:
+            cell_types[combination[0]] = combination[1]
         relative_frequencies[condition] = [cell_types[label] for label in relative_frequencies.index]  # type: ignore
 
     return relative_frequencies
@@ -176,43 +213,6 @@ def remove_outliers(cords, eps: int = 1, min_samples: int = 2):
     cluster = clustering.labels_.astype("U")
 
     return pd.Categorical(cluster, categories=natsorted(np.unique(cluster)))
-
-
-def calc_relative_frequency_per_cluster(adata, group_by: str = "cell_type", xlabel: str = "days", condition=None):
-    """
-    Calculates relative frequencies per cluster
-
-    Args:
-        adata: AnnData object containing the data
-        group_by: The label to group by for the clusters
-        xlabel: x-axis label
-        condition: condition to combine by
-
-    Returns:
-        Pandas DataFrame of relative frequencies
-    """
-    frequencies = adata.obs.groupby([group_by, xlabel]).size()
-    celltypes = np.unique(adata.obs[group_by])
-    ind = adata.obs[xlabel].cat.categories
-
-    relative_frequencies = [frequencies[ident] / sum(frequencies[ident]) for ident in celltypes]
-    relative_frequencies = pd.DataFrame(relative_frequencies, columns=ind, index=celltypes).fillna(0)
-
-    cell_types = {}
-    combinations = adata.obs.groupby([group_by, xlabel]).groups.keys()
-
-    for combination in combinations:
-        cell_types[combination[0]] = combination[1]
-    relative_frequencies[group_by] = relative_frequencies.index  # type: ignore
-
-    # Todo, add for condition
-    if condition:
-        combinations = adata.obs.groupby([group_by, condition]).groups.keys()
-        for combination in combinations:
-            cell_types[combination[0]] = combination[1]
-        relative_frequencies[condition] = [cell_types[label] for label in relative_frequencies.index]  # type: ignore
-
-    return relative_frequencies
 
 
 def add_percentages(adata, table, ids, group_by: str, threshold: int = 0, gene_label: str = "gene"):

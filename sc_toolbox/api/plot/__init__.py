@@ -251,7 +251,7 @@ def average_expression_per_cluster(
         )
 
 
-def avg_expression_split_cluster(
+def average_expression_split_cluster(
     gene_expression,
     genes,
     order,
@@ -328,7 +328,7 @@ def avg_expression_split_cluster(
         )
 
 
-def avg_expression_per_cell(
+def average_expression_per_cell(
     gene_expression,
     genes,
     order,
@@ -923,7 +923,7 @@ def colors_overview(colors: Dict, ncols: int = 2, figsize: Tuple[int, int] = (8,
     plt.show()
 
 
-def rel_frequencies_lineplot(
+def relative_frequencies_lineplot(
     relative_frequencies: pd.DataFrame,
     order,
     cluster,
