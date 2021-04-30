@@ -3,3 +3,4 @@ sphinx_rtd_theme==0.5.2
 sphinx-automodapi==0.13
 sphinx_click
 click
+sc-toolbox
