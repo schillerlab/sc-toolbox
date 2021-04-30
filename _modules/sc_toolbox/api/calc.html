@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>sc_toolbox.api.calc &mdash; sc-toolbox 0.1.0 documentation</title>
+  <title>sc_toolbox.api.calc &mdash; sc-toolbox 0.2.0 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.2.0
               </div>
             
           
@@ -221,7 +221,7 @@
     <span class="k">return</span> <span class="n">gen_expression_table</span></div>
 
 
-<div class="viewcode-block" id="calc_relative_frequencies"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.calc.calc_relative_frequencies">[docs]</a><span class="k">def</span> <span class="nf">calc_relative_frequencies</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">group_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cell_type&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;batch&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="relative_frequencies"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.calc.relative_frequencies">[docs]</a><span class="k">def</span> <span class="nf">relative_frequencies</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">group_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cell_type&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;batch&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculates the relative frequencies of conditions grouped by an observation.</span>
 
@@ -255,6 +255,43 @@
         <span class="n">combis</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;identifier&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">combis</span><span class="p">:</span>
             <span class="n">cell_types</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">relative_frequencies</span><span class="p">[</span><span class="n">condition</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">cell_types</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">relative_frequencies</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">return</span> <span class="n">relative_frequencies</span></div>
+
+
+<div class="viewcode-block" id="relative_frequency_per_cluster"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.calc.relative_frequency_per_cluster">[docs]</a><span class="k">def</span> <span class="nf">relative_frequency_per_cluster</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">group_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cell_type&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates relative frequencies per cluster</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        adata: AnnData object containing the data</span>
+<span class="sd">        group_by: The label to group by for the clusters</span>
+<span class="sd">        xlabel: x-axis label</span>
+<span class="sd">        condition: condition to combine by</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Pandas DataFrame of relative frequencies</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">frequencies</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">group_by</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="n">celltypes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">group_by</span><span class="p">])</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">xlabel</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span>
+
+    <span class="n">relative_frequencies</span> <span class="o">=</span> <span class="p">[</span><span class="n">frequencies</span><span class="p">[</span><span class="n">ident</span><span class="p">]</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">frequencies</span><span class="p">[</span><span class="n">ident</span><span class="p">])</span> <span class="k">for</span> <span class="n">ident</span> <span class="ow">in</span> <span class="n">celltypes</span><span class="p">]</span>
+    <span class="n">relative_frequencies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">relative_frequencies</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">ind</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">celltypes</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">cell_types</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">combinations</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">group_by</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">combination</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">:</span>
+        <span class="n">cell_types</span><span class="p">[</span><span class="n">combination</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">combination</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">relative_frequencies</span><span class="p">[</span><span class="n">group_by</span><span class="p">]</span> <span class="o">=</span> <span class="n">relative_frequencies</span><span class="o">.</span><span class="n">index</span>  <span class="c1"># type: ignore</span>
+
+    <span class="c1"># Todo, add for condition</span>
+    <span class="k">if</span> <span class="n">condition</span><span class="p">:</span>
+        <span class="n">combinations</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">group_by</span><span class="p">,</span> <span class="n">condition</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">combination</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">:</span>
+            <span class="n">cell_types</span><span class="p">[</span><span class="n">combination</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">combination</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">relative_frequencies</span><span class="p">[</span><span class="n">condition</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">cell_types</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">relative_frequencies</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
 
     <span class="k">return</span> <span class="n">relative_frequencies</span></div>
@@ -338,43 +375,6 @@
     <span class="n">cluster</span> <span class="o">=</span> <span class="n">clustering</span><span class="o">.</span><span class="n">labels_</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="n">natsorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">cluster</span><span class="p">)))</span></div>
-
-
-<div class="viewcode-block" id="calc_relative_frequency_per_cluster"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.calc.calc_relative_frequency_per_cluster">[docs]</a><span class="k">def</span> <span class="nf">calc_relative_frequency_per_cluster</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">group_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cell_type&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Calculates relative frequencies per cluster</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        adata: AnnData object containing the data</span>
-<span class="sd">        group_by: The label to group by for the clusters</span>
-<span class="sd">        xlabel: x-axis label</span>
-<span class="sd">        condition: condition to combine by</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Pandas DataFrame of relative frequencies</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">frequencies</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">group_by</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
-    <span class="n">celltypes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">group_by</span><span class="p">])</span>
-    <span class="n">ind</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">xlabel</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span>
-
-    <span class="n">relative_frequencies</span> <span class="o">=</span> <span class="p">[</span><span class="n">frequencies</span><span class="p">[</span><span class="n">ident</span><span class="p">]</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">frequencies</span><span class="p">[</span><span class="n">ident</span><span class="p">])</span> <span class="k">for</span> <span class="n">ident</span> <span class="ow">in</span> <span class="n">celltypes</span><span class="p">]</span>
-    <span class="n">relative_frequencies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">relative_frequencies</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">ind</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">celltypes</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-    <span class="n">cell_types</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">combinations</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">group_by</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-
-    <span class="k">for</span> <span class="n">combination</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">:</span>
-        <span class="n">cell_types</span><span class="p">[</span><span class="n">combination</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">combination</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">relative_frequencies</span><span class="p">[</span><span class="n">group_by</span><span class="p">]</span> <span class="o">=</span> <span class="n">relative_frequencies</span><span class="o">.</span><span class="n">index</span>  <span class="c1"># type: ignore</span>
-
-    <span class="c1"># Todo, add for condition</span>
-    <span class="k">if</span> <span class="n">condition</span><span class="p">:</span>
-        <span class="n">combinations</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">group_by</span><span class="p">,</span> <span class="n">condition</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">combination</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">:</span>
-            <span class="n">cell_types</span><span class="p">[</span><span class="n">combination</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">combination</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">relative_frequencies</span><span class="p">[</span><span class="n">condition</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">cell_types</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">relative_frequencies</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
-
-    <span class="k">return</span> <span class="n">relative_frequencies</span></div>
 
 
 <div class="viewcode-block" id="add_percentages"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.calc.add_percentages">[docs]</a><span class="k">def</span> <span class="nf">add_percentages</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">group_by</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">gene_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;gene&quot;</span><span class="p">):</span>

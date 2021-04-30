@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; sc-toolbox 0.1.0 documentation</title>
+  <title>Usage &mdash; sc-toolbox 0.2.0 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.2.0
               </div>
             
           
@@ -232,37 +232,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="sc_toolbox.api.plot.average_expression_per_cluster">
-<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.plot.</span></code><code class="sig-name descname"><span class="pre">average_expression_per_cluster</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_expression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/plot.html#average_expression_per_cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.plot.average_expression_per_cluster" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plots gene expression over time split by cluster identity.
-One line per cluster.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>gene_expression</strong> – </p></li>
-<li><p><strong>genes</strong> – </p></li>
-<li><p><strong>order</strong> – </p></li>
-<li><p><strong>obs</strong> – </p></li>
-<li><p><strong>xlabel</strong> (<em>str</em>) – x-axis label</p></li>
-<li><p><strong>cluster</strong> (<em>str</em>) – </p></li>
-<li><p><strong>hue</strong> – </p></li>
-<li><p><strong>figsize</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Size of the figure as specified in matplotlib</p></li>
-<li><p><strong>smooth</strong> – </p></li>
-<li><p><strong>rotation</strong> – </p></li>
-<li><p><strong>tick_size</strong> (<em>int</em>) – Size of the ticks as specified in matplotlib</p></li>
-<li><p><strong>label_size</strong> (<em>int</em>) – Size of the labels as specified in matplotlib</p></li>
-<li><p><strong>order_smooth</strong> – </p></li>
-<li><p><strong>conf_int</strong> – </p></li>
-<li><p><strong>scatter</strong> – </p></li>
-<li><p><strong>save</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Path to save the plot to</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="sc_toolbox.api.plot.avg_expression_per_cell">
-<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.plot.</span></code><code class="sig-name descname"><span class="pre">avg_expression_per_cell</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_expression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/plot.html#avg_expression_per_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.plot.avg_expression_per_cell" title="Permalink to this definition">¶</a></dt>
+<dt id="sc_toolbox.api.plot.average_expression_per_cell">
+<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.plot.</span></code><code class="sig-name descname"><span class="pre">average_expression_per_cell</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_expression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/plot.html#average_expression_per_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.plot.average_expression_per_cell" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plots the average gene expression as a line plot per cell.
 Ideally used when the scatter point should not be sample wise, but cell wise.
 :param gene_expression:
@@ -294,8 +265,37 @@ Ideally used when the scatter point should not be sample wise, but cell wise.
 </dd></dl>
 
 <dl class="py function">
-<dt id="sc_toolbox.api.plot.avg_expression_split_cluster">
-<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.plot.</span></code><code class="sig-name descname"><span class="pre">avg_expression_split_cluster</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_expression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'genotype'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/plot.html#avg_expression_split_cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.plot.avg_expression_split_cluster" title="Permalink to this definition">¶</a></dt>
+<dt id="sc_toolbox.api.plot.average_expression_per_cluster">
+<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.plot.</span></code><code class="sig-name descname"><span class="pre">average_expression_per_cluster</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_expression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/plot.html#average_expression_per_cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.plot.average_expression_per_cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots gene expression over time split by cluster identity.
+One line per cluster.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gene_expression</strong> – </p></li>
+<li><p><strong>genes</strong> – </p></li>
+<li><p><strong>order</strong> – </p></li>
+<li><p><strong>obs</strong> – </p></li>
+<li><p><strong>xlabel</strong> (<em>str</em>) – x-axis label</p></li>
+<li><p><strong>cluster</strong> (<em>str</em>) – </p></li>
+<li><p><strong>hue</strong> – </p></li>
+<li><p><strong>figsize</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Size of the figure as specified in matplotlib</p></li>
+<li><p><strong>smooth</strong> – </p></li>
+<li><p><strong>rotation</strong> – </p></li>
+<li><p><strong>tick_size</strong> (<em>int</em>) – Size of the ticks as specified in matplotlib</p></li>
+<li><p><strong>label_size</strong> (<em>int</em>) – Size of the labels as specified in matplotlib</p></li>
+<li><p><strong>order_smooth</strong> – </p></li>
+<li><p><strong>conf_int</strong> – </p></li>
+<li><p><strong>scatter</strong> – </p></li>
+<li><p><strong>save</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Path to save the plot to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="sc_toolbox.api.plot.average_expression_split_cluster">
+<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.plot.</span></code><code class="sig-name descname"><span class="pre">average_expression_split_cluster</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_expression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'genotype'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/plot.html#average_expression_split_cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.plot.average_expression_split_cluster" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot average gene expression as line plots for multiple clusters at once.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -463,8 +463,33 @@ Ideally used when the scatter point should not be sample wise, but cell wise.
 </dd></dl>
 
 <dl class="py function">
-<dt id="sc_toolbox.api.plot.rel_frequencies_lineplot">
-<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.plot.</span></code><code class="sig-name descname"><span class="pre">rel_frequencies_lineplot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'relative</span> <span class="pre">frequency'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/plot.html#rel_frequencies_lineplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.plot.rel_frequencies_lineplot" title="Permalink to this definition">¶</a></dt>
+<dt id="sc_toolbox.api.plot.relative_frequencies_boxplots">
+<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.plot.</span></code><code class="sig-name descname"><span class="pre">relative_frequencies_boxplots</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jitter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/plot.html#relative_frequencies_boxplots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.plot.relative_frequencies_boxplots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the relative frequencies as split boxplots.
+Use calc_relative_frequencies to get the required input format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>relative_frequencies</strong> (<em>pandas.core.frame.DataFrame</em>) – Calculated by calc_relative_frequencies as Pandas DataFrame</p></li>
+<li><p><strong>cluster</strong> – </p></li>
+<li><p><strong>cols</strong> – </p></li>
+<li><p><strong>order</strong> – </p></li>
+<li><p><strong>xlabel</strong> (<em>str</em>) – x-axis label</p></li>
+<li><p><strong>hue</strong> (<em>str</em>) – Value to color by</p></li>
+<li><p><strong>figsize</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Size of the figure as specified in matplotlib</p></li>
+<li><p><strong>width</strong> (<em>float</em>) – Width of the plot as specified in matplotlib</p></li>
+<li><p><strong>jitter</strong> – </p></li>
+<li><p><strong>save</strong> – Path to save the plot to</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<img alt="_images/relative_frequencies_boxplots.png" src="_images/relative_frequencies_boxplots.png" />
+</dd></dl>
+
+<dl class="py function">
+<dt id="sc_toolbox.api.plot.relative_frequencies_lineplot">
+<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.plot.</span></code><code class="sig-name descname"><span class="pre">relative_frequencies_lineplot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'relative</span> <span class="pre">frequency'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tick_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/plot.html#relative_frequencies_lineplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.plot.relative_frequencies_lineplot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot relative frequencies as a line plot.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -491,31 +516,6 @@ Ideally used when the scatter point should not be sample wise, but cell wise.
 </dl>
 <p class="rubric">Example</p>
 <img alt="_images/relative_frequencies_lineplots.png" src="_images/relative_frequencies_lineplots.png" />
-</dd></dl>
-
-<dl class="py function">
-<dt id="sc_toolbox.api.plot.relative_frequencies_boxplots">
-<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.plot.</span></code><code class="sig-name descname"><span class="pre">relative_frequencies_boxplots</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jitter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/plot.html#relative_frequencies_boxplots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.plot.relative_frequencies_boxplots" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plots the relative frequencies as split boxplots.
-Use calc_relative_frequencies to get the required input format.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>relative_frequencies</strong> (<em>pandas.core.frame.DataFrame</em>) – Calculated by calc_relative_frequencies as Pandas DataFrame</p></li>
-<li><p><strong>cluster</strong> – </p></li>
-<li><p><strong>cols</strong> – </p></li>
-<li><p><strong>order</strong> – </p></li>
-<li><p><strong>xlabel</strong> (<em>str</em>) – x-axis label</p></li>
-<li><p><strong>hue</strong> (<em>str</em>) – Value to color by</p></li>
-<li><p><strong>figsize</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Size of the figure as specified in matplotlib</p></li>
-<li><p><strong>width</strong> (<em>float</em>) – Width of the plot as specified in matplotlib</p></li>
-<li><p><strong>jitter</strong> – </p></li>
-<li><p><strong>save</strong> – Path to save the plot to</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Example</p>
-<img alt="_images/relative_frequencies_boxplots.png" src="_images/relative_frequencies_boxplots.png" />
 </dd></dl>
 
 <dl class="py function">
@@ -640,44 +640,6 @@ Use calc_relative_frequencies to get the required input format.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="sc_toolbox.api.calc.calc_relative_frequencies">
-<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.calc.</span></code><code class="sig-name descname"><span class="pre">calc_relative_frequencies</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cell_type'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'batch'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/calc.html#calc_relative_frequencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.calc.calc_relative_frequencies" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the relative frequencies of conditions grouped by an observation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>adata</strong> – AnnData Objet containing the data</p></li>
-<li><p><strong>group_by</strong> (<em>str</em>) – </p></li>
-<li><p><strong>xlabel</strong> (<em>str</em>) – x-axis label</p></li>
-<li><p><strong>condition</strong> (<em>str</em>) – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Relative frequencies in a Pandas DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="sc_toolbox.api.calc.calc_relative_frequency_per_cluster">
-<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.calc.</span></code><code class="sig-name descname"><span class="pre">calc_relative_frequency_per_cluster</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cell_type'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/calc.html#calc_relative_frequency_per_cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.calc.calc_relative_frequency_per_cluster" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates relative frequencies per cluster</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>adata</strong> – AnnData object containing the data</p></li>
-<li><p><strong>group_by</strong> (<em>str</em>) – The label to group by for the clusters</p></li>
-<li><p><strong>xlabel</strong> (<em>str</em>) – x-axis label</p></li>
-<li><p><strong>condition</strong> – condition to combine by</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Pandas DataFrame of relative frequencies</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt id="sc_toolbox.api.calc.correlate_means_to_gene">
 <code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.calc.</span></code><code class="sig-name descname"><span class="pre">correlate_means_to_gene</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">means</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corr_gene</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'EOMES'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/calc.html#correlate_means_to_gene"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.calc.correlate_means_to_gene" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate gene to gene correlation based on a mean expression table</p>
@@ -788,6 +750,44 @@ subset = subset)</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Pandas DataFrame containing test statistic and p-value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="sc_toolbox.api.calc.relative_frequencies">
+<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.calc.</span></code><code class="sig-name descname"><span class="pre">relative_frequencies</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cell_type'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'batch'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/calc.html#relative_frequencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.calc.relative_frequencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the relative frequencies of conditions grouped by an observation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData Objet containing the data</p></li>
+<li><p><strong>group_by</strong> (<em>str</em>) – </p></li>
+<li><p><strong>xlabel</strong> (<em>str</em>) – x-axis label</p></li>
+<li><p><strong>condition</strong> (<em>str</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Relative frequencies in a Pandas DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="sc_toolbox.api.calc.relative_frequency_per_cluster">
+<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.calc.</span></code><code class="sig-name descname"><span class="pre">relative_frequency_per_cluster</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cell_type'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'days'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/calc.html#relative_frequency_per_cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.calc.relative_frequency_per_cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates relative frequencies per cluster</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the data</p></li>
+<li><p><strong>group_by</strong> (<em>str</em>) – The label to group by for the clusters</p></li>
+<li><p><strong>xlabel</strong> (<em>str</em>) – x-axis label</p></li>
+<li><p><strong>condition</strong> – condition to combine by</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Pandas DataFrame of relative frequencies</p>
 </dd>
 </dl>
 </dd></dl>
