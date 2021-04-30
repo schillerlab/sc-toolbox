@@ -18,6 +18,7 @@ class Colormaps(Enum):
         | grey_violet
         | grey_blue
     """
+
     grey_red = colors.LinearSegmentedColormap.from_list("grouping", ["lightgray", "red", "darkred"], N=128)
     grey_violet = colors.LinearSegmentedColormap.from_list(
         "grouping", ["lightgray", "mediumvioletred", "indigo"], N=128
