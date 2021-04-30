@@ -47,7 +47,11 @@ Once you have a copy of the source, you can install it with:
 
     $ make install
 
+Developers should also have `nox`_ and `nox-poetry`_ installed.
+
 
 .. _Github repo: https://github.com/schillerlab/sc-toolbox
 .. _tarball: https://github.com/schillerlab/sc-toolbox/tarball/master
 .. _poetry: https://python-poetry.org/
+.. _nox: https://nox.thea.codes/en/stable/
+.. _nox-poetry: https://github.com/cjolowicz/nox-poetry

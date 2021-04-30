@@ -1,5 +1,12 @@
+.. image:: https://user-images.githubusercontent.com/21954664/116578141-65a85180-a911-11eb-9c33-925a2ec600c6.png
+    :target: https://github.com/schillerlab/sc-toolbox
+    :alt: sc-toolbox logo
+    :align: center
+    :width: 250px
+
+
 sc-toolbox
-===========================
+==========
 
 |PyPI| |Python Version| |License| |Read the Docs| |Build| |Tests| |Codecov| |pre-commit| |Black|
 
@@ -31,12 +38,26 @@ sc-toolbox
    :target: https://github.com/psf/black
    :alt: Black
 
+.. warning::
+    This package is still under heavy development. It is primarily designed for in-house analyses at the `Theislab <https://github.com/theislab>`_
+    and `Schillerlab <https://github.com/schillerlab>`_. Don't yet expect it to be well tested or documented.
+    However, contributions are highly welcome and we will provide guidance if required.
+
 
 Features
 --------
 
-* TODO
+* Create minimal best-practice containers for single-cell data analysis with Scanpy
+* API for advanced Scanpy based plots and analyses
 
+.. figure:: https://user-images.githubusercontent.com/21954664/116225631-5fb84200-a752-11eb-9489-16571428918f.png
+   :alt: Preview plot
+
+.. figure:: https://user-images.githubusercontent.com/21954664/116225765-824a5b00-a752-11eb-8cbf-c14ebd9ac030.png
+   :alt: Preview plot 2
+
+.. figure:: https://user-images.githubusercontent.com/21954664/116226005-c5a4c980-a752-11eb-9846-8dc72315d373.png
+   :alt: Preview plot 3
 
 Installation
 ------------
@@ -47,29 +68,26 @@ You can install *sc-toolbox* via pip_ from PyPI_:
 
    $ pip install sc-toolbox
 
-
 Usage
 -----
 
-Please see the `Command-line Reference <Usage_>`_ for details.
+.. code:: python
 
+   import sc_toolbox.api as sct
 
-Contributing
-------------
-
-Contributions are very welcome. To learn more, see the `Contributor Guide`_.
-
+Please see the `Usage documentation <Usage_>`_.
 
 Credits
 -------
 
-This package was created with cookietemple_ using Cookiecutter_ based on Hypermodern_Python_Cookiecutter_.
+This package was created with cookietemple_ using cookiecutter_ based on Hypermodern_Python_Cookiecutter_.
+Most scripts were developed by `Meshal Ansari <https://github.com/mesh09/>`_ and the package was designed by `Lukas Heumos <https://github.com/zethson>`_.
 
 .. _cookietemple: https://cookietemple.com
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _cookiecutter: https://github.com/audreyr/cookiecutter
 .. _MIT: http://opensource.org/licenses/MIT
 .. _PyPI: https://pypi.org/
 .. _Hypermodern_Python_Cookiecutter: https://github.com/cjolowicz/cookiecutter-hypermodern-python
 .. _pip: https://pip.pypa.io/
-.. _Contributor Guide: CONTRIBUTING.rst
 .. _Usage: https://sc-toolbox.readthedocs.io/en/latest/usage.html
+.. _API: https://sc-toolbox.readthedocs.io/en/latest/api.html

@@ -16,13 +16,13 @@ except ImportError:
     sys.exit(1)
 
 package = "sc_toolbox"
-python_versions = ["3.8", "3.9"]
+python_versions = ["3.9"]
 nox.options.sessions = (
     "pre-commit",
     "safety",
     "mypy",
     "tests",
-    "xdoctest",
+    # "xdoctest",
     "docs-build",
 )
 
@@ -109,7 +109,7 @@ def safety(session: Session) -> None:
 @session(python=python_versions)
 def mypy(session: Session) -> None:
     """Type-check using mypy."""
-    args = session.posargs or ["src", "tests", "docs/conf.py"]
+    args = session.posargs or ["sc_toolbox", "tests", "docs/conf.py"]
     session.install(".")
     session.install("mypy", "pytest")
     session.run("mypy", *args)
@@ -123,7 +123,7 @@ def tests(session: Session) -> None:
     session.install(".")
     session.install("coverage[toml]", "pytest", "pygments")
     try:
-        session.run("coverage", "run", "--parallel", "-m", "pytest", *session.posargs)
+        session.run("coverage", "run", f"--source={package}", "--parallel", "-m", "pytest", *session.posargs)
     finally:
         if session.interactive:
             session.notify("coverage")
@@ -143,14 +143,6 @@ def coverage(session: Session) -> None:
         session.run("coverage", "combine")
 
     session.run("coverage", *args)
-
-
-@session(python=python_versions)
-def typeguard(session: Session) -> None:
-    """Runtime type checking using Typeguard."""
-    session.install(".")
-    session.install("pytest", "typeguard", "pygments")
-    session.run("pytest", f"--typeguard-packages={package}", *session.posargs)
 
 
 @session(python=python_versions)

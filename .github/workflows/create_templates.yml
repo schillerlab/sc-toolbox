@@ -1,0 +1,28 @@
+name: Build sc-toolbox Package
+
+on: [push, pull_request]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        if: "!contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[ci skip]')"
+
+        steps:
+            - uses: actions/checkout@v2
+              name: Check out source-code repository
+
+            - name: Setup Python
+              uses: actions/setup-python@v2
+              with:
+                  python-version: 3.9
+
+            - name: Install Poetry
+              run: |
+                  pip install poetry
+                  poetry --version
+
+            - name: Install sc-toolbox
+              run: make install
+
+            - name: Create Simple Docker Project
+              run: echo -e "\n\n" | poetry run sc-toolbox create
