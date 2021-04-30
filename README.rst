@@ -2,7 +2,7 @@
     :target: https://github.com/schillerlab/sc-toolbox
     :alt: sc-toolbox logo
     :align: center
-    :width: 250px
+    :width: 200px
 
 
 sc-toolbox
