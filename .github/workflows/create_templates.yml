@@ -1,4 +1,4 @@
-name: Build sc-toolbox Package
+name: Create Project Templates
 
 on: [push, pull_request]
 
