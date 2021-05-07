@@ -792,8 +792,8 @@ def cluster_composition_stacked_barplot(
 
     plt.legend(handles=patches, loc="center left", bbox_to_anchor=(1.02, 0.5), prop={"size": tick_size}, frameon=False)
     if save:
-        plt.savefig("{save}")
-        print("[bold blue]Saving Figure to {save}")
+        plt.savefig(f"{save}")
+        print(f"[bold blue]Saving Figure to {save}")
     plt.show()
     plt.close()
 
