@@ -1065,3 +1065,55 @@ def annotated_cell_type_umap(
         fig.savefig(save, dpi=1200, format="pdf", bbox_inches="tight")
 
     return fig, axs
+
+
+def genotype_vs_genotype_umaps(
+    adata,
+    genotype_key: str,
+    genotype_label_1: str,
+    genotype_label_2: str,
+    color: str,
+    hide_one_legend: bool = True,
+    figsize: Tuple[int, int] = (12, 6),
+):
+    """
+    Plots a two UMAPs of genotypes next to each other displaying only the colors of the
+
+    Args:
+        adata: AnnData object
+        genotype_key: Key of the genotypes
+        genotype_label_1: Name of the first genotype; Must be contained in the genotypes
+        genotype_label_2: Name of the second genotype; Must be contained in the genotypes
+        color: Key to color by
+        hide_one_legend: Whether to hide the legend of the genotype_label_1
+        figsize: Size of the figure
+
+    Example:
+        .. image:: /_images/genotype_vs_genotype_umaps.png
+    """
+    genotype_label_1 = adata[adata.obs[genotype_key].isin([genotype_label_1])].copy()
+    genotype_label_2 = adata[adata.obs[genotype_key].isin([genotype_label_2])].copy()
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize)
+    sc.pl.umap(
+        genotype_label_1,
+        color=color,
+        ax=ax1,
+        palette=sc.pl.palettes.default_20,
+        legend_fontsize="xx-small",
+        size=40,
+        show=False,
+    )
+    if hide_one_legend:
+        ax1.get_legend().remove()
+    ax1.set_title(genotype_label_1)
+    sc.pl.umap(
+        genotype_label_2,
+        color=color,
+        ax=ax2,
+        palette=sc.pl.palettes.default_20,
+        legend_fontsize="xx-small",
+        size=40,
+        show=False,
+    )
+    _ = ax2.set_title(genotype_label_2)
