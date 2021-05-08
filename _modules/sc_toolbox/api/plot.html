@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>sc_toolbox.api.plot &mdash; sc-toolbox 0.3.0 documentation</title>
+  <title>sc_toolbox.api.plot &mdash; sc-toolbox 0.4.0 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0
               </div>
             
           
@@ -92,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../readme.html">sc-toolbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributor Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
 </ul>
@@ -163,11 +164,14 @@
 <span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sb</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span>
 <span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="nb">print</span>
@@ -971,8 +975,8 @@
 
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">patches</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center left&quot;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.02</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="n">tick_size</span><span class="p">},</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{save}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[bold blue]Saving Figure to </span><span class="si">{save}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold blue]Saving Figure to </span><span class="si">{</span><span class="n">save</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
@@ -1172,6 +1176,110 @@
         <span class="n">scatter</span><span class="o">=</span><span class="n">scatter</span><span class="p">,</span>
         <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">,</span>
     <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="annotated_cell_type_umap"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.annotated_cell_type_umap">[docs]</a><span class="k">def</span> <span class="nf">annotated_cell_type_umap</span><span class="p">(</span>
+    <span class="n">adata</span><span class="p">,</span>
+    <span class="n">primary_color</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+    <span class="n">cell_type_color</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">legend_loc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;on data&quot;</span><span class="p">,</span>
+    <span class="n">legend_fontsize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Plot title&quot;</span><span class="p">,</span>
+    <span class="n">palette</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">save</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots a UMAP which is colored by the primary_color, but also draws all labels on top of all clusters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        adata: AnnData object</span>
+<span class="sd">        primary_color: Primary color to color all cells by, e.g. &#39;genotype&#39;</span>
+<span class="sd">        cell_type_color: Key containing all cell types, e.g. &#39;cell_type&#39;</span>
+<span class="sd">        legend_loc: Location of the legend (default: &#39;on data&#39;)</span>
+<span class="sd">        legend_fontsize: Font size of the legend (default: 8)</span>
+<span class="sd">        title: Title of the plot</span>
+<span class="sd">        palette: Color</span>
+<span class="sd">        cmap: Color map of the UMAP</span>
+<span class="sd">        figsize: Size of the figure</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        fig and axs Matplotlib objects</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. image:: /_images/annotated_cell_type_umap.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">primary_color</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">)</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span>
+        <span class="n">adata</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">cell_type_color</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">legend_loc</span><span class="o">=</span><span class="n">legend_loc</span><span class="p">,</span>
+        <span class="n">legend_fontsize</span><span class="o">=</span><span class="n">legend_fontsize</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;pdf&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span></div>
+
+
+<div class="viewcode-block" id="genotype_vs_genotype_umaps"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.genotype_vs_genotype_umaps">[docs]</a><span class="k">def</span> <span class="nf">genotype_vs_genotype_umaps</span><span class="p">(</span>
+    <span class="n">adata</span><span class="p">,</span>
+    <span class="n">genotype_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">genotype_label_1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">genotype_label_2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">color</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">hide_one_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots a two UMAPs of genotypes next to each other displaying only the colors of the</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        adata: AnnData object</span>
+<span class="sd">        genotype_key: Key of the genotypes</span>
+<span class="sd">        genotype_label_1: Name of the first genotype; Must be contained in the genotypes</span>
+<span class="sd">        genotype_label_2: Name of the second genotype; Must be contained in the genotypes</span>
+<span class="sd">        color: Key to color by</span>
+<span class="sd">        hide_one_legend: Whether to hide the legend of the genotype_label_1</span>
+<span class="sd">        figsize: Size of the figure</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. image:: /_images/genotype_vs_genotype_umaps.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">genotype_label_1</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">genotype_key</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">genotype_label_1</span><span class="p">])]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">genotype_label_2</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">genotype_key</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">genotype_label_2</span><span class="p">])]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span>
+        <span class="n">genotype_label_1</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span>
+        <span class="n">palette</span><span class="o">=</span><span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">palettes</span><span class="o">.</span><span class="n">default_20</span><span class="p">,</span>
+        <span class="n">legend_fontsize</span><span class="o">=</span><span class="s2">&quot;xx-small&quot;</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+        <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">hide_one_legend</span><span class="p">:</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">genotype_label_1</span><span class="p">)</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span>
+        <span class="n">genotype_label_2</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span>
+        <span class="n">palette</span><span class="o">=</span><span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">palettes</span><span class="o">.</span><span class="n">default_20</span><span class="p">,</span>
+        <span class="n">legend_fontsize</span><span class="o">=</span><span class="s2">&quot;xx-small&quot;</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+        <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">genotype_label_2</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

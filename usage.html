@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Usage &mdash; sc-toolbox 0.3.0 documentation</title>
+  <title>Usage &mdash; sc-toolbox 0.4.0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Credits" href="authors.html" />
+    <link rel="next" title="Contributor Guide" href="contributing.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
 </head>
 
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.3.0
+                0.4.0
               </div>
             
           
@@ -110,6 +110,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributor Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
 </ul>
@@ -211,6 +212,33 @@
 </div>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="sc_toolbox.api.plot.annotated_cell_type_umap">
+<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.plot.</span></code><code class="sig-name descname"><span class="pre">annotated_cell_type_umap</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_type_color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'on</span> <span class="pre">data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Plot</span> <span class="pre">title'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(8,</span> <span class="pre">6)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/plot.html#annotated_cell_type_umap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.plot.annotated_cell_type_umap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots a UMAP which is colored by the primary_color, but also draws all labels on top of all clusters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object</p></li>
+<li><p><strong>primary_color</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>Sequence</em><em>[</em><em>str</em><em>]</em><em>]</em>) – Primary color to color all cells by, e.g. ‘genotype’</p></li>
+<li><p><strong>cell_type_color</strong> (<em>str</em>) – Key containing all cell types, e.g. ‘cell_type’</p></li>
+<li><p><strong>legend_loc</strong> (<em>str</em>) – Location of the legend (default: ‘on data’)</p></li>
+<li><p><strong>legend_fontsize</strong> (<em>int</em>) – Font size of the legend (default: 8)</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – Title of the plot</p></li>
+<li><p><strong>palette</strong> – Color</p></li>
+<li><p><strong>cmap</strong> – Color map of the UMAP</p></li>
+<li><p><strong>figsize</strong> – Size of the figure</p></li>
+<li><p><strong>save</strong> – Path to save the plot to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>fig and axs Matplotlib objects</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<img alt="_images/annotated_cell_type_umap.png" src="_images/annotated_cell_type_umap.png" />
 </dd></dl>
 
 <dl class="py function">
@@ -452,6 +480,27 @@ One line per cluster.</p>
 <dt>Example with columns:</dt><dd><img alt="_images/gene_expression_dpt_ordered_col.png" src="_images/gene_expression_dpt_ordered_col.png" />
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="sc_toolbox.api.plot.genotype_vs_genotype_umaps">
+<code class="sig-prename descclassname"><span class="pre">sc_toolbox.api.plot.</span></code><code class="sig-name descname"><span class="pre">genotype_vs_genotype_umaps</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genotype_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genotype_label_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">genotype_label_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hide_one_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(12,</span> <span class="pre">6)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/plot.html#genotype_vs_genotype_umaps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.plot.genotype_vs_genotype_umaps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots a two UMAPs of genotypes next to each other displaying only the colors of the</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object</p></li>
+<li><p><strong>genotype_key</strong> (<em>str</em>) – Key of the genotypes</p></li>
+<li><p><strong>genotype_label_1</strong> (<em>str</em>) – Name of the first genotype; Must be contained in the genotypes</p></li>
+<li><p><strong>genotype_label_2</strong> (<em>str</em>) – Name of the second genotype; Must be contained in the genotypes</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – Key to color by</p></li>
+<li><p><strong>hide_one_legend</strong> (<em>bool</em>) – Whether to hide the legend of the genotype_label_1</p></li>
+<li><p><strong>figsize</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Size of the figure</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<img alt="_images/genotype_vs_genotype_umaps.png" src="_images/genotype_vs_genotype_umaps.png" />
 </dd></dl>
 
 <dl class="py function">
@@ -944,7 +993,7 @@ If not pip will be invoked to upgrade mlf-core to the latest version.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="authors.html" class="btn btn-neutral float-right" title="Credits" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributor Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
