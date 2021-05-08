@@ -215,7 +215,8 @@ dt {
     color: white !important;
     z-index: 1000;
 }
-span.viewcode-link, span.sig-paren {
+span.viewcode-link,
+span.sig-paren {
     background: black !important;
     z-index: 1000;
 }
