@@ -80,7 +80,7 @@ jobs:
                   print("::set-output name=result::{}".format(result))
 
             - name: Restore pre-commit cache
-              uses: actions/cache@v2.1.4
+              uses: actions/cache@v2.1.5
               if: matrix.session == 'pre-commit'
               with:
                   path: ~/.cache/pre-commit
@@ -146,4 +146,4 @@ jobs:
                   nox --force-color --session=coverage -- xml
 
             - name: Upload coverage report
-              uses: codecov/codecov-action@v1.3.2
+              uses: codecov/codecov-action@v1.5.0

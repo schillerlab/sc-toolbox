@@ -1,11 +1,14 @@
 from enum import Enum
 from typing import Dict
 from typing import List
+from typing import Sequence
 from typing import Tuple
+from typing import Union
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import scanpy as sc
 import seaborn as sb
 from matplotlib import colors
 from rich import print
@@ -809,8 +812,8 @@ def cluster_composition_stacked_barplot(
 
     plt.legend(handles=patches, loc="center left", bbox_to_anchor=(1.02, 0.5), prop={"size": tick_size}, frameon=False)
     if save:
-        plt.savefig("{save}")
-        print("[bold blue]Saving Figure to {save}")
+        plt.savefig(f"{save}")
+        print(f"[bold blue]Saving Figure to {save}")
     plt.show()
     plt.close()
 
@@ -1010,3 +1013,107 @@ def relative_frequencies_lineplot(
         scatter=scatter,
         save=save,
     )
+
+
+def annotated_cell_type_umap(
+    adata,
+    primary_color: Union[str, Sequence[str]],
+    cell_type_color: str,
+    legend_loc: str = "on data",
+    legend_fontsize: int = 8,
+    title: str = "Plot title",
+    palette=None,
+    cmap=None,
+    figsize=(8, 6),
+    save=None,
+):
+    """
+    Plots a UMAP which is colored by the primary_color, but also draws all labels on top of all clusters.
+
+    Args:
+        adata: AnnData object
+        primary_color: Primary color to color all cells by, e.g. 'genotype'
+        cell_type_color: Key containing all cell types, e.g. 'cell_type'
+        legend_loc: Location of the legend (default: 'on data')
+        legend_fontsize: Font size of the legend (default: 8)
+        title: Title of the plot
+        palette: Color
+        cmap: Color map of the UMAP
+        figsize: Size of the figure
+        save: Path to save the plot to
+
+    Returns:
+        fig and axs Matplotlib objects
+
+    Example:
+        .. image:: /_images/annotated_cell_type_umap.png
+    """
+    fig, axs = plt.subplots(figsize=figsize)
+    sc.pl.umap(adata, color=primary_color, show=False, palette=palette, cmap=cmap, ax=axs)
+    sc.pl.umap(
+        adata,
+        color=cell_type_color,
+        alpha=0,
+        legend_loc=legend_loc,
+        legend_fontsize=legend_fontsize,
+        title=title,
+        show=False,
+        ax=axs,
+    )
+
+    if save:
+        fig.savefig(save, dpi=1200, format="pdf", bbox_inches="tight")
+
+    return fig, axs
+
+
+def genotype_vs_genotype_umaps(
+    adata,
+    genotype_key: str,
+    genotype_label_1: str,
+    genotype_label_2: str,
+    color: str,
+    hide_one_legend: bool = True,
+    figsize: Tuple[int, int] = (12, 6),
+):
+    """
+    Plots a two UMAPs of genotypes next to each other displaying only the colors of the
+
+    Args:
+        adata: AnnData object
+        genotype_key: Key of the genotypes
+        genotype_label_1: Name of the first genotype; Must be contained in the genotypes
+        genotype_label_2: Name of the second genotype; Must be contained in the genotypes
+        color: Key to color by
+        hide_one_legend: Whether to hide the legend of the genotype_label_1
+        figsize: Size of the figure
+
+    Example:
+        .. image:: /_images/genotype_vs_genotype_umaps.png
+    """
+    genotype_label_1 = adata[adata.obs[genotype_key].isin([genotype_label_1])].copy()
+    genotype_label_2 = adata[adata.obs[genotype_key].isin([genotype_label_2])].copy()
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize)
+    sc.pl.umap(
+        genotype_label_1,
+        color=color,
+        ax=ax1,
+        palette=sc.pl.palettes.default_20,
+        legend_fontsize="xx-small",
+        size=40,
+        show=False,
+    )
+    if hide_one_legend:
+        ax1.get_legend().remove()
+    ax1.set_title(genotype_label_1)
+    sc.pl.umap(
+        genotype_label_2,
+        color=color,
+        ax=ax2,
+        palette=sc.pl.palettes.default_20,
+        legend_fontsize="xx-small",
+        size=40,
+        show=False,
+    )
+    _ = ax2.set_title(genotype_label_2)
