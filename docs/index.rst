@@ -7,6 +7,7 @@ Welcome to sc-toolbox's documentation!
    readme
    installation
    usage
+   contributing
    authors
    code_of_conduct
 
