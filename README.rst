@@ -8,11 +8,14 @@
 sc-toolbox
 ==========
 
-|PyPI| |Python Version| |License| |Read the Docs| |Build| |Tests| |Codecov| |pre-commit| |Black|
+|PyPI| |Downloads| |Python Version| |License| |Read the Docs| |Build| |Tests| |Codecov| |pre-commit| |Black|
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/sc-toolbox.svg
    :target: https://pypi.org/project/sc-toolbox/
    :alt: PyPI
+.. |Downloads| image:: https://pepy.tech/badge/sc-toolbox
+    :target: https://pepy.tech/badge/sc-toolbox
+    :alt: PyPI Downloads
 .. |Python Version| image:: https://img.shields.io/pypi/pyversions/sc-toolbox
    :target: https://pypi.org/project/sc-toolbox
    :alt: Python Version
