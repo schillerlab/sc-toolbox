@@ -212,6 +212,11 @@ dl .sig-name,
 /*Background of the container list for every option*/
 dt {
     background-color: #000 !important;
-    color: white;
+    color: white !important;
+    z-index: 1000;
+}
+span.viewcode-link,
+span.sig-paren {
+    background: black !important;
     z-index: 1000;
 }
