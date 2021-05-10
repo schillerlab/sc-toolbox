@@ -33,7 +33,7 @@ def main() -> None:
     )
     print("[bold blue]Run [green]sc-toolbox --help [blue]for an overview of all commands\n")
 
-    # Is the latest mlf-core version installed? Upgrade if not!
+    # Is the latest sc-toolbox version installed? Upgrade if not!
     if not UpgradeCommand.check_sc_toolbox_latest():
         print("[bold blue]Run [green]sc-toolbox upgrade [blue]to get the latest version.")
     sc_toolbox_cli()  # type: ignore
