@@ -767,7 +767,7 @@ def cluster_composition_stacked_barplot(
         save: Path to save the plot to
 
     Example:
-
+        .. image:: /_images/cluster_composition_stacked_barplot.png
     """
     import matplotlib.patches as mpatches
 
