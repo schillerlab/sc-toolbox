@@ -1091,12 +1091,12 @@ def genotype_vs_genotype_umaps(
     Example:
         .. image:: /_images/genotype_vs_genotype_umaps.png
     """
-    genotype_label_1 = adata[adata.obs[genotype_key].isin([genotype_label_1])].copy()
-    genotype_label_2 = adata[adata.obs[genotype_key].isin([genotype_label_2])].copy()
+    genotype_data_1 = adata[adata.obs[genotype_key].isin([genotype_label_1])].copy()
+    genotype_data_2 = adata[adata.obs[genotype_key].isin([genotype_label_1])].copy()
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize)
     sc.pl.umap(
-        genotype_label_1,
+        genotype_data_1,
         color=color,
         ax=ax1,
         palette=sc.pl.palettes.default_20,
@@ -1108,7 +1108,7 @@ def genotype_vs_genotype_umaps(
         ax1.get_legend().remove()
     ax1.set_title(genotype_label_1)
     sc.pl.umap(
-        genotype_label_2,
+        genotype_data_2,
         color=color,
         ax=ax2,
         palette=sc.pl.palettes.default_20,
