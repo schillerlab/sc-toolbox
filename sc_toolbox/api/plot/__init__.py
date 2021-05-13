@@ -129,8 +129,9 @@ def standard_lineplot(
     cat.ax.tick_params(labelsize=tick_size)
 
     if save:
-        cat.fig.savefig(f"{save}", bbox_inches="tight")
-        print(f"[bold blue]Saving figure to {save}")
+        full_save_name = f"{gene}_{save}"
+        cat.fig.savefig(f"{full_save_name}", bbox_inches="tight")
+        print(f"[bold blue]Saving figure to {full_save_name}")
 
     plt.show()
     plt.close()
