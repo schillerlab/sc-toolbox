@@ -1092,7 +1092,7 @@ def genotype_vs_genotype_umaps(
         .. image:: /_images/genotype_vs_genotype_umaps.png
     """
     genotype_data_1 = adata[adata.obs[genotype_key].isin([genotype_label_1])].copy()
-    genotype_data_2 = adata[adata.obs[genotype_key].isin([genotype_label_1])].copy()
+    genotype_data_2 = adata[adata.obs[genotype_key].isin([genotype_label_2])].copy()
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize)
     sc.pl.umap(
