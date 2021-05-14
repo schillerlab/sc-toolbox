@@ -6,8 +6,8 @@ import sys
 
 import click
 import rich.logging
-from rich import print
-from rich import traceback
+from rich import print, traceback
+
 from sc_toolbox.cli.commands.create import ProjectCreator
 from sc_toolbox.cli.commands.upgrade import UpgradeCommand
 

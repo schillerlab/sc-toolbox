@@ -46,8 +46,9 @@ def read_concatenate_to_adata(file_paths: List[str]) -> AnnData:
     Returns:
         Single AnnData object containing all concatenated files
     """
-    import anndata as ad
     import gc
+
+    import anndata as ad
     import scipy.sparse
 
     for index, file_name in enumerate(file_paths):

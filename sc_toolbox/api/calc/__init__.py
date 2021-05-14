@@ -1,6 +1,11 @@
 import os
 from typing import List
-from typing import Literal
+
+try:
+    from typing import Literal
+except ImportError:
+    from typing_extensions import Literal  # type: ignore
+
 from typing import Optional
 
 import numpy as np
@@ -206,8 +211,8 @@ def remove_outliers(cords, eps: int = 1, min_samples: int = 2):
         Pandas DataFrame of clusters
 
     """
-    from sklearn.cluster import DBSCAN
     from natsort import natsorted
+    from sklearn.cluster import DBSCAN
 
     clustering = DBSCAN(eps=eps, min_samples=min_samples).fit(cords)
     cluster = clustering.labels_.astype("U")

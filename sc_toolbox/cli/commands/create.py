@@ -1,9 +1,9 @@
 import logging
 import os
-from dataclasses import asdict
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 from cookiecutter.main import cookiecutter
+
 from sc_toolbox.cli.questionary import sc_toolbox_questionary
 
 log = logging.getLogger(__name__)
