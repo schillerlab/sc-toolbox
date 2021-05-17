@@ -638,7 +638,7 @@ def marker_dendrogram(
     marker,
     threshold: float = 0.7,
     column: str = "cluster",
-    logfc_label: str = "logfoldchange";
+    logfc_label: str = "logfoldchange",
     label_size: int = 10,
     orient: str = "top",
     figsize: Tuple[int, int] = (10, 4),
