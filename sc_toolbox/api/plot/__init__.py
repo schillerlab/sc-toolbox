@@ -21,8 +21,8 @@ class Colormaps(Enum):
     """
 
     grey_red = colors.LinearSegmentedColormap.from_list("grouping", ["lightgray", "red", "darkred"], N=128)
-    grey_green = colors.LinearSegmentedColormap.from_list("grouping", ["lightgray", "limegreen", "forestgreen"], N = 128)
-    grey_yellow = colors.LinearSegmentedColormap.from_list("grouping", ["lightgray", "yellow", "gold"], N = 128)
+    grey_green = colors.LinearSegmentedColormap.from_list("grouping", ["lightgray", "limegreen", "forestgreen"], N=128)
+    grey_yellow = colors.LinearSegmentedColormap.from_list("grouping", ["lightgray", "yellow", "gold"], N=128)
     grey_violet = colors.LinearSegmentedColormap.from_list(
         "grouping", ["lightgray", "mediumvioletred", "indigo"], N=128
     )
@@ -145,7 +145,7 @@ def average_expression(
     xlabel: str = "days",
     cluster: str = "all",
     hue=None,
-    cols : str = "tab:blue",
+    cols: str = "tab:blue",
     figsize: Tuple[int, int] = (15, 6),
     smooth=None,
     rotation: int = None,
@@ -182,7 +182,7 @@ def average_expression(
     for gene in genes:
         meanpid = gene_expression.groupby([id_label, xlabel])[gene].mean().reset_index()
 
-        #cluster_label = ", ".join(cluster)
+        # cluster_label = ", ".join(cluster)
         cluster_label = ", ".join(cluster) if isinstance(cluster, list) else cluster
         standard_lineplot(
             meanpid,
@@ -256,7 +256,7 @@ def average_expression_per_cluster(
                 cell_types[c[0]] = c[1]
             meanpid[hue] = [cell_types[label] for label in meanpid.identifier]
 
-        #cluster_label = ", ".join(cluster)
+        # cluster_label = ", ".join(cluster)
         cluster_label = ", ".join(cluster) if isinstance(cluster, list) else cluster
         standard_lineplot(
             meanpid,
@@ -283,7 +283,7 @@ def average_expression_split_cluster(
     gene_expression,
     genes,
     order,
-    id_label = "identifier",
+    id_label="identifier",
     xlabel="days",
     hue="genotype",
     cluster=None,
@@ -503,7 +503,15 @@ def gene_expression_dpt_ordered(
                 data[gene] = np.interp(data[gene], (data[gene].min(), data[gene].max()), (0, +1))
 
             cat = sb.regplot(
-                data=data, x=xlabel, y=gene, scatter=False, order=order, truncate=True, ax=ax, color=cols[i], ci=conf_int
+                data=data,
+                x=xlabel,
+                y=gene,
+                scatter=False,
+                order=order,
+                truncate=True,
+                ax=ax,
+                color=cols[i],
+                ci=conf_int,
             )
             patches.append(mpatches.Patch(color=cols[i], label=gene))
 
@@ -597,7 +605,7 @@ def split_boxplot(
         order: Order of the boxplot labels
         xlabel: x-axis label
         ylabel: y-axis label
-        column: 
+        column:
         hue: Value to split relative frequencies by
         cols: List of colors to use for boxes
         width: Width of the desired plot
@@ -649,7 +657,7 @@ def marker_dendrogram(
 
     Args:
         marker: Data frame containing cell type signaturees
-        threshold: Only consider genes with logfoldchange above this threshold 
+        threshold: Only consider genes with logfoldchange above this threshold
         logfc_label: Name of the column containing logfoldchanges
         column: Name of the column containing cell type annotation
         label_size: Size of the labels as specified in matplotlib
@@ -662,8 +670,8 @@ def marker_dendrogram(
     """
     import scipy.cluster.hierarchy as hc
 
-    #log = "avg_logFC" if "avg_logFC" in marker.columns else "logfoldchange"
-    marker = marker[marker[log] > threshold]
+    # log = "avg_logFC" if "avg_logFC" in marker.columns else "logfoldchange"
+    marker = marker[marker[logfc_label] > threshold]
 
     marker = marker.pivot(index="gene", columns=column, values=logfc_label)
     marker.fillna(value=0, inplace=True)
@@ -696,6 +704,7 @@ def volcano_plot(
     fdr_thresh: float = None,
     adj_p_val: str = "adj_p_val",
     log_fc: str = "avg_logFC",
+    gene: str = "gene",
     sig_col: str = "tab:orange",
     col: str = "tab:blue",
     figsize: Tuple[int, int] = (8, 6),
@@ -709,6 +718,7 @@ def volcano_plot(
         fdr_thresh: FDR threshold
         adj_p_val: Label of the adjusted p value
         log_fc: Label of the log fold change
+        gene: Label of column with gene names
         col: Color of dots
         sig_col: Colour of dots surpassing defined FDR threshold
         figsize: Size of the figure as specified in matplotlib
@@ -728,8 +738,8 @@ def volcano_plot(
     fig, ax = plt.subplots()
     fig.set_size_inches(figsize)
 
-    sb.regplot(other_de[log_FC], other_de['-log_FDR'], fit_reg = False, scatter_kws = {'s':6, "color": col})
-    sb.regplot(lowqval_de[log_FC], lowqval_de['-log_FDR'], fit_reg = False, scatter_kws={'s':8, "color": sig_col})
+    sb.regplot(other_de[log_fc], other_de["-log_FDR"], fit_reg=False, scatter_kws={"s": 6, "color": col})
+    sb.regplot(lowqval_de[log_fc], lowqval_de["-log_FDR"], fit_reg=False, scatter_kws={"s": 8, "color": sig_col})
 
     ax.set_xlabel("log2 FC", fontsize=20)
     ax.set_ylabel("-log Q-value", fontsize=20)
