@@ -728,9 +728,9 @@ def volcano_plot(
     labels = lowqval_highfc_de[gene]
     max_n_labels = 50
     if len(labels) > max_n_labels:
-        print(f"Warning: given your thresholds, more than {max_n_labels} genes would have to be labeled.")
+        print(f"[bold yellow]Warning: given your thresholds, more than {max_n_labels} genes would have to be labeled.")
         print(
-            "To prevent overcrowding of your plot, make your thresholds stricter. \nWe will leave out the labels for now."
+            "[bold yellow]To prevent overcrowding of your plot, make your thresholds stricter. \nWe will leave out the labels for now."
         )
     else:
         # plot labels, and use adjust_text to make sure that labels don't overlap:
