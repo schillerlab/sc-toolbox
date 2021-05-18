@@ -6,9 +6,6 @@
 
 -   [ ] This comment contains a description of changes (with reason)
 -   [ ] Referenced issue is linked
--   [ ] If you've fixed a bug or added code that should be tested, add tests!
--   [ ] Documentation in `docs` is updated
--   [ ] `CHANGELOG.rst` is updated
 
 **Description of changes**
 
@@ -17,7 +14,3 @@
 **Technical details**
 
 <!-- Please state any technical details such as limitations, reasons for additional dependencies, benchmarks etc. here. -->
-
-**Additional context**
-
-<!-- Add any other context or screenshots here. -->
