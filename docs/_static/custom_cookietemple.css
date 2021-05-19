@@ -205,18 +205,39 @@ footer {
 dl .sig-name,
 .pre,
 .sig-prename {
-    color: #fff;
     background-color: #000 !important;
-    z-index: 1000;
 }
+
 /*Background of the container list for every option*/
 dt {
-    background-color: #000 !important;
+    background-color: #181a1b !important;
     color: white !important;
-    z-index: 1000;
 }
+
+/* Black background for source code link and parentheses in class/function declarations */
 span.viewcode-link,
 span.sig-paren {
     background: black !important;
-    z-index: 1000;
+}
+
+/* Style detailed parameters explanation boxes */
+.field-odd,
+.field-even {
+    background-color: #2d2e2f !important;
+    color: #005fff !important;
+}
+
+.docutils > span {
+    background-color: #181a1b !important;
+}
+
+/* Black background for all function/class signatures and declarations (headers) */
+.py dt[id^="sc"] {
+    background-color: black !important;
+}
+
+/* Color the name of each class/function declaration blue */
+code.sig-prename,
+code.sig-name {
+    color: #005fff !important;
 }
