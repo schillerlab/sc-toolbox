@@ -32,7 +32,8 @@ Request features on the `Issue Tracker`_.
 How to set up your development environment
 ------------------------------------------
 
-You need Python 3.7+ and the following tools:
+We strongly recommend working with a fresh Python 3.8 virtual environment (e.g. with Conda).
+Next, install:
 
 - Poetry_
 - Nox_
@@ -44,7 +45,10 @@ You can install them with:
 
     $ pip install poetry nox nox-poetry
 
-Install the sc-toolbox package with development requirements:
+Poetry_ is our build system of choice to glue together the code, manage the dependencies and to build the package.
+Nox_ and the third party extension nox-poetry_ are used to run an extensive test and static code quality check suite.
+
+Install the sc-toolbox package with development requirements inside the cloned sc-toolbox folder:
 
 .. code:: console
 
@@ -59,8 +63,6 @@ You can now run an interactive Python session, or the command-line interface:
 
 Note that the package will solely be installed inside the Poetry virtual environment.
 Read the Poetry documentation to understand how to activate the environment and how to install further packages such as Scanpy into it.
-Alternatively you can activate a virtual environment (e.g. Conda) before installing sc-toolbox.
-It will then automatically be installed into your existing virtual environment.
 
 .. _Poetry: https://python-poetry.org/
 .. _Nox: https://nox.thea.codes/
