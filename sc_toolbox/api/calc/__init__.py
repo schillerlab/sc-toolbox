@@ -416,11 +416,21 @@ def automated_marker_annotation(
     """
     Calculates a marker gene overlap based on pre-existing annotations.
 
+    Currently supported marker files:
+
+    +------------+------------+------------------------------+
+    | Organism   | Tissue     | Marker File                  |
+    +============+============+==============================+
+    | Mouse      | Lung       | lung_particle_markers.txt    |
+    +------------+------------+------------------------------+
+    | Human      | NA         |                              |
+    +------------+------------+------------------------------+
+
     Args:
         adata: AnnData object containing ranked genes
         organism: Currently supported: 'mouse'
         tissue: Currently supported: 'lung'
-        marker_file: Currently supported: 'lung_particle_markers.txt'
+        marker_file: Name of the marker file to be used - refer to table
         key: Key of ranked genes in adata (default: 'rank_genes_groups')
         normalize: Normalization option for the marker gene overlap output (default: 'reference')
         p_value: p-value threshold for existing marker genes (default: 0.05)
@@ -451,8 +461,8 @@ def automated_marker_annotation(
     ].copy()
 
     marker = dict()
-    for ct in marker_table["cluster"].unique():
-        tmp = marker_table[marker_table["cluster"] == ct]
+    for ct in marker_table["cell_type"].unique():
+        tmp = marker_table[marker_table["cell_type"] == ct]
         marker[ct] = tmp.gene.values
 
     return sc.tl.marker_gene_overlap(adata, marker, key=key, normalize=normalize)
