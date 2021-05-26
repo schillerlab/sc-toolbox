@@ -243,9 +243,9 @@ def add_percentages(adata, table, ids, group_by: str, threshold: int = 0, gene_l
         )
 
         if gene_label == "index":
-            table["pct.%s" % ident] = data_temp.loc[table.index.values].values
+            table[f"pct.{ident}s"] = data_temp.reindex(table.index.values).values
         else:
-            table["pct.%s" % ident] = data_temp.loc[table.loc[:, gene_label]].values
+            table[f"pct.{ident}s"] = data_temp.reindex(table.loc[:, gene_label]).values
     return table
 
 
