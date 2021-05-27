@@ -444,7 +444,7 @@ def extended_marker_table(
         all_markers.append(current)
 
     all_markers_df = pd.concat(all_markers)
-    all_markers_df = all_markers[all_markers_df.pval_adj < qval_thresh].copy()
+    all_markers_df = all_markers_df[all_markers_df.pval_adj < qval_thresh].copy()
 
     return all_markers_df
 
