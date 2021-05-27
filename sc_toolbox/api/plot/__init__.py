@@ -15,11 +15,15 @@ class Colormaps(Enum):
     """
     Available colormaps:
         | grey_red
-        | grey_violet
         | grey_blue
+        | grey_green
+        | gray_yellow
+        | grey_violet
     """
 
     grey_red = colors.LinearSegmentedColormap.from_list("grouping", ["lightgray", "red", "darkred"], N=128)
+    grey_green = colors.LinearSegmentedColormap.from_list("grouping", ["lightgray", "limegreen", "forestgreen"], N=128)
+    grey_yellow = colors.LinearSegmentedColormap.from_list("grouping", ["lightgray", "yellow", "gold"], N=128)
     grey_violet = colors.LinearSegmentedColormap.from_list(
         "grouping", ["lightgray", "mediumvioletred", "indigo"], N=128
     )
@@ -65,14 +69,14 @@ def standard_lineplot(
     Draws a standard line plot based on Seaborn's lmplot.
 
     Args:
-        data: Data to plot. Usually AnnData object
+        data: Data frame containing averaged expression values
         order: Order of x-axis labels from left to right
         xlabel: x-axis label
         ylabel: y-axis label
         hue: Subsets of the data which will be drawn on separate facets in the grid. Example: "condition"
-        gene:
+        gene: Gene of interest
         smooth: Whether to smoothen (interpolate) the curve
-        cols:
+        cols: List of colors to use for line plot
         title: Title of the plot
         rotation: Rotation of the x-axis labels
         figsize: Size of the figure as specified in matplotlib
@@ -80,7 +84,7 @@ def standard_lineplot(
         label_size: Size of the labels as specified in matplotlib
         order_smooth: If greater than 1, numpy.polyfit is used to estimate a polynomial regression
         confidence_interval: Confidence interval
-        scatter:
+        scatter: Set to true in order to add mean expression per sample in form of scatter point
         save: Path to save the plot to
     """
     if smooth:
@@ -138,9 +142,11 @@ def average_expression(
     gene_expression,
     genes,
     order: List[str],
+    id_label: str = "identifier",
     xlabel: str = "days",
     cluster: str = "all",
     hue=None,
+    cols: str = "tab:blue",
     figsize: Tuple[int, int] = (15, 6),
     smooth=None,
     rotation: int = None,
@@ -150,21 +156,22 @@ def average_expression(
     save: str = None,
 ):
     """
-    Draw a line plot showing the average gene expression over time.
+    Draw a line plot showing the gene expression over time. Expression values are averaged by individual sample.
 
     Args:
-        gene_expression:
-        genes:
+        gene_expression: Data frame containing gene expression values
+        genes: List of genes for which individual line plots will be generated
         order: Order of x-axis labels from left to right
+        id_label: Adata column in which sample id information is stored
         xlabel: x-axis label
         cluster: Which clusters to plot. Select 'all" if all clusters should be drawn.
         hue: Which value to color by
         figsize: Size of the figure as specified in matplotlib
-        smooth:
-        rotation:
-        order_smooth:
-        conf_int:
-        scatter:
+        smooth: Set to true for smoothened line plot using polynomial regression
+        rotation: set to True to rotate x-axis labels 90 degrees
+        order_smooth: If greater than 1, use numpy.polyfit to estimate a polynomial regression
+        conf_int: Size of the confidence interval for the regression estimate
+        scatter: Set to True to add average expression values per sample ID as dots
         save: Path to save the plot to
 
     Example smooth:
@@ -174,9 +181,10 @@ def average_expression(
         .. image:: /_images/average_expression_raw.png
     """
     for gene in genes:
-        meanpid = gene_expression.groupby(["identifier", xlabel])[gene].mean().reset_index()
+        meanpid = gene_expression.groupby([id_label, xlabel])[gene].mean().reset_index()
 
-        cluster_label = ", ".join(cluster)
+        # cluster_label = ", ".join(cluster)
+        cluster_label = ", ".join(cluster) if isinstance(cluster, list) else cluster
         standard_lineplot(
             meanpid,
             order=order,
@@ -185,7 +193,7 @@ def average_expression(
             hue=hue,
             gene=gene,
             smooth=smooth,
-            cols=None,
+            cols=cols,
             title=gene,
             rotation=rotation,
             figsize=figsize,
@@ -201,6 +209,7 @@ def average_expression_per_cluster(
     genes,
     order,
     obs=None,
+    id_label: str = "identifier",
     xlabel: str = "days",
     cluster: str = "all",
     hue=None,
@@ -219,35 +228,37 @@ def average_expression_per_cluster(
     One line per cluster.
 
     Args:
-        gene_expression:
-        genes:
-        order:
-        obs:
+        gene_expression: Data frame containing gene expression values
+        genes: List of genes for which individual line plots will be generated
+        order: Order of x-axis labels from left to right
+        obs: Data frame containing meta data information
         xlabel: x-axis label
-        cluster:
-        hue:
+        cluster: Which clusters to plot. Select 'all" if all clusters should be drawn.
+        id_label: Meta data column in which sample id information is stored
+        hue: Split expression values by this grouping, one line per category will be drawn
         figsize: Size of the figure as specified in matplotlib
-        smooth:
-        rotation:
+        smooth: Set to True for smoothened line plot using polynomial regression
+        rotation: Set to True to rotate x-axis labels 90 degrees
         tick_size: Size of the ticks as specified in matplotlib
         label_size: Size of the labels as specified in matplotlib
-        order_smooth:
-        conf_int:
-        scatter:
+        order_smooth: If greater than 1, use numpy.polyfit to estimate a polynomial regression
+        conf_int: Size of the confidence interval for the regression estimate
+        scatter: Set to True to add average expression values per sample ID as dots
         save: Path to save the plot to
     """
     for gene in genes:
-        meanpid = gene_expression.groupby(["identifier", xlabel])[gene].mean().reset_index()
+        meanpid = gene_expression.groupby([id_label, xlabel])[gene].mean().reset_index()
 
         if hue:
             cell_types = {}
-            combis = obs.groupby(["identifier", hue]).groups.keys()
+            combis = obs.groupby([id_label, hue]).groups.keys()
 
             for c in combis:
                 cell_types[c[0]] = c[1]
             meanpid[hue] = [cell_types[label] for label in meanpid.identifier]
 
-        cluster_label = ", ".join(cluster)
+        # cluster_label = ", ".join(cluster)
+        cluster_label = ", ".join(cluster) if isinstance(cluster, list) else cluster
         standard_lineplot(
             meanpid,
             order=order,
@@ -273,6 +284,7 @@ def average_expression_split_cluster(
     gene_expression,
     genes,
     order,
+    id_label="identifier",
     xlabel="days",
     hue="genotype",
     cluster=None,
@@ -291,21 +303,22 @@ def average_expression_split_cluster(
     Plot average gene expression as line plots for multiple clusters at once.
 
     Args:
-        gene_expression:
-        genes:
-        order:
+        gene_expression: Data frame containing gene expression values
+        genes: List of genes for which individual line plots will be generated
+        order: Order of x-axis labels from left to right
+        id_label: Meta data column in which sample id information is stored
         xlabel: x-axis label
-        hue: Value to color by
-        cluster:
+        hue: Split expression values by this grouping, one line per category, will be drawn
+        cluster: Which clusters to plot. Select 'all" if all clusters should be drawn.
         figsize: Size of the figure as specified in matplotlib
-        smooth:
+        smooth: Set to True for smoothened line plot using polynomial regression
         rotation: x-axis label rotation
-        cols:
+        cols: List of colors to use for line plot
         tick_size: Size of the ticks as specified in matplotlib
         label_size: Size of the labels as specified in matplotlib
-        order_smooth:
-        conf_int:
-        scatter:
+        order_smooth: If greater than 1, numpy.polyfit is used to estimate a polynomial regression
+        conf_int: Size of the confidence interval for the regression estimate
+        scatter: Set to True to add average expression values per sample ID as dots
         save: Path to save the plot to
 
     Example smooth:
@@ -323,7 +336,7 @@ def average_expression_split_cluster(
         ylab = "Average expression"
 
     for gene in genes:
-        meanpid = gene_expression.groupby(["identifier", hue, xlabel])[gene].mean().reset_index()
+        meanpid = gene_expression.groupby([id_label, hue, xlabel])[gene].mean().reset_index()
 
         standard_lineplot(
             meanpid,
@@ -368,21 +381,21 @@ def average_expression_per_cell(
     Plots the average gene expression as a line plot per cell.
     Ideally used when the scatter point should not be sample wise, but cell wise.
     Args:
-        gene_expression:
-        genes:
-        order:
+        gene_expression: Data frame containing gene expression values
+        genes: List of genes for which individual line plots will be generated
+        order: Order of x-axis labels from left to right
         xlabel: x-axis label
-        cluster:
-        hue: Value to color by
+        cluster: Which clusters to plot. Select 'all" if all clusters should be drawn.
+        hue: Split expression values by this grouping, one line per category, will be drawn
         figsize: Size of the figure as specified in matplotlib
-        smooth:
-        rotation:
+        smooth: Set to true for smoothened line plot using polynomial regression
+        rotation: Set to True to rotate x-axis labels 90 degrees
         tick_size: Size of the ticks as specified in matplotlib
         label_size: Size of the labels as specified in matplotlib
-        order_smooth:
-        conf_int:
-        scatter:
-        cols:
+        order_smooth: If greater than 1, use numpy.polyfit to estimate a polynomial regression
+        conf_int: Size of the confidence interval for the regression estimate
+        scatter: Set to True to add average expression values per sample ID as dots
+        cols: List of colors to use for line plot
         save: Path to save the plot to
 
     """
@@ -414,7 +427,7 @@ def gene_expression_dpt_ordered(
     genes,
     xlabel,
     order=3,
-    ci=95,
+    conf_int=95,
     figsize: Tuple[int, int] = (12, 6),
     condition=None,
     label_size: int = 15,
@@ -424,20 +437,20 @@ def gene_expression_dpt_ordered(
     save: str = None,
 ):
     """
-    Plot smoothed expression of all cells ordered by pseudotime.
+    Plot smoothed expression of all cells ordered by pseudo time.
 
     Args:
         data: AnnData object
-        genes:
+        genes: List of genes for which individual line plots will be generated
         xlabel: x-axis label
-        order:
-        ci:
+        order: Order of x-axis labels from left to right
+        conf_int: Size of the confidence interval for the regression estimate
         figsize: Size of the figure as specified in matplotlib
-        condition:
-        label_size:
-        cols:
-        scale:
-        ylim:
+        condition: Split expression values by this grouping, one line per category will be drawn
+        label_size: Size of the labels as specified in matplotlib
+        cols: List of colors to use for line plot
+        scale: Set to True to scale expression value to a range between 0 and 1
+        ylim: Upper limit on the y-axis if desired
         save: Path to save the plot to
 
     Example:
@@ -481,7 +494,7 @@ def gene_expression_dpt_ordered(
                 data[col] = np.interp(data[col], (data[col].min(), data[col].max()), (0, +1))
 
             cat = sb.regplot(
-                data=data, x=xlabel, y=col, scatter=False, order=order, truncate=True, ax=ax, color=cols[i], ci=ci
+                data=data, x=xlabel, y=col, scatter=False, order=order, truncate=True, ax=ax, color=cols[i], ci=conf_int
             )
             patches.append(mpatches.Patch(color=cols[i], label=col))
 
@@ -491,7 +504,15 @@ def gene_expression_dpt_ordered(
                 data[gene] = np.interp(data[gene], (data[gene].min(), data[gene].max()), (0, +1))
 
             cat = sb.regplot(
-                data=data, x=xlabel, y=gene, scatter=False, order=order, truncate=True, ax=ax, color=cols[i], ci=ci
+                data=data,
+                x=xlabel,
+                y=gene,
+                scatter=False,
+                order=order,
+                truncate=True,
+                ax=ax,
+                color=cols[i],
+                ci=conf_int,
             )
             patches.append(mpatches.Patch(color=cols[i], label=gene))
 
@@ -531,14 +552,14 @@ def relative_frequencies_boxplots(
 
     Args:
         relative_frequencies: Calculated by calc_relative_frequencies as Pandas DataFrame
-        cluster:
-        cols:
-        order:
+        cluster: Cluster to be plotted
+        cols: List of colors to use for boxes
+        order: Order of x-axis labels from left to right
         xlabel: x-axis label
         hue: Value to color by
         figsize: Size of the figure as specified in matplotlib
         width: Width of the plot as specified in matplotlib
-        jitter:
+        jitter: Set to True for individual dots per sample
         save: Path to save the plot to
 
     Example:
@@ -586,12 +607,12 @@ def split_boxplot(
         xlabel: x-axis label
         ylabel: y-axis label
         column:
-        hue: Value to color by
-        cols:
+        hue: Value to split relative frequencies by
+        cols: List of colors to use for boxes
         width: Width of the desired plot
         title: Title of the plot
         figsize: Size of the figure as specified in matplotlib
-        jitter:
+        jitter: Set to True for individual dots per sample
         save: Path to save the plot to
     """
     fig, ax = plt.subplots()
@@ -685,6 +706,8 @@ def volcano_plot(
     adj_p_val: str = "adj_p_val",
     log_fc: str = "avg_logFC",
     gene: str = "gene",
+    sig_col: str = "tab:orange",
+    col: str = "tab:blue",
     figsize: Tuple[int, int] = (8, 6),
     save=None,
 ):
@@ -698,7 +721,9 @@ def volcano_plot(
         log_fc_thresh: absolute(log_fc) threshold for labeling genes.
         adj_p_val: Label of the adjusted p value, these are considered FDRs
         log_fc: Label of the log fold change
-        gene: Label of the gene names
+        gene: Label of column with gene names
+        col: Color of dots
+        sig_col: Colour of dots surpassing defined FDR threshold
         figsize: Size of the figure as specified in matplotlib
         save: Path to save the plot to
 
@@ -767,17 +792,17 @@ def cluster_composition_stacked_barplot(
     Plot relative frequencies as a stacked barplot.
 
     Args:
-        relative_frequencies:
+        relative_frequencies: Data frame containing relative Frequencies as calculated by calc_relFreq()
         xlabel: x-axis label
         figsize: Size of the figure as specified in matplotlib
-        width: Width of the desired plot
-        order:
-        error_bar:
+        width: Width of the bars
+        order: Order of x-axis labels from left to right
+        error_bar: Set to True to add error bars (only possible when grouping the frequencies)
         tick_size: Size of the ticks as specified in matplotlib
         label_size: Size of the labels as specified in matplotlib
-        capsize:
-        margins:
-        cols:
+        capsize: Size of the horizontal lines of the error bar
+        margins: Change margins of the plot if desired
+        cols: List of colors to use for the bands
         save: Path to save the plot to
 
     Example:
@@ -980,22 +1005,22 @@ def relative_frequencies_lineplot(
     Plot relative frequencies as a line plot.
 
     Args:
-        relative_frequencies: Pandas Data
-        order:
-        cluster:
+        relative_frequencies: Data frame containing relative Frequencies as calculated by calc_relFreq()
+        order: Order of x-axis labels from left to right
+        cluster: Which cluster to plot
         xlabel: x-axis label
         ylabel: y-axis label
         hue: Value to color by
         smooth: Whether to smoothen the plot
-        cols:
+        cols: List of colors to use for line plot
         title: Title of the plot
         rotation: Rotation of the x-axis labels
         figsize: Size of the figure as specified in matplotlib
         tick_size: Size of the ticks as specified in matplotlib
         label_size: Size of the labels as specified in matplotlib
-        order_smooth:
-        conf_int:
-        scatter:
+        order_smooth: If greater than 1, numpy.polyfit is used to estimate a polynomial regression
+        conf_int: Size of the confidence interval for the regression estimate
+        scatter: Set to True to add average expression values per sample ID as dots
         save: Path to save the plot to
 
     Example:

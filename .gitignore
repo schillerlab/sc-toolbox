@@ -139,3 +139,6 @@ dmypy.json
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+
+## Some Mac files
+*DS_Store
