@@ -13,7 +13,11 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/custom_cookietemple.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/dark_mode_css/general.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/dark_mode_css/dark.css" type="text/css" />
 
   
   
@@ -30,9 +34,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/dark_mode_js/default_dark.js"></script>
+        <script src="../../../_static/dark_mode_js/theme_switcher.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -406,9 +413,9 @@
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">gene_label</span> <span class="o">==</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span>
-            <span class="n">table</span><span class="p">[</span><span class="s2">&quot;pct.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ident</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_temp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">table</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">table</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;pct.</span><span class="si">{</span><span class="n">ident</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_temp</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">table</span><span class="p">[</span><span class="s2">&quot;pct.</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">ident</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_temp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">gene_label</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">table</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;pct.</span><span class="si">{</span><span class="n">ident</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_temp</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">gene_label</span><span class="p">])</span><span class="o">.</span><span class="n">values</span>
     <span class="k">return</span> <span class="n">table</span></div>
 
 
@@ -566,6 +573,52 @@
     <span class="k">return</span> <span class="n">cors</span></div>
 
 
+<div class="viewcode-block" id="extended_marker_table"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.calc.extended_marker_table">[docs]</a><span class="k">def</span> <span class="nf">extended_marker_table</span><span class="p">(</span>
+    <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
+    <span class="n">qval_thresh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">cell_type_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cell_type&quot;</span><span class="p">,</span>
+    <span class="n">gene_ranks_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rank_genes_groups&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates an extended marker table with cell types and percentages of expressed cell types per cluster.</span>
+<span class="sd">    Run scanpy.tl.rank_genes_groups before using this function.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        adata: AnnData object containing ranked genes</span>
+<span class="sd">        qval_thresh: Threshold to filter the log fold change for</span>
+<span class="sd">        cell_type_label: Label containing all cell types</span>
+<span class="sd">        gene_ranks_key: Key for the ranked gene groups (generated by sc.tl.rank_genes_groups)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A Pandas DataFrame</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="n">gene_ranks_key</span><span class="p">]</span>
+    <span class="n">all_markers</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;names&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;gene&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;names&quot;</span><span class="p">][</span><span class="n">cluster</span><span class="p">],</span>
+                <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;scores&quot;</span><span class="p">][</span><span class="n">cluster</span><span class="p">],</span>
+                <span class="s2">&quot;log_FC&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;logfoldchanges&quot;</span><span class="p">][</span><span class="n">cluster</span><span class="p">],</span>
+                <span class="s2">&quot;pval&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;pvals&quot;</span><span class="p">][</span><span class="n">cluster</span><span class="p">],</span>
+                <span class="s2">&quot;pval_adj&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;pvals_adj&quot;</span><span class="p">][</span><span class="n">cluster</span><span class="p">],</span>
+                <span class="s2">&quot;cell_type&quot;</span><span class="p">:</span> <span class="n">cluster</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Add percentage expressed per cell type</span>
+        <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;within&quot;</span> <span class="k">if</span> <span class="n">ct</span> <span class="o">==</span> <span class="n">cluster</span> <span class="k">else</span> <span class="s2">&quot;outside&quot;</span> <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">cell_type_label</span><span class="p">]]</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">add_percentages</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">current</span><span class="p">,</span> <span class="n">group_by</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">gene_label</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;within&quot;</span><span class="p">,</span> <span class="s2">&quot;outside&quot;</span><span class="p">])</span>
+
+        <span class="n">all_markers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+
+    <span class="n">all_markers_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">all_markers</span><span class="p">)</span>
+    <span class="n">all_markers_df</span> <span class="o">=</span> <span class="n">all_markers</span><span class="p">[</span><span class="n">all_markers_df</span><span class="o">.</span><span class="n">pval_adj</span> <span class="o">&lt;</span> <span class="n">qval_thresh</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">all_markers_df</span></div>
+
+
 <div class="viewcode-block" id="automated_marker_annotation"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.calc.automated_marker_annotation">[docs]</a><span class="k">def</span> <span class="nf">automated_marker_annotation</span><span class="p">(</span>
     <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span>
     <span class="n">organism</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -579,11 +632,21 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculates a marker gene overlap based on pre-existing annotations.</span>
 
+<span class="sd">    Currently supported marker files:</span>
+
+<span class="sd">    +------------+------------+------------------------------+</span>
+<span class="sd">    | Organism   | Tissue     | Marker File                  |</span>
+<span class="sd">    +============+============+==============================+</span>
+<span class="sd">    | Mouse      | Lung       | lung_particle_markers.txt    |</span>
+<span class="sd">    +------------+------------+------------------------------+</span>
+<span class="sd">    | Human      | NA         |                              |</span>
+<span class="sd">    +------------+------------+------------------------------+</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        adata: AnnData object containing ranked genes</span>
 <span class="sd">        organism: Currently supported: &#39;mouse&#39;</span>
 <span class="sd">        tissue: Currently supported: &#39;lung&#39;</span>
-<span class="sd">        marker_file: Currently supported: &#39;lung_particle_markers.txt&#39;</span>
+<span class="sd">        marker_file: Name of the marker file to be used - refer to table</span>
 <span class="sd">        key: Key of ranked genes in adata (default: &#39;rank_genes_groups&#39;)</span>
 <span class="sd">        normalize: Normalization option for the marker gene overlap output (default: &#39;reference&#39;)</span>
 <span class="sd">        p_value: p-value threshold for existing marker genes (default: 0.05)</span>
@@ -614,8 +677,8 @@
     <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="n">marker</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">marker_table</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
-        <span class="n">tmp</span> <span class="o">=</span> <span class="n">marker_table</span><span class="p">[</span><span class="n">marker_table</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ct</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">marker_table</span><span class="p">[</span><span class="s2">&quot;cell_type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">marker_table</span><span class="p">[</span><span class="n">marker_table</span><span class="p">[</span><span class="s2">&quot;cell_type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ct</span><span class="p">]</span>
         <span class="n">marker</span><span class="p">[</span><span class="n">ct</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">gene</span><span class="o">.</span><span class="n">values</span>
 
     <span class="k">return</span> <span class="n">sc</span><span class="o">.</span><span class="n">tl</span><span class="o">.</span><span class="n">marker_gene_overlap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">marker</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">)</span></div>

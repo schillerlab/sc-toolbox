@@ -13,7 +13,11 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom_cookietemple.css" type="text/css" />
+  <link rel="stylesheet" href="_static/dark_mode_css/general.css" type="text/css" />
+  <link rel="stylesheet" href="_static/dark_mode_css/dark.css" type="text/css" />
 
   
   
@@ -30,9 +34,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/dark_mode_js/default_dark.js"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -194,7 +201,8 @@ highly welcomes contributions in the form of bug reports, feature requests, and 
 </div>
 <div class="section" id="how-to-set-up-your-development-environment">
 <h2>How to set up your development environment<a class="headerlink" href="#how-to-set-up-your-development-environment" title="Permalink to this headline">¶</a></h2>
-<p>You need Python 3.7+ and the following tools:</p>
+<p>We strongly recommend working with a fresh Python 3.8 virtual environment (e.g. with Conda).
+Next, install:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://python-poetry.org/">Poetry</a></p></li>
 <li><p><a class="reference external" href="https://nox.thea.codes/">Nox</a></p></li>
@@ -204,7 +212,9 @@ highly welcomes contributions in the form of bug reports, feature requests, and 
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip install poetry nox nox-poetry
 </pre></div>
 </div>
-<p>Install the sc-toolbox package with development requirements:</p>
+<p><a class="reference external" href="https://python-poetry.org/">Poetry</a> is our build system of choice to glue together the code, manage the dependencies and to build the package.
+<a class="reference external" href="https://nox.thea.codes/">Nox</a> and the third party extension <a class="reference external" href="https://nox-poetry.readthedocs.io/">nox-poetry</a> are used to run an extensive test and static code quality check suite.</p>
+<p>Install the sc-toolbox package with development requirements inside the cloned sc-toolbox folder:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make install
 </pre></div>
 </div>
@@ -214,9 +224,7 @@ highly welcomes contributions in the form of bug reports, feature requests, and 
 </pre></div>
 </div>
 <p>Note that the package will solely be installed inside the Poetry virtual environment.
-Read the Poetry documentation to understand how to activate the environment and how to install further packages such as Scanpy into it.
-Alternatively you can activate a virtual environment (e.g. Conda) before installing sc-toolbox.
-It will then automatically be installed into your existing virtual environment.</p>
+Read the Poetry documentation to understand how to activate the environment and how to install further packages such as Scanpy into it.</p>
 </div>
 <div class="section" id="how-to-test-the-project">
 <h2>How to test the project<a class="headerlink" href="#how-to-test-the-project" title="Permalink to this headline">¶</a></h2>
