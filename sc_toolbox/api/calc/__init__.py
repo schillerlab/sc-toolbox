@@ -403,7 +403,7 @@ def correlate_means_to_gene(means: pd.DataFrame, corr_gene: str = "EOMES"):
     return cors
 
 
-def generate_extended_marker_table(
+def extended_marker_table(
     adata: AnnData,
     qval_thresh: float = 0.05,
     cell_type_label: str = "cell_type",
