@@ -1,4 +1,4 @@
-gene	score	logfoldchange	pval	pval_adj	cluster
+gene	score	logfoldchange	pval	pval_adj	cell_type
 Chil3	113.77271	7.300887	0.0	0.0	AM
 Ccl6	101.76517	5.722293	0.0	0.0	AM
 Ctsd	98.33385	4.668608	0.0	0.0	AM
