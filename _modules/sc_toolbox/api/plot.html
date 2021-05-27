@@ -1,0 +1,1374 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>sc_toolbox.api.plot &mdash; sc-toolbox 0.7.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom_cookietemple.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/dark_mode_css/general.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/dark_mode_css/dark.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/dark_mode_js/default_dark.js"></script>
+        <script src="../../../_static/dark_mode_js/theme_switcher.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> sc-toolbox
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">sc-toolbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributor Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sc-toolbox</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sc_toolbox.api.plot</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sc_toolbox.api.plot</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sb</span>
+<span class="kn">from</span> <span class="nn">adjustText</span> <span class="kn">import</span> <span class="n">adjust_text</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span>
+<span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="nb">print</span>
+
+
+<div class="viewcode-block" id="Colormaps"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.Colormaps">[docs]</a><span class="k">class</span> <span class="nc">Colormaps</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Available colormaps:</span>
+<span class="sd">        | grey_red</span>
+<span class="sd">        | grey_blue</span>
+<span class="sd">        | grey_green</span>
+<span class="sd">        | gray_yellow</span>
+<span class="sd">        | grey_violet</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">grey_red</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">&quot;grouping&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;lightgray&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="s2">&quot;darkred&quot;</span><span class="p">],</span> <span class="n">N</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+    <span class="n">grey_green</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">&quot;grouping&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;lightgray&quot;</span><span class="p">,</span> <span class="s2">&quot;limegreen&quot;</span><span class="p">,</span> <span class="s2">&quot;forestgreen&quot;</span><span class="p">],</span> <span class="n">N</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+    <span class="n">grey_yellow</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">&quot;grouping&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;lightgray&quot;</span><span class="p">,</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;gold&quot;</span><span class="p">],</span> <span class="n">N</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+    <span class="n">grey_violet</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span>
+        <span class="s2">&quot;grouping&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;lightgray&quot;</span><span class="p">,</span> <span class="s2">&quot;mediumvioletred&quot;</span><span class="p">,</span> <span class="s2">&quot;indigo&quot;</span><span class="p">],</span> <span class="n">N</span><span class="o">=</span><span class="mi">128</span>
+    <span class="p">)</span>
+    <span class="n">grey_blue</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">&quot;grouping&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;lightgray&quot;</span><span class="p">,</span> <span class="s2">&quot;cornflowerblue&quot;</span><span class="p">,</span> <span class="s2">&quot;darkblue&quot;</span><span class="p">],</span> <span class="n">N</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="custom_plot_size"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.custom_plot_size">[docs]</a><span class="k">def</span> <span class="nf">custom_plot_size</span><span class="p">(</span><span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dpi</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a custom axis object of desired sizes.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        width: Desired plot width</span>
+<span class="sd">        height: Desired plot height</span>
+<span class="sd">        dpi: Desired plot DPI.</span>
+
+<span class="sd">    Returns: Axis of desired sizes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="standard_lineplot"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.standard_lineplot">[docs]</a><span class="k">def</span> <span class="nf">standard_lineplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">order</span><span class="p">:</span> <span class="n">List</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">gene</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">smooth</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="n">tick_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">label_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">order_smooth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">confidence_interval</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Draws a standard line plot based on Seaborn&#39;s lmplot.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: Data frame containing averaged expression values</span>
+<span class="sd">        order: Order of x-axis labels from left to right</span>
+<span class="sd">        xlabel: x-axis label</span>
+<span class="sd">        ylabel: y-axis label</span>
+<span class="sd">        hue: Subsets of the data which will be drawn on separate facets in the grid. Example: &quot;condition&quot;</span>
+<span class="sd">        gene: Gene of interest</span>
+<span class="sd">        smooth: Whether to smoothen (interpolate) the curve</span>
+<span class="sd">        cols: List of colors to use for line plot</span>
+<span class="sd">        title: Title of the plot</span>
+<span class="sd">        rotation: Rotation of the x-axis labels</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        tick_size: Size of the ticks as specified in matplotlib</span>
+<span class="sd">        label_size: Size of the labels as specified in matplotlib</span>
+<span class="sd">        order_smooth: If greater than 1, numpy.polyfit is used to estimate a polynomial regression</span>
+<span class="sd">        confidence_interval: Confidence interval</span>
+<span class="sd">        scatter: Set to true in order to add mean expression per sample in form of scatter point</span>
+<span class="sd">        save: Path to save the plot to</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">smooth</span><span class="p">:</span>
+        <span class="c1"># Possible to set alpha of scatter with scatter_kws={&#39;alpha&#39;: 0.1}</span>
+        <span class="k">if</span> <span class="n">hue</span><span class="p">:</span>
+            <span class="n">cat</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span>
+                <span class="n">ci</span><span class="o">=</span><span class="n">confidence_interval</span><span class="p">,</span>
+                <span class="n">order</span><span class="o">=</span><span class="n">order_smooth</span><span class="p">,</span>
+                <span class="n">scatter</span><span class="o">=</span><span class="n">scatter</span><span class="p">,</span>
+                <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span>
+                <span class="n">truncate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">palette</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cat</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="n">confidence_interval</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order_smooth</span><span class="p">,</span> <span class="n">scatter</span><span class="o">=</span><span class="n">scatter</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">cols</span>
+            <span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Removed Parameter order = order, as order should be given numerically anyways.</span>
+        <span class="k">if</span> <span class="n">hue</span><span class="p">:</span>
+            <span class="n">cat</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;point&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cat</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;point&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scatter</span><span class="p">:</span>
+            <span class="n">cat2</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">hue</span><span class="p">:</span>
+                <span class="n">cat2</span><span class="o">.</span><span class="n">legend_</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+
+    <span class="n">cat</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticks</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">xlabel</span><span class="p">]))</span>
+
+    <span class="n">cat</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+    <span class="n">cat</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="n">figsize</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">rotation</span><span class="p">:</span>
+        <span class="n">cat</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
+    <span class="n">cat</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">label_size</span><span class="p">)</span>
+    <span class="n">cat</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">label_size</span><span class="p">)</span>
+    <span class="n">cat</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">label_size</span><span class="p">)</span>
+    <span class="n">cat</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="n">tick_size</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+        <span class="n">full_save_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">gene</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">save</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">cat</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">full_save_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold blue]Saving figure to </span><span class="si">{</span><span class="n">full_save_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="average_expression"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.average_expression">[docs]</a><span class="k">def</span> <span class="nf">average_expression</span><span class="p">(</span>
+    <span class="n">gene_expression</span><span class="p">,</span>
+    <span class="n">genes</span><span class="p">,</span>
+    <span class="n">order</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">id_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;identifier&quot;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span>
+    <span class="n">cluster</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">cols</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">smooth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">order_smooth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">conf_int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Draw a line plot showing the gene expression over time. Expression values are averaged by individual sample.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        gene_expression: Data frame containing gene expression values</span>
+<span class="sd">        genes: List of genes for which individual line plots will be generated</span>
+<span class="sd">        order: Order of x-axis labels from left to right</span>
+<span class="sd">        id_label: Adata column in which sample id information is stored</span>
+<span class="sd">        xlabel: x-axis label</span>
+<span class="sd">        cluster: Which clusters to plot. Select &#39;all&quot; if all clusters should be drawn.</span>
+<span class="sd">        hue: Which value to color by</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        smooth: Set to true for smoothened line plot using polynomial regression</span>
+<span class="sd">        rotation: set to True to rotate x-axis labels 90 degrees</span>
+<span class="sd">        order_smooth: If greater than 1, use numpy.polyfit to estimate a polynomial regression</span>
+<span class="sd">        conf_int: Size of the confidence interval for the regression estimate</span>
+<span class="sd">        scatter: Set to True to add average expression values per sample ID as dots</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    Example smooth:</span>
+<span class="sd">        .. image:: /_images/average_expression_smooth.png</span>
+
+<span class="sd">    Example raw:</span>
+<span class="sd">        .. image:: /_images/average_expression_raw.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">genes</span><span class="p">:</span>
+        <span class="n">meanpid</span> <span class="o">=</span> <span class="n">gene_expression</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">id_label</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">])[</span><span class="n">gene</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+        <span class="c1"># cluster_label = &quot;, &quot;.join(cluster)</span>
+        <span class="n">cluster_label</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="n">cluster</span>
+        <span class="n">standard_lineplot</span><span class="p">(</span>
+            <span class="n">meanpid</span><span class="p">,</span>
+            <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
+            <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span>
+            <span class="n">ylabel</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Average expression in cluster </span><span class="si">{</span><span class="n">cluster_label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span>
+            <span class="n">gene</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span>
+            <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">,</span>
+            <span class="n">cols</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span>
+            <span class="n">rotation</span><span class="o">=</span><span class="n">rotation</span><span class="p">,</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+            <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">,</span>
+            <span class="n">order_smooth</span><span class="o">=</span><span class="n">order_smooth</span><span class="p">,</span>
+            <span class="n">confidence_interval</span><span class="o">=</span><span class="n">conf_int</span><span class="p">,</span>
+            <span class="n">scatter</span><span class="o">=</span><span class="n">scatter</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="average_expression_per_cluster"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.average_expression_per_cluster">[docs]</a><span class="k">def</span> <span class="nf">average_expression_per_cluster</span><span class="p">(</span>
+    <span class="n">gene_expression</span><span class="p">,</span>
+    <span class="n">genes</span><span class="p">,</span>
+    <span class="n">order</span><span class="p">,</span>
+    <span class="n">obs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">id_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;identifier&quot;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span>
+    <span class="n">cluster</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">smooth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">tick_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="n">label_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="n">order_smooth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">conf_int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots gene expression over time split by cluster identity.</span>
+<span class="sd">    One line per cluster.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        gene_expression: Data frame containing gene expression values</span>
+<span class="sd">        genes: List of genes for which individual line plots will be generated</span>
+<span class="sd">        order: Order of x-axis labels from left to right</span>
+<span class="sd">        obs: Data frame containing meta data information</span>
+<span class="sd">        xlabel: x-axis label</span>
+<span class="sd">        cluster: Which clusters to plot. Select &#39;all&quot; if all clusters should be drawn.</span>
+<span class="sd">        id_label: Meta data column in which sample id information is stored</span>
+<span class="sd">        hue: Split expression values by this grouping, one line per category will be drawn</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        smooth: Set to True for smoothened line plot using polynomial regression</span>
+<span class="sd">        rotation: Set to True to rotate x-axis labels 90 degrees</span>
+<span class="sd">        tick_size: Size of the ticks as specified in matplotlib</span>
+<span class="sd">        label_size: Size of the labels as specified in matplotlib</span>
+<span class="sd">        order_smooth: If greater than 1, use numpy.polyfit to estimate a polynomial regression</span>
+<span class="sd">        conf_int: Size of the confidence interval for the regression estimate</span>
+<span class="sd">        scatter: Set to True to add average expression values per sample ID as dots</span>
+<span class="sd">        save: Path to save the plot to</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">genes</span><span class="p">:</span>
+        <span class="n">meanpid</span> <span class="o">=</span> <span class="n">gene_expression</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">id_label</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">])[</span><span class="n">gene</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">hue</span><span class="p">:</span>
+            <span class="n">cell_types</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">combis</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">id_label</span><span class="p">,</span> <span class="n">hue</span><span class="p">])</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">combis</span><span class="p">:</span>
+                <span class="n">cell_types</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">meanpid</span><span class="p">[</span><span class="n">hue</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">cell_types</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">meanpid</span><span class="o">.</span><span class="n">identifier</span><span class="p">]</span>
+
+        <span class="c1"># cluster_label = &quot;, &quot;.join(cluster)</span>
+        <span class="n">cluster_label</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="n">cluster</span>
+        <span class="n">standard_lineplot</span><span class="p">(</span>
+            <span class="n">meanpid</span><span class="p">,</span>
+            <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
+            <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span>
+            <span class="n">ylabel</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Average expression in cluster </span><span class="si">{</span><span class="n">cluster_label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span>
+            <span class="n">gene</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span>
+            <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">,</span>
+            <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span>
+            <span class="n">tick_size</span><span class="o">=</span><span class="n">tick_size</span><span class="p">,</span>
+            <span class="n">label_size</span><span class="o">=</span><span class="n">label_size</span><span class="p">,</span>
+            <span class="n">rotation</span><span class="o">=</span><span class="n">rotation</span><span class="p">,</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+            <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">,</span>
+            <span class="n">order_smooth</span><span class="o">=</span><span class="n">order_smooth</span><span class="p">,</span>
+            <span class="n">confidence_interval</span><span class="o">=</span><span class="n">conf_int</span><span class="p">,</span>
+            <span class="n">scatter</span><span class="o">=</span><span class="n">scatter</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="average_expression_split_cluster"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.average_expression_split_cluster">[docs]</a><span class="k">def</span> <span class="nf">average_expression_split_cluster</span><span class="p">(</span>
+    <span class="n">gene_expression</span><span class="p">,</span>
+    <span class="n">genes</span><span class="p">,</span>
+    <span class="n">order</span><span class="p">,</span>
+    <span class="n">id_label</span><span class="o">=</span><span class="s2">&quot;identifier&quot;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;days&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;genotype&quot;</span><span class="p">,</span>
+    <span class="n">cluster</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">smooth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">tick_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">label_size</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">order_smooth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">conf_int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot average gene expression as line plots for multiple clusters at once.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        gene_expression: Data frame containing gene expression values</span>
+<span class="sd">        genes: List of genes for which individual line plots will be generated</span>
+<span class="sd">        order: Order of x-axis labels from left to right</span>
+<span class="sd">        id_label: Meta data column in which sample id information is stored</span>
+<span class="sd">        xlabel: x-axis label</span>
+<span class="sd">        hue: Split expression values by this grouping, one line per category, will be drawn</span>
+<span class="sd">        cluster: Which clusters to plot. Select &#39;all&quot; if all clusters should be drawn.</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        smooth: Set to True for smoothened line plot using polynomial regression</span>
+<span class="sd">        rotation: x-axis label rotation</span>
+<span class="sd">        cols: List of colors to use for line plot</span>
+<span class="sd">        tick_size: Size of the ticks as specified in matplotlib</span>
+<span class="sd">        label_size: Size of the labels as specified in matplotlib</span>
+<span class="sd">        order_smooth: If greater than 1, numpy.polyfit is used to estimate a polynomial regression</span>
+<span class="sd">        conf_int: Size of the confidence interval for the regression estimate</span>
+<span class="sd">        scatter: Set to True to add average expression values per sample ID as dots</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    Example smooth:</span>
+<span class="sd">        .. image:: /_images/average_expression_per_cluster_smooth.png</span>
+
+<span class="sd">    Example raw:</span>
+<span class="sd">        .. image:: /_images/average_expression_per_cluster_raw.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">cluster</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">ylab</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Average expression in </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ylab</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Average expression in </span><span class="si">{</span><span class="n">cluster</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ylab</span> <span class="o">=</span> <span class="s2">&quot;Average expression&quot;</span>
+
+    <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">genes</span><span class="p">:</span>
+        <span class="n">meanpid</span> <span class="o">=</span> <span class="n">gene_expression</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">id_label</span><span class="p">,</span> <span class="n">hue</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">])[</span><span class="n">gene</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+        <span class="n">standard_lineplot</span><span class="p">(</span>
+            <span class="n">meanpid</span><span class="p">,</span>
+            <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
+            <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span>
+            <span class="n">ylabel</span><span class="o">=</span><span class="n">ylab</span><span class="p">,</span>
+            <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span>
+            <span class="n">gene</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span>
+            <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">,</span>
+            <span class="n">cols</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span>
+            <span class="n">tick_size</span><span class="o">=</span><span class="n">tick_size</span><span class="p">,</span>
+            <span class="n">label_size</span><span class="o">=</span><span class="n">label_size</span><span class="p">,</span>
+            <span class="n">rotation</span><span class="o">=</span><span class="n">rotation</span><span class="p">,</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+            <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">,</span>
+            <span class="n">order_smooth</span><span class="o">=</span><span class="n">order_smooth</span><span class="p">,</span>
+            <span class="n">confidence_interval</span><span class="o">=</span><span class="n">conf_int</span><span class="p">,</span>
+            <span class="n">scatter</span><span class="o">=</span><span class="n">scatter</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="average_expression_per_cell"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.average_expression_per_cell">[docs]</a><span class="k">def</span> <span class="nf">average_expression_per_cell</span><span class="p">(</span>
+    <span class="n">gene_expression</span><span class="p">,</span>
+    <span class="n">genes</span><span class="p">,</span>
+    <span class="n">order</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span>
+    <span class="n">cluster</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">smooth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">tick_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">label_size</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">order_smooth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">conf_int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots the average gene expression as a line plot per cell.</span>
+<span class="sd">    Ideally used when the scatter point should not be sample wise, but cell wise.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        gene_expression: Data frame containing gene expression values</span>
+<span class="sd">        genes: List of genes for which individual line plots will be generated</span>
+<span class="sd">        order: Order of x-axis labels from left to right</span>
+<span class="sd">        xlabel: x-axis label</span>
+<span class="sd">        cluster: Which clusters to plot. Select &#39;all&quot; if all clusters should be drawn.</span>
+<span class="sd">        hue: Split expression values by this grouping, one line per category, will be drawn</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        smooth: Set to true for smoothened line plot using polynomial regression</span>
+<span class="sd">        rotation: Set to True to rotate x-axis labels 90 degrees</span>
+<span class="sd">        tick_size: Size of the ticks as specified in matplotlib</span>
+<span class="sd">        label_size: Size of the labels as specified in matplotlib</span>
+<span class="sd">        order_smooth: If greater than 1, use numpy.polyfit to estimate a polynomial regression</span>
+<span class="sd">        conf_int: Size of the confidence interval for the regression estimate</span>
+<span class="sd">        scatter: Set to True to add average expression values per sample ID as dots</span>
+<span class="sd">        cols: List of colors to use for line plot</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">gene</span> <span class="ow">in</span> <span class="n">genes</span><span class="p">:</span>
+        <span class="n">cluster_label</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="n">cluster</span>
+        <span class="n">standard_lineplot</span><span class="p">(</span>
+            <span class="n">gene_expression</span><span class="p">,</span>
+            <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
+            <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span>
+            <span class="n">ylabel</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Average expression in cluster </span><span class="si">{</span><span class="n">cluster_label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span>
+            <span class="n">gene</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span>
+            <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">,</span>
+            <span class="n">cols</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span>
+            <span class="n">tick_size</span><span class="o">=</span><span class="n">tick_size</span><span class="p">,</span>
+            <span class="n">label_size</span><span class="o">=</span><span class="n">label_size</span><span class="p">,</span>
+            <span class="n">rotation</span><span class="o">=</span><span class="n">rotation</span><span class="p">,</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+            <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">,</span>
+            <span class="n">order_smooth</span><span class="o">=</span><span class="n">order_smooth</span><span class="p">,</span>
+            <span class="n">confidence_interval</span><span class="o">=</span><span class="n">conf_int</span><span class="p">,</span>
+            <span class="n">scatter</span><span class="o">=</span><span class="n">scatter</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="gene_expression_dpt_ordered"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.gene_expression_dpt_ordered">[docs]</a><span class="k">def</span> <span class="nf">gene_expression_dpt_ordered</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">genes</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="p">,</span>
+    <span class="n">order</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">conf_int</span><span class="o">=</span><span class="mi">95</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">condition</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">label_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">ylim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot smoothed expression of all cells ordered by pseudo time.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: AnnData object</span>
+<span class="sd">        genes: List of genes for which individual line plots will be generated</span>
+<span class="sd">        xlabel: x-axis label</span>
+<span class="sd">        order: Order of x-axis labels from left to right</span>
+<span class="sd">        conf_int: Size of the confidence interval for the regression estimate</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        condition: Split expression values by this grouping, one line per category will be drawn</span>
+<span class="sd">        label_size: Size of the labels as specified in matplotlib</span>
+<span class="sd">        cols: List of colors to use for line plot</span>
+<span class="sd">        scale: Set to True to scale expression value to a range between 0 and 1</span>
+<span class="sd">        ylim: Upper limit on the y-axis if desired</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. image:: /_images/gene_expression_dpt_ordered.png</span>
+
+<span class="sd">    Example with columns:</span>
+<span class="sd">        .. image:: /_images/gene_expression_dpt_ordered_col.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">mpatches</span>
+
+    <span class="n">patches</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+    <span class="c1"># use rainbow colour palette if no colours are specified</span>
+    <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span>
+
+        <span class="n">bins</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">condition</span><span class="p">]))</span> <span class="k">if</span> <span class="n">condition</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">genes</span><span class="p">)</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">rainbow</span>
+        <span class="n">cmaplist</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmap</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cmap</span><span class="o">.</span><span class="n">N</span><span class="p">)]</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">&quot;colours&quot;</span><span class="p">,</span> <span class="n">cmaplist</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmap</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bins</span><span class="p">)]</span>
+
+    <span class="c1"># only working for one gene at a time for now</span>
+    <span class="k">if</span> <span class="n">condition</span><span class="p">:</span>
+        <span class="n">conditions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">condition</span><span class="p">])</span>
+        <span class="n">gene</span> <span class="o">=</span> <span class="n">genes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">condition</span><span class="p">])</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+        <span class="p">]</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">xlabel</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">like</span><span class="o">=</span><span class="n">xlabel</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">con</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">conditions</span><span class="p">):</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">gene</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">con</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="k">if</span> <span class="n">scale</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+            <span class="n">cat</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">scatter</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ci</span><span class="o">=</span><span class="n">conf_int</span>
+            <span class="p">)</span>
+            <span class="n">patches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">col</span><span class="p">))</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">gene</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">genes</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">scale</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">gene</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">gene</span><span class="p">],</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">gene</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="n">gene</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+            <span class="n">cat</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">gene</span><span class="p">,</span>
+                <span class="n">scatter</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
+                <span class="n">truncate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="n">ci</span><span class="o">=</span><span class="n">conf_int</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">patches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">gene</span><span class="p">))</span>
+
+    <span class="n">cat</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;expression&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">label_size</span><span class="p">)</span>
+    <span class="n">cat</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">label_size</span><span class="p">)</span>
+    <span class="n">cat</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="n">label_size</span><span class="p">)</span>
+    <span class="n">sb</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">patches</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center left&quot;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.02</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="n">label_size</span><span class="p">},</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ylim</span><span class="p">:</span>
+        <span class="n">cat</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[bold blue]Saving figure to </span><span class="si">{save}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="relative_frequencies_boxplots"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.relative_frequencies_boxplots">[docs]</a><span class="k">def</span> <span class="nf">relative_frequencies_boxplots</span><span class="p">(</span>
+    <span class="n">relative_frequencies</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">cluster</span><span class="p">,</span>
+    <span class="n">cols</span><span class="p">,</span>
+    <span class="n">order</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;batch&quot;</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">jitter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots the relative frequencies as split boxplots.</span>
+<span class="sd">    Use calc_relative_frequencies to get the required input format.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        relative_frequencies: Calculated by calc_relative_frequencies as Pandas DataFrame</span>
+<span class="sd">        cluster: Cluster to be plotted</span>
+<span class="sd">        cols: List of colors to use for boxes</span>
+<span class="sd">        order: Order of x-axis labels from left to right</span>
+<span class="sd">        xlabel: x-axis label</span>
+<span class="sd">        hue: Value to color by</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        width: Width of the plot as specified in matplotlib</span>
+<span class="sd">        jitter: Set to True for individual dots per sample</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. image:: /_images/relative_frequencies_boxplots.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Subset according to order</span>
+    <span class="n">relative_frequencies</span> <span class="o">=</span> <span class="n">relative_frequencies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">relative_frequencies</span><span class="p">[</span><span class="n">xlabel</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">order</span><span class="p">)]</span>
+
+    <span class="n">split_boxplot</span><span class="p">(</span>
+        <span class="n">relative_frequencies</span><span class="p">,</span>
+        <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
+        <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span>
+        <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;relative frequency&quot;</span><span class="p">,</span>
+        <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span>
+        <span class="n">column</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span>
+        <span class="n">cols</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+        <span class="n">jitter</span><span class="o">=</span><span class="n">jitter</span><span class="p">,</span>
+        <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="split_boxplot"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.split_boxplot">[docs]</a><span class="k">def</span> <span class="nf">split_boxplot</span><span class="p">(</span>
+    <span class="n">table</span><span class="p">,</span>
+    <span class="n">order</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">column</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">jitter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Draws a boxsplit split by hue.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        table: Table containing the data to draw the boxplots for</span>
+<span class="sd">        order: Order of the boxplot labels</span>
+<span class="sd">        xlabel: x-axis label</span>
+<span class="sd">        ylabel: y-axis label</span>
+<span class="sd">        column:</span>
+<span class="sd">        hue: Value to split relative frequencies by</span>
+<span class="sd">        cols: List of colors to use for boxes</span>
+<span class="sd">        width: Width of the desired plot</span>
+<span class="sd">        title: Title of the plot</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        jitter: Set to True for individual dots per sample</span>
+<span class="sd">        save: Path to save the plot to</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="n">figsize</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">table</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">column</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">table</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">column</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">jitter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">swarmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">table</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">column</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">hue</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">title</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">get_figure</span><span class="p">()</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{save}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="marker_dendrogram"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.marker_dendrogram">[docs]</a><span class="k">def</span> <span class="nf">marker_dendrogram</span><span class="p">(</span>
+    <span class="n">marker_table</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span>
+    <span class="n">log_fc_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;log_FC&quot;</span><span class="p">,</span>
+    <span class="n">label_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">orientation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;top&quot;</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots a dendogram of used marker genes.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        marker_table: A marker table as generated by sct.calc.extended_marker_table</span>
+<span class="sd">        threshold: Threshold for the log fold change</span>
+<span class="sd">        column: Column to create pivot by; usually just the clusters</span>
+<span class="sd">        log_fc_key: Key for the stored log fold changes in the marker table</span>
+<span class="sd">        label_size: Font size of the labels</span>
+<span class="sd">        orientation: Orientation of the figure; Currently just &#39;top&#39; or no orientation</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. image:: /_images/marker_dendrogram.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="k">as</span> <span class="nn">hc</span>
+
+    <span class="n">marker_table</span> <span class="o">=</span> <span class="n">marker_table</span><span class="p">[</span><span class="n">marker_table</span><span class="p">[</span><span class="n">log_fc_key</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">]</span>
+
+    <span class="n">marker_table</span> <span class="o">=</span> <span class="n">marker_table</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;gene&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">column</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">log_fc_key</span><span class="p">)</span>
+    <span class="n">marker_table</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">corr</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">marker_table</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+    <span class="n">corr</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">distance</span><span class="o">.</span><span class="n">squareform</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span>  <span class="c1"># convert to condensed</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">hc</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;complete&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">rot</span> <span class="o">=</span> <span class="mi">90</span> <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="s2">&quot;top&quot;</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">hc</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span>
+        <span class="n">z</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="n">marker_table</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
+        <span class="n">leaf_rotation</span><span class="o">=</span><span class="n">rot</span><span class="p">,</span>
+        <span class="n">color_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">orientation</span><span class="o">=</span><span class="n">orientation</span><span class="p">,</span>
+        <span class="n">leaf_font_size</span><span class="o">=</span><span class="n">label_size</span><span class="p">,</span>
+        <span class="n">above_threshold_color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">label_size</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">save</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{save}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold blue]Saving figure to </span><span class="si">{</span><span class="n">save</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="volcano_plot"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.volcano_plot">[docs]</a><span class="k">def</span> <span class="nf">volcano_plot</span><span class="p">(</span>
+    <span class="n">table</span><span class="p">,</span>
+    <span class="n">fdr_thresh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">log_fc_thresh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">adj_p_val</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;adj_p_val&quot;</span><span class="p">,</span>
+    <span class="n">log_fc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;avg_logFC&quot;</span><span class="p">,</span>
+    <span class="n">gene</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;gene&quot;</span><span class="p">,</span>
+    <span class="n">sig_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span>
+    <span class="n">col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">save</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scatter plot of differential gene expression results generated by diffxpy</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        table: diffxpy generated table of results</span>
+<span class="sd">        fdr_thresh: -log(FDR) threshold for labeling genes. If set to None, we</span>
+<span class="sd">            will consider the 99th percentile of -log(FDR) values the threshold.</span>
+<span class="sd">        log_fc_thresh: absolute(log_fc) threshold for labeling genes.</span>
+<span class="sd">        adj_p_val: Label of the adjusted p value, these are considered FDRs</span>
+<span class="sd">        log_fc: Label of the log fold change</span>
+<span class="sd">        gene: Label of column with gene names</span>
+<span class="sd">        col: Color of dots</span>
+<span class="sd">        sig_col: Colour of dots surpassing defined FDR threshold</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. image:: /_images/diffxpy_volcano.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">table</span><span class="p">[</span><span class="s2">&quot;-log_FDR&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">adj_p_val</span><span class="p">])</span>
+
+    <span class="c1"># take the 99% quantile by default for highlighting</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">fdr_thresh</span><span class="p">:</span>
+        <span class="n">fdr_thresh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;-log_FDR&quot;</span><span class="p">],</span> <span class="mi">99</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">log_fc_thresh</span><span class="p">:</span>
+        <span class="n">log_fc_thresh</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">lowqval_highfc_de</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">table</span><span class="p">[</span><span class="s2">&quot;-log_FDR&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">fdr_thresh</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">log_fc</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">log_fc_thresh</span><span class="p">)]</span>
+    <span class="n">other_de</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">table</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">lowqval_highfc_de</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="n">figsize</span><span class="p">)</span>
+
+    <span class="n">sb</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">other_de</span><span class="p">[</span><span class="n">log_fc</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">other_de</span><span class="p">[</span><span class="s2">&quot;-log_FDR&quot;</span><span class="p">],</span> <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">})</span>
+    <span class="n">sb</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">lowqval_highfc_de</span><span class="p">[</span><span class="n">log_fc</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">lowqval_highfc_de</span><span class="p">[</span><span class="s2">&quot;-log_FDR&quot;</span><span class="p">],</span> <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">})</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;log2 FC&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;-log Q-value&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Label names and positions</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lowqval_highfc_de</span><span class="p">[</span><span class="n">log_fc</span><span class="p">]]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lowqval_highfc_de</span><span class="p">[</span><span class="s2">&quot;-log_FDR&quot;</span><span class="p">]]</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">lowqval_highfc_de</span><span class="p">[</span><span class="n">gene</span><span class="p">]</span>
+    <span class="n">max_n_labels</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_n_labels</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold yellow]Warning: given your thresholds, more than </span><span class="si">{</span><span class="n">max_n_labels</span><span class="si">}</span><span class="s2"> genes would have to be labeled.&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[bold yellow]To prevent overcrowding of your plot, make your thresholds stricter.</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;We will leave out the labels for now.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># plot labels, and use adjust_text to make sure that labels don&#39;t overlap:</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="p">]</span>
+        <span class="n">adjust_text</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="cluster_composition_stacked_barplot"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.cluster_composition_stacked_barplot">[docs]</a><span class="k">def</span> <span class="nf">cluster_composition_stacked_barplot</span><span class="p">(</span>
+    <span class="n">relative_frequencies</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">width</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">error_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">label_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="n">tick_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">13</span><span class="p">,</span>
+    <span class="n">capsize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">margins</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">),</span>
+    <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot relative frequencies as a stacked barplot.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        relative_frequencies: Data frame containing relative Frequencies as calculated by calc_relFreq()</span>
+<span class="sd">        xlabel: x-axis label</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        width: Width of the bars</span>
+<span class="sd">        order: Order of x-axis labels from left to right</span>
+<span class="sd">        error_bar: Set to True to add error bars (only possible when grouping the frequencies)</span>
+<span class="sd">        tick_size: Size of the ticks as specified in matplotlib</span>
+<span class="sd">        label_size: Size of the labels as specified in matplotlib</span>
+<span class="sd">        capsize: Size of the horizontal lines of the error bar</span>
+<span class="sd">        margins: Change margins of the plot if desired</span>
+<span class="sd">        cols: List of colors to use for the bands</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. image:: /_images/cluster_composition_stacked_barplot.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">mpatches</span>
+
+    <span class="n">patches</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">relative_frequencies</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">xlabel</span><span class="p">])</span> <span class="k">if</span> <span class="n">order</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">order</span>
+    <span class="n">ci</span> <span class="o">=</span> <span class="mi">95</span> <span class="k">if</span> <span class="n">error_bar</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="n">margins</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">margins</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">cell_types</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">([</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">relative_frequencies</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;identifier&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">]])</span>
+    <span class="c1"># cell_types = np.flip(np.setdiff1d(relFreqs.columns, [&quot;identifier&quot;, xlabel]))</span>
+
+    <span class="n">bars</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">)))</span>
+    <span class="n">plot_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">relative_frequencies</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">xlabel</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">typ</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cell_types</span><span class="p">):</span>
+        <span class="n">sum_up</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">relative_frequencies</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">typ</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">bars</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">g</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">relative_frequencies</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">xlabel</span><span class="p">])</span>
+        <span class="p">]</span>
+        <span class="n">plot_data</span><span class="p">[</span><span class="n">typ</span><span class="p">]</span> <span class="o">=</span> <span class="n">sum_up</span>
+        <span class="n">bars</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">bars</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">relative_frequencies</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">typ</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">]]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">order</span><span class="p">,</span> <span class="n">typ</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">typ</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">cell_types</span><span class="p">)):</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">typ</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="n">ci</span><span class="p">,</span> <span class="n">errcolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">capsize</span><span class="o">=</span><span class="n">capsize</span>
+        <span class="p">)</span>
+        <span class="n">patches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">typ</span><span class="p">))</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">label_size</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;relative frequency&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">label_size</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="n">tick_size</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Change the bar width</span>
+    <span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">fig</span><span class="o">.</span><span class="n">patches</span><span class="p">:</span>
+        <span class="n">centre</span> <span class="o">=</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">bar</span><span class="o">.</span><span class="n">set_x</span><span class="p">(</span><span class="n">centre</span> <span class="o">-</span> <span class="n">width</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+        <span class="n">bar</span><span class="o">.</span><span class="n">set_width</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">patches</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center left&quot;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.02</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="n">tick_size</span><span class="p">},</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold blue]Saving Figure to </span><span class="si">{</span><span class="n">save</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="gene_boxplot"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.gene_boxplot">[docs]</a><span class="k">def</span> <span class="nf">gene_boxplot</span><span class="p">(</span>
+    <span class="n">table</span><span class="p">,</span>
+    <span class="n">palette</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cell_types&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">score</span><span class="o">=</span><span class="s2">&quot;Axin2&quot;</span><span class="p">,</span>
+    <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">rotate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">save</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot gene values as split boxplots</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        table: Pandas DataFrame</span>
+<span class="sd">        palette:</span>
+<span class="sd">        xlabel: x-axis label</span>
+<span class="sd">        hue:</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        legend: Whether to draw a legend or not</span>
+<span class="sd">        score:</span>
+<span class="sd">        scatter:</span>
+<span class="sd">        rotate:</span>
+<span class="sd">        width: Width of the desired plot</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. image:: /_images/gene_boxplot.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sb</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;ticks&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="n">figsize</span><span class="p">)</span>
+
+    <span class="n">sf</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">scatter</span> <span class="k">else</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">hue</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">table</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">score</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span> <span class="n">showfliers</span><span class="o">=</span><span class="n">sf</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scatter</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">table</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">score</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span> <span class="n">dodge</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">table</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">score</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">showfliers</span><span class="o">=</span><span class="n">sf</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scatter</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">table</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">score</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">dodge</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">rotate</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="n">legend</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">1.06</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend_</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">artists</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+    <span class="n">sb</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>  <span class="c1"># to not show ouline box</span>
+
+    <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving to </span><span class="si">{</span><span class="n">save</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="colors_overview"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.colors_overview">[docs]</a><span class="k">def</span> <span class="nf">colors_overview</span><span class="p">(</span><span class="n">colors</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">ncols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Draw an overview plot of all used colors</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        colors: Dictionary of color name and color</span>
+<span class="sd">        ncols: How many columns for the plot</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. image:: /_images/colors.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span> <span class="k">as</span> <span class="n">mcolors</span>
+
+    <span class="c1"># Sort colors by hue, saturation, value and name.</span>
+    <span class="n">by_hsv</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">((</span><span class="nb">tuple</span><span class="p">(</span><span class="n">mcolors</span><span class="o">.</span><span class="n">rgb_to_hsv</span><span class="p">(</span><span class="n">mcolors</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">color</span><span class="p">)[:</span><span class="mi">3</span><span class="p">])),</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">colors</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="n">sorted_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">hsv</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">by_hsv</span><span class="p">]</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_names</span><span class="p">)</span>
+    <span class="n">nrows</span> <span class="o">=</span> <span class="n">n</span> <span class="o">//</span> <span class="n">ncols</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+    <span class="c1"># Get height and width</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">get_dpi</span><span class="p">()</span> <span class="o">*</span> <span class="n">fig</span><span class="o">.</span><span class="n">get_size_inches</span><span class="p">()</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="p">(</span><span class="n">nrows</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">ncols</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sorted_names</span><span class="p">):</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="n">ncols</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">i</span> <span class="o">//</span> <span class="n">ncols</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">row</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">h</span>
+
+        <span class="n">xi_line</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="p">(</span><span class="n">col</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">)</span>
+        <span class="n">xf_line</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="p">(</span><span class="n">col</span> <span class="o">+</span> <span class="mf">0.25</span><span class="p">)</span>
+        <span class="n">xi_text</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="p">(</span><span class="n">col</span> <span class="o">+</span> <span class="mf">0.3</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+            <span class="n">xi_text</span><span class="p">,</span>
+            <span class="n">y</span><span class="p">,</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">colors</span><span class="p">[</span><span class="n">name</span><span class="p">]),</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="p">(</span><span class="n">h</span> <span class="o">*</span> <span class="mf">0.4</span><span class="p">),</span>
+            <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+            <span class="n">verticalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">xi_line</span><span class="p">,</span> <span class="n">xf_line</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="p">(</span><span class="n">h</span> <span class="o">*</span> <span class="mf">0.6</span><span class="p">))</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving to </span><span class="si">{</span><span class="n">save</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="relative_frequencies_lineplot"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.relative_frequencies_lineplot">[docs]</a><span class="k">def</span> <span class="nf">relative_frequencies_lineplot</span><span class="p">(</span>
+    <span class="n">relative_frequencies</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">order</span><span class="p">,</span>
+    <span class="n">cluster</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;relative frequency&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">smooth</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="n">tick_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">label_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">order_smooth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">conf_int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot relative frequencies as a line plot.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        relative_frequencies: Data frame containing relative Frequencies as calculated by calc_relFreq()</span>
+<span class="sd">        order: Order of x-axis labels from left to right</span>
+<span class="sd">        cluster: Which cluster to plot</span>
+<span class="sd">        xlabel: x-axis label</span>
+<span class="sd">        ylabel: y-axis label</span>
+<span class="sd">        hue: Value to color by</span>
+<span class="sd">        smooth: Whether to smoothen the plot</span>
+<span class="sd">        cols: List of colors to use for line plot</span>
+<span class="sd">        title: Title of the plot</span>
+<span class="sd">        rotation: Rotation of the x-axis labels</span>
+<span class="sd">        figsize: Size of the figure as specified in matplotlib</span>
+<span class="sd">        tick_size: Size of the ticks as specified in matplotlib</span>
+<span class="sd">        label_size: Size of the labels as specified in matplotlib</span>
+<span class="sd">        order_smooth: If greater than 1, numpy.polyfit is used to estimate a polynomial regression</span>
+<span class="sd">        conf_int: Size of the confidence interval for the regression estimate</span>
+<span class="sd">        scatter: Set to True to add average expression values per sample ID as dots</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. image:: /_images/relative_frequencies_lineplots.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">hue</span><span class="p">:</span>
+        <span class="n">sub_freqs</span> <span class="o">=</span> <span class="n">relative_frequencies</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">cluster</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">hue</span><span class="p">]]</span>
+        <span class="n">sub_freqs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">sub_freqs</span><span class="p">,</span> <span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">hue</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sub_freqs</span> <span class="o">=</span> <span class="n">relative_frequencies</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">cluster</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">xlabel</span><span class="p">]]</span>
+        <span class="n">sub_freqs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">sub_freqs</span><span class="p">,</span> <span class="n">id_vars</span><span class="o">=</span><span class="p">[</span><span class="n">xlabel</span><span class="p">])</span>
+
+    <span class="n">standard_lineplot</span><span class="p">(</span>
+        <span class="n">sub_freqs</span><span class="p">,</span>
+        <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
+        <span class="n">xlabel</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span>
+        <span class="n">ylabel</span><span class="o">=</span><span class="n">ylabel</span><span class="p">,</span>
+        <span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">,</span>
+        <span class="n">gene</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
+        <span class="n">smooth</span><span class="o">=</span><span class="n">smooth</span><span class="p">,</span>
+        <span class="n">cols</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">rotation</span><span class="o">=</span><span class="n">rotation</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span>
+        <span class="n">tick_size</span><span class="o">=</span><span class="n">tick_size</span><span class="p">,</span>
+        <span class="n">label_size</span><span class="o">=</span><span class="n">label_size</span><span class="p">,</span>
+        <span class="n">order_smooth</span><span class="o">=</span><span class="n">order_smooth</span><span class="p">,</span>
+        <span class="n">confidence_interval</span><span class="o">=</span><span class="n">conf_int</span><span class="p">,</span>
+        <span class="n">scatter</span><span class="o">=</span><span class="n">scatter</span><span class="p">,</span>
+        <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="annotated_cell_type_umap"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.annotated_cell_type_umap">[docs]</a><span class="k">def</span> <span class="nf">annotated_cell_type_umap</span><span class="p">(</span>
+    <span class="n">adata</span><span class="p">,</span>
+    <span class="n">primary_color</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+    <span class="n">cell_type_color</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">legend_loc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;on data&quot;</span><span class="p">,</span>
+    <span class="n">legend_fontsize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Plot title&quot;</span><span class="p">,</span>
+    <span class="n">palette</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">save</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots a UMAP which is colored by the primary_color, but also draws all labels on top of all clusters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        adata: AnnData object</span>
+<span class="sd">        primary_color: Primary color to color all cells by, e.g. &#39;genotype&#39;</span>
+<span class="sd">        cell_type_color: Key containing all cell types, e.g. &#39;cell_type&#39;</span>
+<span class="sd">        legend_loc: Location of the legend (default: &#39;on data&#39;)</span>
+<span class="sd">        legend_fontsize: Font size of the legend (default: 8)</span>
+<span class="sd">        title: Title of the plot</span>
+<span class="sd">        palette: Color</span>
+<span class="sd">        cmap: Color map of the UMAP</span>
+<span class="sd">        figsize: Size of the figure</span>
+<span class="sd">        save: Path to save the plot to</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        fig and axs Matplotlib objects</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. image:: /_images/annotated_cell_type_umap.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">primary_color</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">)</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span>
+        <span class="n">adata</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">cell_type_color</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">legend_loc</span><span class="o">=</span><span class="n">legend_loc</span><span class="p">,</span>
+        <span class="n">legend_fontsize</span><span class="o">=</span><span class="n">legend_fontsize</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+        <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;pdf&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span></div>
+
+
+<div class="viewcode-block" id="genotype_vs_genotype_umaps"><a class="viewcode-back" href="../../../usage.html#sc_toolbox.api.plot.genotype_vs_genotype_umaps">[docs]</a><span class="k">def</span> <span class="nf">genotype_vs_genotype_umaps</span><span class="p">(</span>
+    <span class="n">adata</span><span class="p">,</span>
+    <span class="n">genotype_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">genotype_label_1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">genotype_label_2</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">color</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">hide_one_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots a two UMAPs of genotypes next to each other displaying only the colors of the</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        adata: AnnData object</span>
+<span class="sd">        genotype_key: Key of the genotypes</span>
+<span class="sd">        genotype_label_1: Name of the first genotype; Must be contained in the genotypes</span>
+<span class="sd">        genotype_label_2: Name of the second genotype; Must be contained in the genotypes</span>
+<span class="sd">        color: Key to color by</span>
+<span class="sd">        hide_one_legend: Whether to hide the legend of the genotype_label_1</span>
+<span class="sd">        figsize: Size of the figure</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        .. image:: /_images/genotype_vs_genotype_umaps.png</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">genotype_data_1</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">genotype_key</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">genotype_label_1</span><span class="p">])]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">genotype_data_2</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">genotype_key</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">genotype_label_2</span><span class="p">])]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span>
+        <span class="n">genotype_data_1</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span>
+        <span class="n">palette</span><span class="o">=</span><span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">palettes</span><span class="o">.</span><span class="n">default_20</span><span class="p">,</span>
+        <span class="n">legend_fontsize</span><span class="o">=</span><span class="s2">&quot;xx-small&quot;</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+        <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">hide_one_legend</span><span class="p">:</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">get_legend</span><span class="p">()</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">genotype_label_1</span><span class="p">)</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span>
+        <span class="n">genotype_data_2</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span>
+        <span class="n">palette</span><span class="o">=</span><span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">palettes</span><span class="o">.</span><span class="n">default_20</span><span class="p">,</span>
+        <span class="n">legend_fontsize</span><span class="o">=</span><span class="s2">&quot;xx-small&quot;</span><span class="p">,</span>
+        <span class="n">size</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+        <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">genotype_label_2</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Lukas Heumos.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
