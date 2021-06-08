@@ -859,6 +859,34 @@ subset = subset)</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="sc_toolbox.api.calc.generate_pseudobulk">
+<span class="sig-prename descclassname"><span class="pre">sc_toolbox.api.calc.</span></span><span class="sig-name descname"><span class="pre">generate_pseudobulk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'identifier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\t'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/calc.html#generate_pseudobulk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.calc.generate_pseudobulk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a pseudobulk for a given key of groups in the AnnData object.
+Looks like:</p>
+<blockquote>
+<div><p>Genes    group_member_1    group_member_2</p>
+</div></blockquote>
+<p>1 gene_1   value_1           value_2
+2 gene_2   value_3           value_4</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>anndata._core.anndata.AnnData</em>) – AnnData object</p></li>
+<li><p><strong>group_key</strong> (<em>str</em>) – The key to group by. E.g. by mice, by condition, … (default: ‘identifier’)</p></li>
+<li><p><strong>sep</strong> – Separator to use when saving the pseudobulk table (default: ‘      ‘)</p></li>
+<li><p><strong>save</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Path to save the pseudobulk table to (default: None)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A Pandas DataFrame containing the pseudobulk table</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.core.frame.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="sc_toolbox.api.calc.ranksums_between_groups">
 <span class="sig-prename descclassname"><span class="pre">sc_toolbox.api.calc.</span></span><span class="sig-name descname"><span class="pre">ranksums_between_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bystander'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'infected'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlabel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'condition'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cells</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Axin2'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/calc.html#ranksums_between_groups"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.calc.ranksums_between_groups" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform Wilcoxon Rank-sum test between two groups.</p>
