@@ -449,6 +449,35 @@ def extended_marker_table(
     return all_markers_df
 
 
+def generate_pseudobulk(adata: AnnData, group_key: str = "identifier", sep="\t", save: str = None) -> pd.DataFrame:
+    """
+    Generates a pseudobulk for a given key of groups in the AnnData object.
+    Looks like:
+      Genes    group_member_1    group_member_2
+    1 gene_1   value_1           value_2
+    2 gene_2   value_3           value_4
+
+    Args:
+        adata: AnnData object
+        group_key: The key to group by. E.g. by mice, by condition, ... (default: 'identifier')
+        sep: Separator to use when saving the pseudobulk table (default: '\t')
+        save: Path to save the pseudobulk table to (default: None)
+
+    Returns:
+        A Pandas DataFrame containing the pseudobulk table
+    """
+    pseudobulk = pd.DataFrame(data=adata.var_names.values, columns=["Genes"])
+
+    for i in adata.obs.loc[:, group_key].cat.categories:
+        temp = adata.obs.loc[:, group_key] == i
+        pseudobulk[i] = adata[temp].X.sum(0, dtype=int)  # column sums (genes)
+
+    if save:
+        pseudobulk.to_csv(save, sep=sep, index=False)
+
+    return pseudobulk
+
+
 def automated_marker_annotation(
     adata: AnnData,
     organism: str,
