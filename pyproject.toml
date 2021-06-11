@@ -56,12 +56,24 @@ sphinx-rtd-theme = ">=0.5.0"
 sphinx-rtd-dark-mode = "^1.2.2"
 sphinx-click = ">=2.5.0"
 Pygments = ">=2.9.0"
+types-pkg-resources = "^0.1.2"
+types-requests = "^0.1.9"
+types-attrs = "^19.1.0"
 
 [tool.poetry.scripts]
 sc-toolbox = "sc_toolbox.__main__:main"
 
 [tool.black]
 line-length = 120
+
+[tool.mypy]
+strict = true
+pretty = true
+show_column_numbers = true
+show_error_codes = true
+show_error_context = true
+ignore_missing_imports = true
+
 
 [tool.coverage.paths]
 source = ["sc_toolbox", "*/site-packages"]
