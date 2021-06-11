@@ -37,7 +37,7 @@ adjustText = "^0.7.3"
 pytest = "^6.2.4"
 coverage = {extras = ["toml"], version = "^5.3"}
 safety = "^1.9.0"
-mypy = "^0.812"
+mypy = "^0.902"
 typeguard = "^2.12.1"
 xdoctest = {extras = ["colors"], version = "^0.15.0"}
 sphinx = ">=3.5.4"
