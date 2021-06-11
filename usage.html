@@ -863,11 +863,29 @@ subset = subset)</p>
 <span class="sig-prename descclassname"><span class="pre">sc_toolbox.api.calc.</span></span><span class="sig-name descname"><span class="pre">generate_pseudobulk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'identifier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\t'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sc_toolbox/api/calc.html#generate_pseudobulk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sc_toolbox.api.calc.generate_pseudobulk" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a pseudobulk for a given key of groups in the AnnData object.
 Looks like:</p>
-<blockquote>
-<div><p>Genes    group_member_1    group_member_2</p>
-</div></blockquote>
-<p>1 gene_1   value_1           value_2
-2 gene_2   value_3           value_4</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 38%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Genes</p></th>
+<th class="head"><p>Group Member 1</p></th>
+<th class="head"><p>Group Member 2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Gene 1</p></td>
+<td><p>Value 1</p></td>
+<td><p>Value 2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Gene 2</p></td>
+<td><p>Value 2</p></td>
+<td><p>Value 3</p></td>
+</tr>
+</tbody>
+</table>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

@@ -623,9 +623,14 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates a pseudobulk for a given key of groups in the AnnData object.</span>
 <span class="sd">    Looks like:</span>
-<span class="sd">      Genes    group_member_1    group_member_2</span>
-<span class="sd">    1 gene_1   value_1           value_2</span>
-<span class="sd">    2 gene_2   value_3           value_4</span>
+
+<span class="sd">    +------------+------------------+------------------+</span>
+<span class="sd">    | Genes      | Group Member 1   | Group Member 2   |</span>
+<span class="sd">    +============+==================+==================+</span>
+<span class="sd">    | Gene 1     | Value 1          | Value 2          |</span>
+<span class="sd">    +------------+------------------+------------------+</span>
+<span class="sd">    | Gene 2     | Value 2          | Value 3          |</span>
+<span class="sd">    +------------+------------------+------------------+</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        adata: AnnData object</span>
