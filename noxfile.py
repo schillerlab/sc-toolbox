@@ -110,7 +110,7 @@ def mypy(session: Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or ["sc_toolbox", "tests", "docs/conf.py"]
     session.install(".")
-    session.install("mypy", "pytest", "types-pkg-resources", "types-requests", "types-attr")
+    session.install("mypy", "pytest", "types-pkg-resources", "types-requests", "types-attrs")
     session.run("mypy", *args)
 
 
