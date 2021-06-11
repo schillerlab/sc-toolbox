@@ -67,13 +67,12 @@ sc-toolbox = "sc_toolbox.__main__:main"
 line-length = 120
 
 [tool.mypy]
-strict = true
+strict = false
 pretty = true
 show_column_numbers = true
 show_error_codes = true
 show_error_context = true
 ignore_missing_imports = true
-
 
 [tool.coverage.paths]
 source = ["sc_toolbox", "*/site-packages"]
