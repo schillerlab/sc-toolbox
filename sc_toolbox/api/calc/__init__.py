@@ -453,9 +453,14 @@ def generate_pseudobulk(adata: AnnData, group_key: str = "identifier", sep="\t",
     """
     Generates a pseudobulk for a given key of groups in the AnnData object.
     Looks like:
-      Genes    group_member_1    group_member_2
-    1 gene_1   value_1           value_2
-    2 gene_2   value_3           value_4
+
+    +------------+------------------+------------------+
+    | Genes      | Group Member 1   | Group Member 2   |
+    +============+==================+==================+
+    | Gene 1     | Value 1          | Value 2          |
+    +------------+------------------+------------------+
+    | Gene 2     | Value 2          | Value 3          |
+    +------------+------------------+------------------+
 
     Args:
         adata: AnnData object
