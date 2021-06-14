@@ -57,7 +57,7 @@ sphinx-rtd-dark-mode = "^1.2.2"
 sphinx-click = ">=2.5.0"
 Pygments = ">=2.9.0"
 types-pkg-resources = "^0.1.2"
-types-requests = "^0.1.9"
+types-requests = "^0.1.11"
 types-attrs = "^19.1.0"
 
 [tool.poetry.scripts]
