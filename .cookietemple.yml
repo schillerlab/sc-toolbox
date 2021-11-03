@@ -16,5 +16,5 @@ email: lukas.heumos@posteo.net
 project_name: sc-toolbox
 project_short_description: A collection of project templates and useful code snippets
   for single-cell data analysis with Scanpy.
-version: 0.9.0
+version: 0.10.0
 license: MIT
