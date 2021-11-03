@@ -7,7 +7,6 @@ import pandas as pd
 import scanpy as sc
 import seaborn as sb
 from adjustText import adjust_text
-from anndata import AnnData
 from matplotlib import colors
 from rich import print
 
