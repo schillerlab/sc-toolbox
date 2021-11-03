@@ -864,7 +864,7 @@
     <span class="n">tick_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">13</span><span class="p">,</span>
     <span class="n">capsize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">margins</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">),</span>
-    <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -881,13 +881,16 @@
 <span class="sd">        label_size: Size of the labels as specified in matplotlib</span>
 <span class="sd">        capsize: Size of the horizontal lines of the error bar</span>
 <span class="sd">        margins: Change margins of the plot if desired</span>
-<span class="sd">        cols: List of colors to use for the bands</span>
+<span class="sd">        colors: List of colors to use for the bands</span>
 <span class="sd">        save: Path to save the plot to</span>
 
 <span class="sd">    Example:</span>
 <span class="sd">        .. image:: /_images/cluster_composition_stacked_barplot.png</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">mpatches</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">colors</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Colors was not passed. Obtain them from e.g. adata.uns[&#39;cluster_key_colors&#39;]&quot;</span><span class="p">)</span>
 
     <span class="n">patches</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -913,9 +916,9 @@
 
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">typ</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">cell_types</span><span class="p">)):</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">typ</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="n">ci</span><span class="p">,</span> <span class="n">errcolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">capsize</span><span class="o">=</span><span class="n">capsize</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">plot_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">typ</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="n">ci</span><span class="p">,</span> <span class="n">errcolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">capsize</span><span class="o">=</span><span class="n">capsize</span>
         <span class="p">)</span>
-        <span class="n">patches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">typ</span><span class="p">))</span>
+        <span class="n">patches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mpatches</span><span class="o">.</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">typ</span><span class="p">))</span>
 
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">label_size</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;relative frequency&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">label_size</span><span class="p">)</span>
