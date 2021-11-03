@@ -7,6 +7,7 @@ import pandas as pd
 import scanpy as sc
 import seaborn as sb
 from adjustText import adjust_text
+from anndata import AnnData
 from matplotlib import colors
 from rich import print
 
@@ -785,7 +786,7 @@ def cluster_composition_stacked_barplot(
     tick_size: int = 13,
     capsize: int = None,
     margins: Tuple[float, float] = (0.02, 0.04),
-    cols=None,
+    colors=None,
     save: str = None,
 ):
     """
@@ -802,13 +803,16 @@ def cluster_composition_stacked_barplot(
         label_size: Size of the labels as specified in matplotlib
         capsize: Size of the horizontal lines of the error bar
         margins: Change margins of the plot if desired
-        cols: List of colors to use for the bands
+        colors: List of colors to use for the bands
         save: Path to save the plot to
 
     Example:
         .. image:: /_images/cluster_composition_stacked_barplot.png
     """
     import matplotlib.patches as mpatches
+
+    if not colors:
+        raise ValueError("Colors was not passed. Obtain them from e.g. adata.uns['cluster_key_colors']")
 
     patches = []
     fig, ax = plt.subplots()
@@ -834,9 +838,9 @@ def cluster_composition_stacked_barplot(
 
     for i, typ in enumerate(reversed(cell_types)):
         fig = sb.barplot(
-            data=plot_data, x=xlabel, y=typ, order=order, ci=ci, errcolor="black", color=cols[i], capsize=capsize
+            data=plot_data, x=xlabel, y=typ, order=order, ci=ci, errcolor="black", color=colors[i], capsize=capsize
         )
-        patches.append(mpatches.Patch(color=cols[i], label=typ))
+        patches.append(mpatches.Patch(color=colors[i], label=typ))
 
     ax.set_xlabel(xlabel, size=label_size)
     ax.set_ylabel("relative frequency", size=label_size)
