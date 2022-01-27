@@ -35,7 +35,7 @@ adjustText = ">=0.7.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
-coverage = {extras = ["toml"], version = "^6.2"}
+coverage = {extras = ["toml"], version = "^6.3"}
 safety = "^1.9.0"
 mypy = "^0.930"
 typeguard = "^2.13.3"
