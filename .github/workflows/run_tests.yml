@@ -43,7 +43,7 @@ jobs:
 
         steps:
             - name: Check out the repository
-              uses: actions/checkout@v2.4.0
+              uses: actions/checkout@v3
 
             - name: Set up Python ${{ matrix.python-version }}
               uses: actions/setup-python@v2.3.1
@@ -94,14 +94,14 @@ jobs:
 
             - name: Upload coverage data
               if: always() && matrix.session == 'tests'
-              uses: "actions/upload-artifact@v2.3.1"
+              uses: "actions/upload-artifact@v3"
               with:
                   name: coverage-data
                   path: ".coverage.*"
 
             - name: Upload documentation
               if: matrix.session == 'docs-build'
-              uses: actions/upload-artifact@v2.3.1
+              uses: actions/upload-artifact@v3
               with:
                   name: docs
                   path: docs/_build
@@ -111,7 +111,7 @@ jobs:
         needs: tests
         steps:
             - name: Check out the repository
-              uses: actions/checkout@v2.4.0
+              uses: actions/checkout@v3
 
             - name: Set up Python 3.8
               uses: actions/setup-python@v2.3.1
@@ -133,7 +133,7 @@ jobs:
                   pip install rich
 
             - name: Download coverage data
-              uses: actions/download-artifact@v2.1.0
+              uses: actions/download-artifact@v3
               with:
                   name: coverage-data
 
