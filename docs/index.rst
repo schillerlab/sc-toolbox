@@ -1,5 +1,8 @@
+.. include:: ../README.rst
+===========================
 Welcome to sc-toolbox's documentation!
-=======================================
+==========================================================
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
@@ -8,6 +11,7 @@ Welcome to sc-toolbox's documentation!
    installation
    usage
    reference
+   contributing
    authors
    code_of_conduct
 
