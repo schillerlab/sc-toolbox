@@ -21,13 +21,9 @@ Request features on the [Issue Tracker].
 
 ## Getting the code
 
-pertpy uses submodules for the tutorials. Hence, the project must be cloned as:
-
 ```console
-$ git clone --recurse-submodules --remote-submodules https://github.com/theislab/pertpy
+$ git clone --recurse-submodules https://github.com/schillerlab/sc-toolbox
 ```
-
-This will automatically also clone and update the submodules.
 
 ## How to set up your development environment
 
@@ -54,7 +50,7 @@ or the command-line interface:
 
 ```console
 $ poetry run python
-$ poetry run pertpy
+$ poetry run sc_toolbox
 ```
 
 ## How to test the project
@@ -121,12 +117,12 @@ It is recommended to open an issue before starting work on anything.
 This will allow a chance to talk it over with the owners and validate your approach.
 
 [apache2.0 license]: https://opensource.org/licenses/Apache2.0
-[code of conduct]: https://github.com/theislab/pertpy/CODE_OF_CONDUCT.md
-[documentation]: https://pertpy.readthedocs.io/
-[issue tracker]: https://github.com/theislab/pertpy/issues
+[code of conduct]: https://github.com/schillerlab/sc-toolbox/CODE_OF_CONDUCT.md
+[documentation]: https://sc-toolbox.readthedocs.io/
+[issue tracker]: https://github.com/schillerlab/sc-toolbox/issues
 [nox]: https://nox.thea.codes/
 [nox-poetry]: https://nox-poetry.readthedocs.io/
 [poetry]: https://python-poetry.org/
-[pull request]: https://github.com/theislab/pertpy/pulls
+[pull request]: https://github.com/schillerlab/sc-toolbox/pulls
 [pytest]: https://pytest.readthedocs.io/
-[source code]: https://github.com/theislab/pertpy
+[source code]: https://github.com/schillerlab/sc-toolbox

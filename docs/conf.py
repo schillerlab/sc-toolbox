@@ -109,7 +109,7 @@ pygments_dark_style = "native"
 html_theme = "furo"
 
 # Set link name generated in the top bar.
-html_title = "pertpy"
+html_title = "sc-toolbox"
 html_logo = "_images/logo.png"
 
 html_theme_options = {
@@ -165,7 +165,7 @@ nbsphinx_prolog = r"""
         <p class="admonition-title">Note</p>
         <p>
         This page was generated from
-        <a class="reference external" href="https://github.com/theislab/pertpy/tree/{version}/">{docname}</a>.
+        <a class="reference external" href="https://github.com/schillerlab/sc-toolbox/tree/{version}/">{docname}</a>.
         Some tutorial content may look better in light mode.
         </p>
     </div>

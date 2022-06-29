@@ -6,8 +6,8 @@ __version__ = "0.12.0"
 
 from pypi_latest import PypiLatest
 
-pertpy_pypi_latest = PypiLatest("sc-toolbox", __version__)
-pertpy_pypi_latest.check_latest()
+sc_toolbox_pypi_latest = PypiLatest("sc-toolbox", __version__)
+sc_toolbox_pypi_latest.check_latest()
 
 from . import plot as pl
 from . import preprocessing as pp
