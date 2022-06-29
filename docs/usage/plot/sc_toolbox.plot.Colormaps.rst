@@ -52,3 +52,9 @@ grey_blue
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. autoattribute:: Colormaps.grey_blue
+
+
+
+
+
+
