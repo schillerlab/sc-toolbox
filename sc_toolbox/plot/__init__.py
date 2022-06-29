@@ -265,7 +265,7 @@ def average_expression_per_cluster(
             hue=hue,
             gene=gene,
             smooth=smooth,
-            palette=None,
+            palette=palette,
             title=gene,
             tick_size=tick_size,
             label_size=label_size,
