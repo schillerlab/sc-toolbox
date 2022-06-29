@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sc-toolbox"
-version = "0.11.2"  # <<COOKIETEMPLE_FORCE_BUMP>>
+version = "0.12.0"  # <<COOKIETEMPLE_FORCE_BUMP>>
 description = "A collection of project templates and useful code snippets for single-cell data analysis with Scanpy."
 authors = ["Lukas Heumos <lukas.heumos@posteo.net>"]
 license = "MIT"

@@ -2,7 +2,7 @@
 
 __author__ = "Lukas Heumos"
 __email__ = "lukas.heumos@posteo.net"
-__version__ = "0.11.2"
+__version__ = "0.12.0"
 
 from pypi_latest import PypiLatest
 
