@@ -4,4 +4,11 @@ __author__ = "Lukas Heumos"
 __email__ = "lukas.heumos@posteo.net"
 __version__ = "0.11.2"
 
-from sc_toolbox.api import calc, plot, util
+from pypi_latest import PypiLatest
+
+pertpy_pypi_latest = PypiLatest("sc-toolbox", __version__)
+pertpy_pypi_latest.check_latest()
+
+from . import plot as pl
+from . import preprocessing as pp
+from . import tools as tl

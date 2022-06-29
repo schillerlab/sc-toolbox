@@ -880,6 +880,20 @@ python-versions = ">=3.6.8"
 diagrams = ["railroad-diagrams", "jinja2"]
 
 [[package]]
+name = "pypi-latest"
+version = "0.1.2"
+description = "Verify that currently installed version is the latest one released on PyPI and update it if not."
+category = "main"
+optional = false
+python-versions = ">=3.6.1,<4"
+
+[package.dependencies]
+click = ">=7.0.0"
+PyYAML = ">=5.4.1"
+questionary = ">=1.9.0"
+rich = ">=10.4.0"
+
+[[package]]
 name = "pytest"
 version = "6.2.5"
 description = "pytest: simple powerful testing with Python"
@@ -1594,7 +1608,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7.1,<3.10"
-content-hash = "2355eac77b1afdc7756c4251c909e5c88b2753b94051638782c7b2e93cc46c7c"
+content-hash = "1c8222543b4b19887e347fdbcd210692ffab5c41cd134156640ccd6bd000f3fa"
 
 [metadata.files]
 adjusttext = [
@@ -2237,6 +2251,10 @@ pynndescent = [
 pyparsing = [
     {file = "pyparsing-3.0.9-py3-none-any.whl", hash = "sha256:5026bae9a10eeaefb61dab2f09052b9f4307d44aee4eda64b309723d8d206bbc"},
     {file = "pyparsing-3.0.9.tar.gz", hash = "sha256:2b020ecf7d21b687f219b71ecad3631f644a47f01403fa1d1036b0c6416d70fb"},
+]
+pypi-latest = [
+    {file = "pypi-latest-0.1.2.tar.gz", hash = "sha256:b195654567e6abaac6acfec37638d8e000838f419bc6b129962a896eedc4ed4e"},
+    {file = "pypi_latest-0.1.2-py3-none-any.whl", hash = "sha256:c8132c7d834365db8bbca6b81a2d558d820dd950b2012bef3c41d181164e64df"},
 ]
 pytest = [
     {file = "pytest-6.2.5-py3-none-any.whl", hash = "sha256:7310f8d27bc79ced999e760ca304d69f6ba6c6649c0b60fb0e04a4a77cacc134"},
