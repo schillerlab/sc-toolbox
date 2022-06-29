@@ -1,0 +1,473 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+<meta property="og:title" content="Usage" />
+  
+<meta property="og:type" content="website" />
+  
+<meta property="og:url" content="https://sc-toolbox.readthedocs.io/en/latest/usage/usage.html" />
+  
+<meta property="og:description" content="Import the sc-toolbox API as follows: You can then access the respective modules like: Preprocessing: Tools: Plots:" />
+  
+<meta property="og:image" content="https://sc-toolbox.readthedocs.io/en/latest//_static/logo.png" />
+  
+<meta property="og:image:alt" content="Usage" />
+  <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="sc_toolbox.tools.generate_expression_table" href="tools/sc_toolbox.tools.generate_expression_table.html" /><link rel="prev" title="Installation" href="../installation.html" />
+
+    <meta name="generator" content="sphinx-5.0.2, furo 2022.06.21"/>
+        <title>Usage - pertpy</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/override.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/sphinx_gallery.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #003262;
+  --color-brand-content: #003262per;
+  --admonition-font-size: var(--font-size-normal);
+  --admonition-title-font-size: var(--font-size-normal);
+  --code-font-size: var(--font-size--small);
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">pertpy</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">Usage</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.generate_expression_table.html">sc_toolbox.tools.generate_expression_table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.relative_frequencies.html">sc_toolbox.tools.relative_frequencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.relative_frequency_per_cluster.html">sc_toolbox.tools.relative_frequency_per_cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.correlate_to_signature.html">sc_toolbox.tools.correlate_to_signature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.remove_outliers.html">sc_toolbox.tools.remove_outliers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.add_percentages.html">sc_toolbox.tools.add_percentages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.ranksums_between_groups.html">sc_toolbox.tools.ranksums_between_groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.generate_count_object.html">sc_toolbox.tools.generate_count_object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.tidy_de_table.html">sc_toolbox.tools.tidy_de_table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.correlate_means_to_gene.html">sc_toolbox.tools.correlate_means_to_gene</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.extended_marker_table.html">sc_toolbox.tools.extended_marker_table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.generate_pseudobulk.html">sc_toolbox.tools.generate_pseudobulk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.automated_marker_annotation.html">sc_toolbox.tools.automated_marker_annotation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tools/sc_toolbox.tools.de_res_to_anndata.html">sc_toolbox.tools.de_res_to_anndata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.Colormaps.html">sc_toolbox.plot.Colormaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.custom_plot_size.html">sc_toolbox.plot.custom_plot_size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.standard_lineplot.html">sc_toolbox.plot.standard_lineplot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.average_expression.html">sc_toolbox.plot.average_expression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.average_expression_per_cluster.html">sc_toolbox.plot.average_expression_per_cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.average_expression_split_cluster.html">sc_toolbox.plot.average_expression_split_cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.average_expression_per_cell.html">sc_toolbox.plot.average_expression_per_cell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.gene_expression_dpt_ordered.html">sc_toolbox.plot.gene_expression_dpt_ordered</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.relative_frequencies_boxplots.html">sc_toolbox.plot.relative_frequencies_boxplots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.split_boxplot.html">sc_toolbox.plot.split_boxplot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.marker_dendrogram.html">sc_toolbox.plot.marker_dendrogram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.volcano_plot.html">sc_toolbox.plot.volcano_plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.cluster_composition_stacked_barplot.html">sc_toolbox.plot.cluster_composition_stacked_barplot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.gene_boxplot.html">sc_toolbox.plot.gene_boxplot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.colors_overview.html">sc_toolbox.plot.colors_overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.relative_frequencies_lineplot.html">sc_toolbox.plot.relative_frequencies_lineplot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.annotated_cell_type_umap.html">sc_toolbox.plot.annotated_cell_type_umap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot/sc_toolbox.plot.genotype_vs_genotype_umaps.html">sc_toolbox.plot.genotype_vs_genotype_umaps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributor Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code_of_conduct.html">Contributor Covenant Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/schillerlab/sc-toolbox/discussions">Discussions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Credits</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h1>
+<p>Import the sc-toolbox API as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sc_toolbox</span> <span class="k">as</span> <span class="nn">sct</span>
+</pre></div>
+</div>
+<p>You can then access the respective modules like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sct</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">cool_fancy_plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<section id="preprocessing">
+<h2>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this heading">#</a></h2>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+</tbody>
+</table>
+</div>
+</section>
+<section id="tools">
+<h2>Tools<a class="headerlink" href="#tools" title="Permalink to this heading">#</a></h2>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.generate_expression_table.html#sc_toolbox.tools.generate_expression_table" title="sc_toolbox.tools.generate_expression_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.generate_expression_table</span></code></a></p></td>
+<td><p>Generates a table of cells by genes of expression values as a Pandas DataFrame.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.relative_frequencies.html#sc_toolbox.tools.relative_frequencies" title="sc_toolbox.tools.relative_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.relative_frequencies</span></code></a></p></td>
+<td><p>Calculates the relative frequencies of conditions grouped by an observation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.relative_frequency_per_cluster.html#sc_toolbox.tools.relative_frequency_per_cluster" title="sc_toolbox.tools.relative_frequency_per_cluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.relative_frequency_per_cluster</span></code></a></p></td>
+<td><p>Calculates relative frequencies per cluster</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.correlate_to_signature.html#sc_toolbox.tools.correlate_to_signature" title="sc_toolbox.tools.correlate_to_signature"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.correlate_to_signature</span></code></a></p></td>
+<td><p>Correlations Score (based on cell type signature (logFC)) - alternative to sc.tl.score</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.remove_outliers.html#sc_toolbox.tools.remove_outliers" title="sc_toolbox.tools.remove_outliers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.remove_outliers</span></code></a></p></td>
+<td><p>Remove outlying cells based on UMAP embeddings with DBScan (density based clustering).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.add_percentages.html#sc_toolbox.tools.add_percentages" title="sc_toolbox.tools.add_percentages"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.add_percentages</span></code></a></p></td>
+<td><p>Add columns to existing diffxpy table specifying percentage of expressing cells.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.ranksums_between_groups.html#sc_toolbox.tools.ranksums_between_groups" title="sc_toolbox.tools.ranksums_between_groups"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.ranksums_between_groups</span></code></a></p></td>
+<td><p>Perform Wilcoxon Rank-sum test between two groups.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.generate_count_object.html#sc_toolbox.tools.generate_count_object" title="sc_toolbox.tools.generate_count_object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.generate_count_object</span></code></a></p></td>
+<td><p>&#64;Meshal what is this really supposed to do?</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.tidy_de_table.html#sc_toolbox.tools.tidy_de_table" title="sc_toolbox.tools.tidy_de_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.tidy_de_table</span></code></a></p></td>
+<td><p>Sorts diffxpy de table and adds percentages of expression per group</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.correlate_means_to_gene.html#sc_toolbox.tools.correlate_means_to_gene" title="sc_toolbox.tools.correlate_means_to_gene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.correlate_means_to_gene</span></code></a></p></td>
+<td><p>Calculate gene to gene correlation based on a mean expression table</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.extended_marker_table.html#sc_toolbox.tools.extended_marker_table" title="sc_toolbox.tools.extended_marker_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.extended_marker_table</span></code></a></p></td>
+<td><p>Generates an extended marker table with cell types and percentages of expressed cell types per cluster.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.generate_pseudobulk.html#sc_toolbox.tools.generate_pseudobulk" title="sc_toolbox.tools.generate_pseudobulk"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.generate_pseudobulk</span></code></a></p></td>
+<td><p>Generates a pseudobulk for a given key of groups in the AnnData object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.automated_marker_annotation.html#sc_toolbox.tools.automated_marker_annotation" title="sc_toolbox.tools.automated_marker_annotation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.automated_marker_annotation</span></code></a></p></td>
+<td><p>Calculates a marker gene overlap based on pre-existing annotations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="tools/sc_toolbox.tools.de_res_to_anndata.html#sc_toolbox.tools.de_res_to_anndata" title="sc_toolbox.tools.de_res_to_anndata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tools.de_res_to_anndata</span></code></a></p></td>
+<td><p>Add a tabular differential expression result to AnnData as if it was produced by scanpy.tl.rank_genes_groups.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="plots">
+<h2>Plots<a class="headerlink" href="#plots" title="Permalink to this heading">#</a></h2>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.Colormaps.html#sc_toolbox.plot.Colormaps" title="sc_toolbox.plot.Colormaps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.Colormaps</span></code></a>(value)</p></td>
+<td><p>Useful Colormaps for e.g.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.custom_plot_size.html#sc_toolbox.plot.custom_plot_size" title="sc_toolbox.plot.custom_plot_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.custom_plot_size</span></code></a>(width, height, dpi)</p></td>
+<td><p>Create a custom axis object of desired sizes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.standard_lineplot.html#sc_toolbox.plot.standard_lineplot" title="sc_toolbox.plot.standard_lineplot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.standard_lineplot</span></code></a>(data, order, xlabel, ...)</p></td>
+<td><p>Draws a standard line plot based on Seaborn's lmplot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.average_expression.html#sc_toolbox.plot.average_expression" title="sc_toolbox.plot.average_expression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.average_expression</span></code></a>(gene_expression, ...)</p></td>
+<td><p>Draw a line plot showing the gene expression over time.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.average_expression_per_cluster.html#sc_toolbox.plot.average_expression_per_cluster" title="sc_toolbox.plot.average_expression_per_cluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.average_expression_per_cluster</span></code></a>(...[, ...])</p></td>
+<td><p>Plots gene expression over time split by cluster identity.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.average_expression_split_cluster.html#sc_toolbox.plot.average_expression_split_cluster" title="sc_toolbox.plot.average_expression_split_cluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.average_expression_split_cluster</span></code></a>(...[, ...])</p></td>
+<td><p>Plot average gene expression as line plots for multiple clusters at once.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.average_expression_per_cell.html#sc_toolbox.plot.average_expression_per_cell" title="sc_toolbox.plot.average_expression_per_cell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.average_expression_per_cell</span></code></a>(...[, ...])</p></td>
+<td><p>Plots the average gene expression as a line plot per cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.gene_expression_dpt_ordered.html#sc_toolbox.plot.gene_expression_dpt_ordered" title="sc_toolbox.plot.gene_expression_dpt_ordered"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.gene_expression_dpt_ordered</span></code></a>(data, ...)</p></td>
+<td><p>Plot smoothed expression of all cells ordered by pseudo time.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.relative_frequencies_boxplots.html#sc_toolbox.plot.relative_frequencies_boxplots" title="sc_toolbox.plot.relative_frequencies_boxplots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.relative_frequencies_boxplots</span></code></a>(...[, ...])</p></td>
+<td><p>Plots the relative frequencies as split boxplots.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.split_boxplot.html#sc_toolbox.plot.split_boxplot" title="sc_toolbox.plot.split_boxplot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.split_boxplot</span></code></a>(table, order, xlabel, ylabel)</p></td>
+<td><p>Draws a boxsplit split by hue.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.marker_dendrogram.html#sc_toolbox.plot.marker_dendrogram" title="sc_toolbox.plot.marker_dendrogram"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.marker_dendrogram</span></code></a>(marker_table[, ...])</p></td>
+<td><p>Plots a dendogram of used marker genes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.volcano_plot.html#sc_toolbox.plot.volcano_plot" title="sc_toolbox.plot.volcano_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.volcano_plot</span></code></a>(table[, fdr_thresh, ...])</p></td>
+<td><p>Scatter plot of differential gene expression results generated by diffxpy</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.cluster_composition_stacked_barplot.html#sc_toolbox.plot.cluster_composition_stacked_barplot" title="sc_toolbox.plot.cluster_composition_stacked_barplot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.cluster_composition_stacked_barplot</span></code></a>(...)</p></td>
+<td><p>Plot relative frequencies as a stacked barplot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.gene_boxplot.html#sc_toolbox.plot.gene_boxplot" title="sc_toolbox.plot.gene_boxplot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.gene_boxplot</span></code></a>(table, palette[, xlabel, ...])</p></td>
+<td><p>Plot gene values as split boxplots.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.colors_overview.html#sc_toolbox.plot.colors_overview" title="sc_toolbox.plot.colors_overview"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.colors_overview</span></code></a>(colors[, ncols, ...])</p></td>
+<td><p>Draw an overview plot of all used colors.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.relative_frequencies_lineplot.html#sc_toolbox.plot.relative_frequencies_lineplot" title="sc_toolbox.plot.relative_frequencies_lineplot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.relative_frequencies_lineplot</span></code></a>(...[, ...])</p></td>
+<td><p>Plot relative frequencies as a line plot.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.annotated_cell_type_umap.html#sc_toolbox.plot.annotated_cell_type_umap" title="sc_toolbox.plot.annotated_cell_type_umap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.annotated_cell_type_umap</span></code></a>(adata, ...[, ...])</p></td>
+<td><p>Plots a UMAP which is colored by the primary_color, but also draws all labels on top of all clusters.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="plot/sc_toolbox.plot.genotype_vs_genotype_umaps.html#sc_toolbox.plot.genotype_vs_genotype_umaps" title="sc_toolbox.plot.genotype_vs_genotype_umaps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot.genotype_vs_genotype_umaps</span></code></a>(adata, ...)</p></td>
+<td><p>Plots a two UMAPs of genotypes next to each other displaying only the colors of the second UMAP.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="tools/sc_toolbox.tools.generate_expression_table.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">sc_toolbox.tools.generate_expression_table</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../installation.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Installation</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2021, Lukas Heumos, Schillerlab, Theislab
+            </div>
+            Made with 
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Usage</a><ul>
+<li><a class="reference internal" href="#preprocessing">Preprocessing</a></li>
+<li><a class="reference internal" href="#tools">Tools</a></li>
+<li><a class="reference internal" href="#plots">Plots</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    </body>
+</html>
