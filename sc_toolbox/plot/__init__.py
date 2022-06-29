@@ -12,14 +12,7 @@ from rich import print
 
 
 class Colormaps(Enum):
-    """
-    Available colormaps:
-        | grey_red
-        | grey_blue
-        | grey_green
-        | gray_yellow
-        | grey_violet
-    """
+    """Useful Colormaps for e.g. UMAPs. """
 
     grey_red = colors.LinearSegmentedColormap.from_list("grouping", ["lightgray", "red", "darkred"], N=128)
     grey_green = colors.LinearSegmentedColormap.from_list("grouping", ["lightgray", "limegreen", "forestgreen"], N=128)
