@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 import os
 from typing import List
 
 from pandas import Categorical
+from statsmodels.stats.multitest import fdrcorrection
 
 try:
     from typing import Literal
@@ -322,7 +325,8 @@ def generate_count_object(
     """
     adata_subset = adata[adata.obs.grouping.isin(subset)]
     cells = [
-        True if (adata_subset.obs[cell_type_label][i] in cell_type) else False for i in range(adata_subset.n_obs)  # type: ignore
+        True if (adata_subset.obs[cell_type_label][i] in cell_type) else False  # type: ignore
+        for i in range(adata_subset.n_obs)
     ]
 
     # Raw count data for diffxpy
@@ -548,3 +552,66 @@ def automated_marker_annotation(
         marker[ct] = tmp.gene.values
 
     return sc.tl.marker_gene_overlap(adata, marker, key=key, normalize=normalize)
+
+
+def de_res_to_anndata(
+    adata: AnnData,
+    de_res: pd.DataFrame,
+    *,
+    groupby: str,
+    gene_id_col: str = "gene_symbol",
+    score_col: str = "score",
+    pval_col: str = "pvalue",
+    pval_adj_col: Optional[str] = None,
+    lfc_col: str = "lfc",
+    key_added: str = "rank_genes_groups",
+) -> None:
+    """Add a tabular differential expression result to AnnData as if it was produced by scanpy.tl.rank_genes_groups.
+
+    Args:
+        adata: Annotated data matrix
+        de_res: Tablular DE result as Pandas DataFrame
+        groupby: Column in `de_res` that indicates the group. This column must also exist in `adata.obs`.
+        gene_id_col: Column in `de_res` that holds the gene identifiers
+        score_col: Column in `de_res` that holds the score (results will be ordered by score).
+        pval_col: Column in `de_res` that holds the unadjusted pvalue
+        pval_adj_col: Column in `de_res` that holds the adjusted pvalue.
+                      If not specified, the unadjusted p values will be FDR-adjusted.
+        lfc_col: Column in `de_res` that holds the log fold change
+        key_added: Key under which the results will be stored in adata.uns
+    """
+    if groupby not in adata.obs.columns or groupby not in de_res.columns:
+        raise ValueError("groupby column must exist in both adata and de_res. ")
+    res_dict = {
+        "params": {
+            "groupby": groupby,
+            "reference": "rest",
+            "method": "other",
+            "use_raw": True,
+            "layer": None,
+            "corr_method": "other",
+        },
+        "names": [],
+        "scores": [],
+        "pvals": [],
+        "pvals_adj": [],
+        "logfoldchanges": [],
+    }
+    df_groupby = de_res.groupby(groupby)
+    for _, tmp_df in df_groupby:
+        tmp_df = tmp_df.sort_values(score_col, ascending=False)
+        res_dict["names"].append(tmp_df[gene_id_col].values)  # type: ignore
+        res_dict["scores"].append(tmp_df[score_col].values)  # type: ignore
+        res_dict["pvals"].append(tmp_df[pval_col].values)  # type: ignore
+        if pval_adj_col is not None:
+            res_dict["pvals_adj"].append(tmp_df[pval_adj_col].values)  # type: ignore
+        else:
+            res_dict["pvals_adj"].append(fdrcorrection(tmp_df[pval_col].values)[1])  # type: ignore
+        res_dict["logfoldchanges"].append(tmp_df[lfc_col].values)  # type: ignore
+
+    for key in ["names", "scores", "pvals", "pvals_adj", "logfoldchanges"]:
+        res_dict[key] = pd.DataFrame(
+            np.vstack(res_dict[key]).T,  # type: ignore
+            columns=list(df_groupby.groups.keys()),
+        ).to_records(index=False, column_dtypes="O")
+    adata.uns[key_added] = res_dict

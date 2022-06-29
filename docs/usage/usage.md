@@ -43,6 +43,7 @@ sct.pl.cool_fancy_plot()
     tools.extended_marker_table
     tools.generate_pseudobulk
     tools.automated_marker_annotation
+    tools.de_res_to_anndata
 ```
 
 ## Plots

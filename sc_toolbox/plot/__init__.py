@@ -31,8 +31,7 @@ class Colormaps(Enum):
 
 
 def custom_plot_size(width: int, height: int, dpi: int):
-    """
-    Create a custom axis object of desired sizes.
+    """Create a custom axis object of desired sizes.
 
     Args:
         width: Desired plot width
@@ -54,7 +53,7 @@ def standard_lineplot(
     hue=None,
     gene=None,
     smooth: bool = None,
-    cols=None,
+    palette=None,
     title=None,
     rotation: int = None,
     figsize: Tuple[int, int] = (15, 5),
@@ -65,8 +64,7 @@ def standard_lineplot(
     scatter=None,
     save: str = None,
 ):
-    """
-    Draws a standard line plot based on Seaborn's lmplot.
+    """Draws a standard line plot based on Seaborn's lmplot.
 
     Args:
         data: Data frame containing averaged expression values
@@ -76,7 +74,7 @@ def standard_lineplot(
         hue: Subsets of the data which will be drawn on separate facets in the grid. Example: "condition"
         gene: Gene of interest
         smooth: Whether to smoothen (interpolate) the curve
-        cols: List of colors to use for line plot
+        palette: Color palette. For example a list of colors.
         title: Title of the plot
         rotation: Rotation of the x-axis labels
         figsize: Size of the figure as specified in matplotlib
@@ -99,21 +97,27 @@ def standard_lineplot(
                 scatter=scatter,
                 hue=hue,
                 truncate=True,
-                palette=cols,
+                palette=palette,
             )
         else:
             cat = sb.lmplot(
-                data=data, x=xlabel, y=gene, ci=confidence_interval, order=order_smooth, scatter=scatter, palette=cols
+                data=data,
+                x=xlabel,
+                y=gene,
+                ci=confidence_interval,
+                order=order_smooth,
+                scatter=scatter,
+                palette=palette,
             )
 
     else:
         # Removed Parameter order = order, as order should be given numerically anyways.
         if hue:
-            cat = sb.catplot(data=data, x=xlabel, y=gene, linestyles="-", kind="point", hue=hue, palette=cols)
+            cat = sb.catplot(data=data, x=xlabel, y=gene, linestyles="-", kind="point", hue=hue, palette=palette)
         else:
-            cat = sb.catplot(data=data, x=xlabel, y=gene, linestyles="-", kind="point", palette=cols)
+            cat = sb.catplot(data=data, x=xlabel, y=gene, linestyles="-", kind="point", palette=palette)
         if scatter:
-            cat2 = sb.stripplot(data=data, x=xlabel, y=gene, palette=cols, hue=hue, size=7)
+            cat2 = sb.stripplot(data=data, x=xlabel, y=gene, palette=palette, hue=hue, size=7)
             if hue:
                 cat2.legend_.remove()
 
@@ -146,7 +150,7 @@ def average_expression(
     xlabel: str = "days",
     cluster: str = "all",
     hue=None,
-    cols: str = "tab:blue",
+    palette: str = "tab:blue",
     figsize: Tuple[int, int] = (15, 6),
     smooth=None,
     rotation: int = None,
@@ -155,8 +159,7 @@ def average_expression(
     scatter=None,
     save: str = None,
 ):
-    """
-    Draw a line plot showing the gene expression over time. Expression values are averaged by individual sample.
+    """Draw a line plot showing the gene expression over time. Expression values are averaged by individual sample.
 
     Args:
         gene_expression: Data frame containing gene expression values
@@ -193,7 +196,7 @@ def average_expression(
             hue=hue,
             gene=gene,
             smooth=smooth,
-            cols=cols,
+            palette=palette,
             title=gene,
             rotation=rotation,
             figsize=figsize,
@@ -220,11 +223,12 @@ def average_expression_per_cluster(
     label_size: int = 15,
     order_smooth=None,
     conf_int=None,
+    palette=None,
     scatter=None,
     save: str = None,
 ):
-    """
-    Plots gene expression over time split by cluster identity.
+    """Plots gene expression over time split by cluster identity.
+
     One line per cluster.
 
     Args:
@@ -243,6 +247,7 @@ def average_expression_per_cluster(
         label_size: Size of the labels as specified in matplotlib
         order_smooth: If greater than 1, use numpy.polyfit to estimate a polynomial regression
         conf_int: Size of the confidence interval for the regression estimate
+        palette: Color palette that gets passed to Seaborn's lineplot. For example a list of colors.
         scatter: Set to True to add average expression values per sample ID as dots
         save: Path to save the plot to
     """
@@ -267,7 +272,7 @@ def average_expression_per_cluster(
             hue=hue,
             gene=gene,
             smooth=smooth,
-            cols=None,
+            palette=None,
             title=gene,
             tick_size=tick_size,
             label_size=label_size,
@@ -346,7 +351,7 @@ def average_expression_split_cluster(
             hue=hue,
             gene=gene,
             smooth=smooth,
-            cols=cols,
+            palette=cols,
             title=gene,
             tick_size=tick_size,
             label_size=label_size,
@@ -409,7 +414,7 @@ def average_expression_per_cell(
             hue=hue,
             gene=gene,
             smooth=smooth,
-            cols=cols,
+            palette=cols,
             title=gene,
             tick_size=tick_size,
             label_size=label_size,
@@ -545,9 +550,9 @@ def relative_frequencies_boxplots(
     width: float = 0.5,
     jitter=None,
     save=None,
-):
-    """
-    Plots the relative frequencies as split boxplots.
+) -> None:
+    """Plots the relative frequencies as split boxplots.
+
     Use calc_relative_frequencies to get the required input format.
 
     Args:
@@ -597,9 +602,8 @@ def split_boxplot(
     figsize: Tuple[int, int] = (15, 6),
     jitter=None,
     save: str = None,
-):
-    """
-    Draws a boxsplit split by hue.
+) -> None:
+    """Draws a boxsplit split by hue.
 
     Args:
         table: Table containing the data to draw the boxplots for
@@ -653,8 +657,7 @@ def marker_dendrogram(
     figsize: Tuple[int, int] = (10, 4),
     save: str = None,
 ):
-    """
-    Plots a dendogram of used marker genes.
+    """Plots a dendogram of used marker genes.
 
     Args:
         marker_table: A marker table as generated by sct.calc.extended_marker_table
@@ -788,8 +791,7 @@ def cluster_composition_stacked_barplot(
     colors=None,
     save: str = None,
 ):
-    """
-    Plot relative frequencies as a stacked barplot.
+    """Plot relative frequencies as a stacked barplot.
 
     Args:
         relative_frequencies: Data frame containing relative Frequencies as calculated by calc_relFreq()
@@ -873,8 +875,7 @@ def gene_boxplot(
     width=0.7,
     save=None,
 ):
-    """
-    Plot gene values as split boxplots
+    """Plot gene values as split boxplots.
 
     Args:
         table: Pandas DataFrame
@@ -927,8 +928,7 @@ def gene_boxplot(
 
 
 def colors_overview(colors: Dict, ncols: int = 2, figsize: Tuple[int, int] = (8, 5), save: str = None):
-    """
-    Draw an overview plot of all used colors
+    """Draw an overview plot of all used colors.
 
     Args:
         colors: Dictionary of color name and color
@@ -1004,8 +1004,7 @@ def relative_frequencies_lineplot(
     scatter=None,
     save: str = None,
 ):
-    """
-    Plot relative frequencies as a line plot.
+    """Plot relative frequencies as a line plot.
 
     Args:
         relative_frequencies: Data frame containing relative Frequencies as calculated by calc_relFreq()
@@ -1044,7 +1043,7 @@ def relative_frequencies_lineplot(
         hue=hue,
         gene="value",
         smooth=smooth,
-        cols=cols,
+        palette=cols,
         title=title,
         rotation=rotation,
         figsize=figsize,
@@ -1069,8 +1068,7 @@ def annotated_cell_type_umap(
     figsize=(8, 6),
     save=None,
 ):
-    """
-    Plots a UMAP which is colored by the primary_color, but also draws all labels on top of all clusters.
+    """Plots a UMAP which is colored by the primary_color, but also draws all labels on top of all clusters.
 
     Args:
         adata: AnnData object
@@ -1118,8 +1116,7 @@ def genotype_vs_genotype_umaps(
     hide_one_legend: bool = True,
     figsize: Tuple[int, int] = (12, 6),
 ):
-    """
-    Plots a two UMAPs of genotypes next to each other displaying only the colors of the
+    """Plots a two UMAPs of genotypes next to each other displaying only the colors of the second UMAP.
 
     Args:
         adata: AnnData object
