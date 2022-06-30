@@ -16,7 +16,7 @@ jobs:
                   python-version: 3.9
 
             - name: Install cookietemple
-              run: pip install cookietemple==1.4.0
+              run: pip install cookietemple==1.4.1
 
             - name: Run cookietemple lint
               run: cookietemple lint .

@@ -1,9 +1,9 @@
-cookietemple_version: '1.4.0 # <<COOKIETEMPLE_NO_BUMP>>'
+cookietemple_version: '1.4.1 # <<COOKIETEMPLE_NO_BUMP>>'
 domain: cli
 language: python
 project_slug: sc-toolbox
 project_slug_no_hyphen: sc_toolbox
-template_version: '2.1.0 # <<COOKIETEMPLE_NO_BUMP>>'
+template_version: '2.1.1 # <<COOKIETEMPLE_NO_BUMP>>'
 template_handle: cli-python
 github_username: schillerlab
 creator_github_username: zethson
@@ -16,5 +16,5 @@ email: lukas.heumos@posteo.net
 project_name: sc-toolbox
 project_short_description: A collection of project templates and useful code snippets
   for single-cell data analysis with Scanpy.
-version: 0.11.1
+version: 0.12.0
 license: MIT

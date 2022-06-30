@@ -5,7 +5,7 @@ from rich import traceback
 
 
 @click.command()
-@click.version_option(version="0.11.1", message=click.style("sc-toolbox Version: 0.11.1"))
+@click.version_option(version="0.12.0", message=click.style("sc-toolbox Version: 0.12.0"))
 def main() -> None:
     """sc-toolbox."""
 
