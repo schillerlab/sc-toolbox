@@ -4,13 +4,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <meta name="generator" content="sphinx-5.0.2, furo 2022.06.21"/>
+    <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
         <title>sc_toolbox.plot - sc-toolbox</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/override.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/sphinx_gallery.css" />
@@ -152,7 +152,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../../_static/logo.png" alt="Logo"/>
@@ -160,7 +160,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -168,7 +168,7 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../usage/usage.html">Usage</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../usage/usage.html">Usage</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Usage</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/tools/sc_toolbox.tools.generate_expression_table.html">sc_toolbox.tools.generate_expression_table</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/tools/sc_toolbox.tools.relative_frequencies.html">sc_toolbox.tools.relative_frequencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/tools/sc_toolbox.tools.relative_frequency_per_cluster.html">sc_toolbox.tools.relative_frequency_per_cluster</a></li>
@@ -242,7 +242,7 @@
         <article role="main">
           <h1>Source code for sc_toolbox.plot</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -255,7 +255,7 @@
 
 
 <div class="viewcode-block" id="Colormaps"><a class="viewcode-back" href="../../usage/plot/sc_toolbox.plot.Colormaps.html#sc_toolbox.plot.Colormaps">[docs]</a><span class="k">class</span> <span class="nc">Colormaps</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Useful Colormaps for e.g. UMAPs.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Useful Colormaps for e.g. UMAPs.&quot;&quot;&quot;</span>
 
     <span class="n">grey_red</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">&quot;grouping&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;lightgray&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="s2">&quot;darkred&quot;</span><span class="p">],</span> <span class="n">N</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
     <span class="n">grey_green</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">&quot;grouping&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;lightgray&quot;</span><span class="p">,</span> <span class="s2">&quot;limegreen&quot;</span><span class="p">,</span> <span class="s2">&quot;forestgreen&quot;</span><span class="p">],</span> <span class="n">N</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
@@ -267,7 +267,7 @@
 
 
 <div class="viewcode-block" id="custom_plot_size"><a class="viewcode-back" href="../../usage/plot/sc_toolbox.plot.custom_plot_size.html#sc_toolbox.plot.custom_plot_size">[docs]</a><span class="k">def</span> <span class="nf">custom_plot_size</span><span class="p">(</span><span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dpi</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create a custom axis object of desired sizes.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a custom axis object of desired sizes.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        width: Desired plot width</span>
@@ -288,19 +288,19 @@
     <span class="n">ylabel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">hue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">gene</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">smooth</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">smooth</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">palette</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">rotation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
     <span class="n">tick_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">label_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">order_smooth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
     <span class="n">confidence_interval</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Draws a standard line plot based on Seaborn&#39;s lmplot.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Draws a standard line plot based on Seaborn&#39;s lmplot.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        data: Data frame containing averaged expression values</span>
@@ -389,13 +389,13 @@
     <span class="n">palette</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span>
     <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
     <span class="n">smooth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">rotation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">order_smooth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">conf_int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Draw a line plot showing the gene expression over time. Expression values are averaged by individual sample.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Draw a line plot showing the gene expression over time. Expression values are averaged by individual sample.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        gene_expression: Data frame containing gene expression values</span>
@@ -461,9 +461,9 @@
     <span class="n">conf_int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">palette</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plots gene expression over time split by cluster identity.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plots gene expression over time split by cluster identity.</span>
 
 <span class="sd">    One line per cluster.</span>
 
@@ -540,7 +540,7 @@
     <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">save</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot average gene expression as line plots for multiple clusters at once.</span>
 
 <span class="sd">    Args:</span>
@@ -616,9 +616,9 @@
     <span class="n">conf_int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plots the average gene expression as a line plot per cell.</span>
 <span class="sd">    Ideally used when the scatter point should not be sample wise, but cell wise.</span>
 <span class="sd">    Args:</span>
@@ -675,9 +675,9 @@
     <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">ylim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot smoothed expression of all cells ordered by pseudo time.</span>
 
 <span class="sd">    Args:</span>
@@ -787,7 +787,7 @@
     <span class="n">jitter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">save</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Plots the relative frequencies as split boxplots.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plots the relative frequencies as split boxplots.</span>
 
 <span class="sd">    Use calc_relative_frequencies to get the required input format.</span>
 
@@ -837,9 +837,9 @@
     <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
     <span class="n">jitter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Draws a boxsplit split by hue.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Draws a boxsplit split by hue.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        table: Table containing the data to draw the boxplots for</span>
@@ -891,9 +891,9 @@
     <span class="n">label_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
     <span class="n">orientation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;top&quot;</span><span class="p">,</span>
     <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
-    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plots a dendogram of used marker genes.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plots a dendogram of used marker genes.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        marker_table: A marker table as generated by sct.calc.extended_marker_table</span>
@@ -940,7 +940,7 @@
 
 <div class="viewcode-block" id="volcano_plot"><a class="viewcode-back" href="../../usage/plot/sc_toolbox.plot.volcano_plot.html#sc_toolbox.plot.volcano_plot">[docs]</a><span class="k">def</span> <span class="nf">volcano_plot</span><span class="p">(</span>
     <span class="n">table</span><span class="p">,</span>
-    <span class="n">fdr_thresh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fdr_thresh</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">log_fc_thresh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="n">adj_p_val</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;adj_p_val&quot;</span><span class="p">,</span>
     <span class="n">log_fc</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;avg_logFC&quot;</span><span class="p">,</span>
@@ -950,7 +950,7 @@
     <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
     <span class="n">save</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Scatter plot of differential gene expression results generated by diffxpy</span>
 
 <span class="sd">    Args:</span>
@@ -1022,12 +1022,12 @@
     <span class="n">error_bar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">label_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
     <span class="n">tick_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">13</span><span class="p">,</span>
-    <span class="n">capsize</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">capsize</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">margins</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">),</span>
     <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot relative frequencies as a stacked barplot.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot relative frequencies as a stacked barplot.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        relative_frequencies: Data frame containing relative Frequencies as calculated by calc_relFreq()</span>
@@ -1102,7 +1102,7 @@
     <span class="n">table</span><span class="p">,</span>
     <span class="n">palette</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cell_types&quot;</span><span class="p">,</span>
-    <span class="n">hue</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hue</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
     <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">score</span><span class="o">=</span><span class="s2">&quot;Axin2&quot;</span><span class="p">,</span>
@@ -1111,7 +1111,7 @@
     <span class="n">width</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
     <span class="n">save</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot gene values as split boxplots.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot gene values as split boxplots.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        table: Pandas DataFrame</span>
@@ -1163,8 +1163,8 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="colors_overview"><a class="viewcode-back" href="../../usage/plot/sc_toolbox.plot.colors_overview.html#sc_toolbox.plot.colors_overview">[docs]</a><span class="k">def</span> <span class="nf">colors_overview</span><span class="p">(</span><span class="n">colors</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">ncols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Draw an overview plot of all used colors.</span>
+<div class="viewcode-block" id="colors_overview"><a class="viewcode-back" href="../../usage/plot/sc_toolbox.plot.colors_overview.html#sc_toolbox.plot.colors_overview">[docs]</a><span class="k">def</span> <span class="nf">colors_overview</span><span class="p">(</span><span class="n">colors</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">ncols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Draw an overview plot of all used colors.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        colors: Dictionary of color name and color</span>
@@ -1227,20 +1227,20 @@
     <span class="n">cluster</span><span class="p">,</span>
     <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span>
     <span class="n">ylabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;relative frequency&quot;</span><span class="p">,</span>
-    <span class="n">hue</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">smooth</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">hue</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">smooth</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">rotation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
-    <span class="n">tick_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">label_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tick_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">label_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">order_smooth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
     <span class="n">conf_int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">scatter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot relative frequencies as a line plot.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot relative frequencies as a line plot.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        relative_frequencies: Data frame containing relative Frequencies as calculated by calc_relFreq()</span>
@@ -1304,7 +1304,7 @@
     <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
     <span class="n">save</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plots a UMAP which is colored by the primary_color, but also draws all labels on top of all clusters.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plots a UMAP which is colored by the primary_color, but also draws all labels on top of all clusters.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        adata: AnnData object</span>
@@ -1352,7 +1352,7 @@
     <span class="n">hide_one_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">figsize</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plots a two UMAPs of genotypes next to each other displaying only the colors of the second UMAP.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plots a two UMAPs of genotypes next to each other displaying only the colors of the second UMAP.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        adata: AnnData object</span>
@@ -1411,9 +1411,7 @@
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         
@@ -1426,10 +1424,8 @@
     </aside>
   </div>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>

@@ -4,13 +4,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
-    <meta name="generator" content="sphinx-5.0.2, furo 2022.06.21"/>
+    <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
         <title>sc_toolbox.tools - sc-toolbox</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/override.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/sphinx_gallery.css" />
@@ -152,7 +152,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
   <div class="sidebar-logo-container">
     <img class="sidebar-logo" src="../../_static/logo.png" alt="Logo"/>
@@ -160,7 +160,7 @@
   
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
-  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -168,7 +168,7 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../usage/usage.html">Usage</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../usage/usage.html">Usage</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Usage</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/tools/sc_toolbox.tools.generate_expression_table.html">sc_toolbox.tools.generate_expression_table</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/tools/sc_toolbox.tools.relative_frequencies.html">sc_toolbox.tools.relative_frequencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../usage/tools/sc_toolbox.tools.relative_frequency_per_cluster.html">sc_toolbox.tools.relative_frequency_per_cluster</a></li>
@@ -269,11 +269,11 @@
     <span class="n">adata</span><span class="p">,</span>
     <span class="n">cluster</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
     <span class="n">subset_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cell_type&quot;</span><span class="p">,</span>
-    <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">condition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">use_raw</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">condition</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_raw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generates a table of cells by genes of expression values as a Pandas DataFrame.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a table of cells by genes of expression values as a Pandas DataFrame.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        adata: Anndata object</span>
@@ -316,7 +316,7 @@
 
 
 <div class="viewcode-block" id="relative_frequencies"><a class="viewcode-back" href="../../usage/tools/sc_toolbox.tools.relative_frequencies.html#sc_toolbox.tools.relative_frequencies">[docs]</a><span class="k">def</span> <span class="nf">relative_frequencies</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">group_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cell_type&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;batch&quot;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculates the relative frequencies of conditions grouped by an observation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the relative frequencies of conditions grouped by an observation.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        adata: AnnData Objet containing the data</span>
@@ -353,7 +353,7 @@
 
 
 <div class="viewcode-block" id="relative_frequency_per_cluster"><a class="viewcode-back" href="../../usage/tools/sc_toolbox.tools.relative_frequency_per_cluster.html#sc_toolbox.tools.relative_frequency_per_cluster">[docs]</a><span class="k">def</span> <span class="nf">relative_frequency_per_cluster</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">group_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cell_type&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;days&quot;</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculates relative frequencies per cluster</span>
 
 <span class="sd">    Args:</span>
@@ -399,7 +399,7 @@
     <span class="n">gene_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;gene&quot;</span><span class="p">,</span>
     <span class="n">use_raw</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Correlations Score (based on cell type signature (logFC)) - alternative to sc.tl.score</span>
 
 <span class="sd">    Args:</span>
@@ -447,7 +447,7 @@
 
 
 <div class="viewcode-block" id="remove_outliers"><a class="viewcode-back" href="../../usage/tools/sc_toolbox.tools.remove_outliers.html#sc_toolbox.tools.remove_outliers">[docs]</a><span class="k">def</span> <span class="nf">remove_outliers</span><span class="p">(</span><span class="n">cords</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">min_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Categorical</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Remove outlying cells based on UMAP embeddings with DBScan (density based clustering).</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove outlying cells based on UMAP embeddings with DBScan (density based clustering).</span>
 
 <span class="sd">    Call as: sub.obs[&quot;d_cluster&quot;] = remove_outliers(sub.obsm[&quot;X_umap&quot;], min_samples = 10)</span>
 
@@ -469,7 +469,7 @@
 
 
 <div class="viewcode-block" id="add_percentages"><a class="viewcode-back" href="../../usage/tools/sc_toolbox.tools.add_percentages.html#sc_toolbox.tools.add_percentages">[docs]</a><span class="k">def</span> <span class="nf">add_percentages</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">group_by</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">gene_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;gene&quot;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Add columns to existing diffxpy table specifying percentage of expressing cells.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add columns to existing diffxpy table specifying percentage of expressing cells.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        adata: AnnData object containing the data</span>
@@ -499,7 +499,7 @@
 <div class="viewcode-block" id="ranksums_between_groups"><a class="viewcode-back" href="../../usage/tools/sc_toolbox.tools.ranksums_between_groups.html#sc_toolbox.tools.ranksums_between_groups">[docs]</a><span class="k">def</span> <span class="nf">ranksums_between_groups</span><span class="p">(</span>
     <span class="n">table</span><span class="p">,</span> <span class="n">id1</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;bystander&quot;</span><span class="p">,</span> <span class="n">id2</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;infected&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;condition&quot;</span><span class="p">,</span> <span class="n">cells</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">score</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Axin2&quot;</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform Wilcoxon Rank-sum test between two groups.</span>
 
 <span class="sd">    Args:</span>
@@ -531,15 +531,15 @@
     <span class="n">adata</span><span class="p">,</span>
     <span class="n">hue</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;disease&quot;</span><span class="p">,</span>
     <span class="n">cell_type_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cell_type&quot;</span><span class="p">,</span>
-    <span class="n">cell_type</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">cell_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">min_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="n">min_cells</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">ref</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;healthy&quot;</span><span class="p">,</span>
-    <span class="n">subset</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">subset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">layer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;counts&quot;</span><span class="p">,</span>
     <span class="n">outliers_removal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    @Meshal what is this really supposed to do?</span>
 
 <span class="sd">    Args:</span>
@@ -590,7 +590,7 @@
     <span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">filter_genes</span><span class="p">(</span><span class="n">adata_raw</span><span class="p">,</span> <span class="n">min_cells</span><span class="o">=</span><span class="n">min_cells</span><span class="p">)</span>
 
     <span class="c1"># Set reference as first column</span>
-    <span class="n">adata_raw</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">hue</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">reorder_categories</span><span class="p">([</span><span class="n">ref</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">ref</span><span class="p">)[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">adata_raw</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">hue</span><span class="p">]</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">reorder_categories</span><span class="p">([</span><span class="n">ref</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">ref</span><span class="p">)[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
     <span class="n">pal</span> <span class="o">=</span> <span class="n">adata_subset</span><span class="o">.</span><span class="n">uns</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hue</span><span class="si">}</span><span class="s2">_colors&quot;</span><span class="p">]</span>
     <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata_raw</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="n">hue</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">pal</span><span class="p">))</span>
 
@@ -598,7 +598,7 @@
 
 
 <div class="viewcode-block" id="tidy_de_table"><a class="viewcode-back" href="../../usage/tools/sc_toolbox.tools.tidy_de_table.html#sc_toolbox.tools.tidy_de_table">[docs]</a><span class="k">def</span> <span class="nf">tidy_de_table</span><span class="p">(</span><span class="n">de_test</span><span class="p">,</span> <span class="n">adata</span><span class="p">,</span> <span class="n">cells</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">qval_thresh</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="n">group_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;treatment&quot;</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sorts diffxpy de table and adds percentages of expression per group</span>
 
 <span class="sd">    Args:</span>
@@ -623,7 +623,7 @@
 
 
 <div class="viewcode-block" id="correlate_means_to_gene"><a class="viewcode-back" href="../../usage/tools/sc_toolbox.tools.correlate_means_to_gene.html#sc_toolbox.tools.correlate_means_to_gene">[docs]</a><span class="k">def</span> <span class="nf">correlate_means_to_gene</span><span class="p">(</span><span class="n">means</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">corr_gene</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;EOMES&quot;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate gene to gene correlation based on a mean expression table</span>
 
 <span class="sd">    Args:</span>
@@ -657,7 +657,7 @@
     <span class="n">cell_type_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cell_type&quot;</span><span class="p">,</span>
     <span class="n">gene_ranks_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rank_genes_groups&quot;</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates an extended marker table with cell types and percentages of expressed cell types per cluster.</span>
 
 <span class="sd">    Run scanpy.tl.rank_genes_groups before using this function.</span>
@@ -698,8 +698,10 @@
     <span class="k">return</span> <span class="n">all_markers_df</span></div>
 
 
-<div class="viewcode-block" id="generate_pseudobulk"><a class="viewcode-back" href="../../usage/tools/sc_toolbox.tools.generate_pseudobulk.html#sc_toolbox.tools.generate_pseudobulk">[docs]</a><span class="k">def</span> <span class="nf">generate_pseudobulk</span><span class="p">(</span><span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="n">group_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;identifier&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="generate_pseudobulk"><a class="viewcode-back" href="../../usage/tools/sc_toolbox.tools.generate_pseudobulk.html#sc_toolbox.tools.generate_pseudobulk">[docs]</a><span class="k">def</span> <span class="nf">generate_pseudobulk</span><span class="p">(</span>
+    <span class="n">adata</span><span class="p">:</span> <span class="n">AnnData</span><span class="p">,</span> <span class="n">group_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;identifier&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates a pseudobulk for a given key of groups in the AnnData object.</span>
 
 <span class="sd">    Looks like:</span>
@@ -743,7 +745,7 @@
     <span class="n">p_value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
     <span class="n">log_fold_change</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculates a marker gene overlap based on pre-existing annotations.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates a marker gene overlap based on pre-existing annotations.</span>
 
 <span class="sd">    Currently supported marker files:</span>
 
@@ -809,7 +811,7 @@
     <span class="n">lfc_col</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;lfc&quot;</span><span class="p">,</span>
     <span class="n">key_added</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rank_genes_groups&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Add a tabular differential expression result to AnnData as if it was produced by scanpy.tl.rank_genes_groups.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a tabular differential expression result to AnnData as if it was produced by scanpy.tl.rank_genes_groups.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        adata: Annotated data matrix</span>
@@ -877,9 +879,7 @@
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         
@@ -892,10 +892,8 @@
     </aside>
   </div>
 </div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
