@@ -42,15 +42,15 @@ sc-toolbox
    :alt: Black
 
 .. warning::
-    This package is still under heavy development. It is primarily designed for in-house analyses at the `Theislab <https://github.com/theislab>`_
-    and `Schillerlab <https://github.com/schillerlab>`_. Don't yet expect it to be well tested or documented.
-    However, contributions are highly welcome and we will provide guidance if required.
+    This package is not properly maintained. It was primarily used for in-house analyses at the `Theislab <https://github.com/theislab>`_
+    and `Schillerlab <https://github.com/schillerlab>`_. Do not expect it to be well tested or documented.
+    However, contributions are welcome and we will provide guidance if required.
 
 
 Features
 --------
 
-* Create minimal best-practice containers for single-cell data analysis with Scanpy
+* Create minimal containers for single-cell data analysis with Scanpy
 * API for advanced Scanpy based plots and analyses
 
 .. figure:: https://user-images.githubusercontent.com/21954664/116225631-5fb84200-a752-11eb-9489-16571428918f.png
