@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Dict, List, Sequence, Tuple, Union
+from typing import Dict, List, Optional, Sequence, Tuple, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -45,17 +45,17 @@ def standard_lineplot(
     ylabel: str,
     hue=None,
     gene=None,
-    smooth: bool = None,
+    smooth: Optional[bool] = None,
     palette=None,
     title=None,
-    rotation: int = None,
+    rotation: Optional[int] = None,
     figsize: Tuple[int, int] = (15, 5),
     tick_size=None,
     label_size=None,
     order_smooth: int = 3,
     confidence_interval=None,
     scatter=None,
-    save: str = None,
+    save: Optional[str] = None,
 ):
     """Draws a standard line plot based on Seaborn's lmplot.
 
@@ -146,11 +146,11 @@ def average_expression(
     palette: str = "tab:blue",
     figsize: Tuple[int, int] = (15, 6),
     smooth=None,
-    rotation: int = None,
+    rotation: Optional[int] = None,
     order_smooth=None,
     conf_int=None,
     scatter=None,
-    save: str = None,
+    save: Optional[str] = None,
 ):
     """Draw a line plot showing the gene expression over time. Expression values are averaged by individual sample.
 
@@ -218,7 +218,7 @@ def average_expression_per_cluster(
     conf_int=None,
     palette=None,
     scatter=None,
-    save: str = None,
+    save: Optional[str] = None,
 ):
     """Plots gene expression over time split by cluster identity.
 
@@ -373,7 +373,7 @@ def average_expression_per_cell(
     conf_int=None,
     scatter=None,
     cols=None,
-    save: str = None,
+    save: Optional[str] = None,
 ):
     """
     Plots the average gene expression as a line plot per cell.
@@ -432,7 +432,7 @@ def gene_expression_dpt_ordered(
     cols=None,
     scale=None,
     ylim=None,
-    save: str = None,
+    save: Optional[str] = None,
 ):
     """
     Plot smoothed expression of all cells ordered by pseudo time.
@@ -594,7 +594,7 @@ def split_boxplot(
     title=None,
     figsize: Tuple[int, int] = (15, 6),
     jitter=None,
-    save: str = None,
+    save: Optional[str] = None,
 ) -> None:
     """Draws a boxsplit split by hue.
 
@@ -648,7 +648,7 @@ def marker_dendrogram(
     label_size: int = 10,
     orientation: str = "top",
     figsize: Tuple[int, int] = (10, 4),
-    save: str = None,
+    save: Optional[str] = None,
 ):
     """Plots a dendogram of used marker genes.
 
@@ -697,7 +697,7 @@ def marker_dendrogram(
 
 def volcano_plot(
     table,
-    fdr_thresh: float = None,
+    fdr_thresh: Optional[float] = None,
     log_fc_thresh: float = 0,
     adj_p_val: str = "adj_p_val",
     log_fc: str = "avg_logFC",
@@ -779,10 +779,10 @@ def cluster_composition_stacked_barplot(
     error_bar=None,
     label_size: int = 15,
     tick_size: int = 13,
-    capsize: int = None,
+    capsize: Optional[int] = None,
     margins: Tuple[float, float] = (0.02, 0.04),
     colors=None,
-    save: str = None,
+    save: Optional[str] = None,
 ):
     """Plot relative frequencies as a stacked barplot.
 
@@ -859,7 +859,7 @@ def gene_boxplot(
     table,
     palette: List[str],
     xlabel: str = "cell_types",
-    hue: str = None,
+    hue: Optional[str] = None,
     figsize: Tuple[int, int] = (10, 5),
     legend=True,
     score="Axin2",
@@ -920,7 +920,7 @@ def gene_boxplot(
     plt.show()
 
 
-def colors_overview(colors: Dict, ncols: int = 2, figsize: Tuple[int, int] = (8, 5), save: str = None):
+def colors_overview(colors: Dict, ncols: int = 2, figsize: Tuple[int, int] = (8, 5), save: Optional[str] = None):
     """Draw an overview plot of all used colors.
 
     Args:
@@ -984,18 +984,18 @@ def relative_frequencies_lineplot(
     cluster,
     xlabel: str = "days",
     ylabel: str = "relative frequency",
-    hue: str = None,
-    smooth: bool = None,
+    hue: Optional[str] = None,
+    smooth: Optional[bool] = None,
     cols=None,
-    title: str = None,
-    rotation: int = None,
+    title: Optional[str] = None,
+    rotation: Optional[int] = None,
     figsize: Tuple[int, int] = (15, 5),
-    tick_size: int = None,
-    label_size: int = None,
+    tick_size: Optional[int] = None,
+    label_size: Optional[int] = None,
     order_smooth: int = 3,
     conf_int=None,
     scatter=None,
-    save: str = None,
+    save: Optional[str] = None,
 ):
     """Plot relative frequencies as a line plot.
 

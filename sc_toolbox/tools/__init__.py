@@ -26,9 +26,9 @@ def generate_expression_table(
     adata,
     cluster: str = "all",
     subset_by: str = "cell_type",
-    xlabel: str = None,
-    condition: str = None,
-    use_raw: bool = None,
+    xlabel: Optional[str] = None,
+    condition: Optional[str] = None,
+    use_raw: Optional[bool] = None,
 ):
     """Generates a table of cells by genes of expression values as a Pandas DataFrame.
 
@@ -288,11 +288,11 @@ def generate_count_object(
     adata,
     hue: str = "disease",
     cell_type_label: str = "cell_type",
-    cell_type: List[str] = None,
+    cell_type: Optional[List[str]] = None,
     min_samples: int = 2,
     min_cells: int = 5,
     ref: str = "healthy",
-    subset: List[str] = None,
+    subset: Optional[List[str]] = None,
     layer: str = "counts",
     outliers_removal: bool = False,
 ):
@@ -347,7 +347,7 @@ def generate_count_object(
     sc.pp.filter_genes(adata_raw, min_cells=min_cells)
 
     # Set reference as first column
-    adata_raw.obs.loc[:, hue].cat.reorder_categories([ref, np.setdiff1d(subset, ref)[0]], inplace=True)
+    adata_raw.obs.loc[:, hue].cat.reorder_categories([ref, np.setdiff1d(subset, ref)[0]], inplace=True)  # type: ignore
     pal = adata_subset.uns[f"{hue}_colors"]
     sc.pl.umap(adata_raw, color=[hue], palette=list(pal))
 
@@ -455,7 +455,9 @@ def extended_marker_table(
     return all_markers_df
 
 
-def generate_pseudobulk(adata: AnnData, group_key: str = "identifier", sep="\t", save: str = None) -> pd.DataFrame:
+def generate_pseudobulk(
+    adata: AnnData, group_key: str = "identifier", sep="\t", save: Optional[str] = None
+) -> pd.DataFrame:
     """
     Generates a pseudobulk for a given key of groups in the AnnData object.
 

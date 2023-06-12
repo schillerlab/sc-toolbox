@@ -15,7 +15,7 @@ except ImportError:
     sys.exit(1)
 
 package = "sc_toolbox"
-python_versions = ["3.8"]
+python_versions = ["3.10"]
 nox.options.sessions = (
     "pre-commit",
     #  "safety",
