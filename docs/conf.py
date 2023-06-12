@@ -15,8 +15,8 @@ copyright = "2021, Lukas Heumos, Schillerlab, Theislab"
 author = "Lukas Heumos"
 github_repo = "sc_toolbox"
 
-version = "0.12.1"
-release = "0.12.1"
+version = "0.12.2"
+release = "0.12.2"
 
 extensions = [
     "myst_parser",
