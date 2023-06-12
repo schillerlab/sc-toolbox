@@ -9,9 +9,9 @@ homepage = "https://github.com/schillerlab/sc-toolbox"
 repository = "https://github.com/schillerlab/sc-toolbox"
 documentation = "https://sc-toolbox.readthedocs.io"
 classifiers = [
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 
 
