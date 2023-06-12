@@ -27,7 +27,7 @@ $ git clone --recurse-submodules https://github.com/schillerlab/sc-toolbox
 
 ## How to set up your development environment
 
-You need Python 3.8+ and the following tools:
+You need Python 3.10+ and the following tools:
 
 -   [Poetry]
 -   [Nox]
